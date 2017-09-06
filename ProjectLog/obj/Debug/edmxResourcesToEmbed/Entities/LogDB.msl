@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="mobidigModelStoreContainer" CdmEntityContainer="mobidigEntities">
+    <EntitySetMapping Name="log">
+      <EntityTypeMapping TypeName="mobidigModel.log">
+        <MappingFragment StoreEntitySet="log">
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="action" ColumnName="action" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="ip" ColumnName="ip" />
+          <ScalarProperty Name="application" ColumnName="application" />
+          <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

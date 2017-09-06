@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mobidigModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="mobidigModelStoreContainer">
+    <EntitySet Name="log" EntityType="mobidigModel.Store.log" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+  </EntityContainer>
+  <EntityType Name="log">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="timestamp" Type="datetime" />
+    <Property Name="application" Type="varchar" MaxLength="255" />
+    <Property Name="ip" Type="varchar" MaxLength="50" />
+    <Property Name="user" Type="varchar" MaxLength="255" />
+    <Property Name="action" Type="varchar" MaxLength="255" />
+    <Property Name="data" Type="varchar(max)" />
+  </EntityType>
+</Schema>

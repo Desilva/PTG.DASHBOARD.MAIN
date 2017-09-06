@@ -1,0 +1,10 @@
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\obj\Debug\ProjectLog.csprojResolveAssemblyReference.cache
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\bin\Debug\ProjectLog.dll.config
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\bin\Debug\ProjectLog.dll
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\bin\Debug\ProjectLog.pdb
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\bin\Debug\EntityFramework.dll
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\bin\Debug\EntityFramework.SqlServer.dll
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\bin\Debug\EntityFramework.xml
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\bin\Debug\EntityFramework.SqlServer.xml
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\obj\Debug\ProjectLog.dll
+E:\Documents\Informatics\Project\Pertagas\PTG.FIN.ASP\ProjectLog\obj\Debug\ProjectLog.pdb

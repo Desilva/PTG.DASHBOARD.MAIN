@@ -1,0 +1,280 @@
+﻿body, html {
+    height: 100%;
+}
+
+.login-bg {
+    background-color: white;
+}
+
+/*.wrap {
+    width: 50%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: red;
+}*/
+
+.background-rounded {
+    background-image: url("../Content/img/image-background transparant.png");
+    /* Full height */
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 92%;
+    border-bottom-right-radius: 180px;
+    /*margin-left: -200px;*/
+    /*margin-top: -80px;*/
+    /*margin-right: -10px;*/
+    width: 100%;
+}
+
+/* css logo pge header */
+.logo-header img {
+    width: 250px;
+    /*height: 105px;*/
+}
+
+/* css welcome */
+.welcome {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 45px;
+    font-weight: 600;
+    text-align: center;
+    color: #555754;
+    text-transform: capitalize;
+    letter-spacing: 8px;
+    margin-top: 20px;
+}
+
+p.form-title {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    color: #8c8c8c;
+    margin-top: 5%;
+    text-transform: capitalize;
+    margin-bottom: 40px;
+}
+
+form.login {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+    form.login input[type="text"], input[type="password"] {
+        width: 100%;
+        background: 0;
+        border: 0;
+        border-bottom: 1px solid #43433b;
+        outline: 0;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        color: rgba(0, 0, 0, 0.66);
+        outline: 0;
+    }
+
+.btn-masuk {
+    width: 100%;
+    background: #35b6ec;
+    border-color: #35b6ec;
+}
+
+    .btn-masuk:hover {
+        width: 100%;
+        background: #107dab;
+        border-color: #107dab;
+    }
+
+form.login .remember-forgot {
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+}
+
+form.login .forgot-pass-content {
+    min-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+form.login label, form.login a {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.66);
+}
+
+form.login a {
+    transition: color 0.5s ease;
+}
+
+    form.login a:hover {
+        color: #107dab;
+    }
+
+.pr-wrap {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+
+.show-pass-reset {
+    display: block !important;
+}
+
+.pass-reset {
+    margin: 0 auto;
+    width: 250px;
+    position: relative;
+    margin-top: 22%;
+    z-index: 999;
+    background: #FFFFFF;
+    padding: 20px 15px;
+}
+
+    .pass-reset label {
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 15px;
+    }
+
+    .pass-reset input[type="email"] {
+        width: 100%;
+        margin: 5px 0 0 0;
+        padding: 5px 10px;
+        background: 0;
+        border: 0;
+        border-bottom: 1px solid #000000;
+        outline: 0;
+        font-style: italic;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        color: #000000;
+        outline: 0;
+    }
+
+    .pass-reset input[type="submit"] {
+        width: 100%;
+        border: 0;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 500;
+        margin-top: 10px;
+        outline: 0;
+        cursor: pointer;
+        letter-spacing: 1px;
+    }
+
+        .pass-reset input[type="submit"]:hover {
+            transition: background-color 0.5s ease;
+        }
+
+.posted-by {
+    position: absolute;
+    bottom: 26px;
+    margin: 0 auto;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, 0.66);
+    padding: 10px;
+    left: 45%;
+}
+
+.remember-me {
+    margin-left: -50px;
+    margin-top: -10px;
+}
+
+@media only screen and (min-width: 700px) {
+    .forgot-password {
+        margin-right: -20px;
+        margin-top: -2px;
+    }
+}
+
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+    /* style icon */
+    .inner-addon .glyphicon {
+        position: absolute;
+        padding: 10px;
+        pointer-events: none;
+    }
+
+/* align icon */
+.left-addon .glyphicon {
+    left: 0px;
+}
+
+.right-addon .glyphicon {
+    right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+    padding-left: 30px;
+}
+
+.right-addon input {
+    padding-right: 30px;
+}
+
+.vertical-offset-100 {
+    padding-top: 100px;
+}
+
+/* transparent form login */
+.panel {
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid transparent;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+/* reize panel bootstrap otomatis */
+.custom-panel {
+    width: 0%;
+    margin: 0 auto;
+    min-width: 350px;
+    height: 300px;
+}
+
+/* overice css footer */
+.footer {
+    height: 52px;
+    text-align: center;
+    bottom: 0;
+}
+
+/* css pop up  */
+#form-input {
+    width: 100%;
+}
+
+.input-value {
+    margin-bottom: 20px;
+}
+/* overide css top_navbar */
+/*.dropdown-target {
+    left: 210px;
+}*/
+.row-login {
+    margin-left: 100px;
+}

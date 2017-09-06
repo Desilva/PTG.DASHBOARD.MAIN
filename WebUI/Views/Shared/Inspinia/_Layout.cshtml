@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/kendo/css")
+    @Styles.Render("~/Content/sweetalert")
+    @Styles.Render("~/font-awesome/css")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <!-- Wrapper-->
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        @Html.Partial("Inspinia/_Navigation")
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg">
+
+            <!-- Top Navbar -->
+            @{Html.RenderPartial("Inspinia/_TopNavbar"); }
+
+            <!-- Breadcrumb-->
+            @Html.Partial("Inspinia/_Breadcrumb")
+
+            <!-- Main view  -->
+            @RenderBody()
+
+            <!-- Footer -->
+            @{Html.RenderPartial("Inspinia/_Footer"); }
+
+        </div>
+        <!-- End page wrapper-->
+
+    </div>
+    <!-- End wrapper-->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquerymigrate")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/plugins/metsiMenu")
+    @Scripts.Render("~/plugins/pace")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/bundles/inspinia")
+    @Scripts.Render("~/bundles/kendo")
+    @Html.Partial("_GlobalObejctJs")
+    @Scripts.Render("~/bundles/webapp")
+    @Scripts.Render("~/bundles/sweet-alert")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('body').toggleClass('mini-navbar');
+        });
+    </script>
+</body>
+</html>

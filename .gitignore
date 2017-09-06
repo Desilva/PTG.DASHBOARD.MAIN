@@ -1,0 +1,17 @@
+Business/obj/
+Business/bin/
+ProjectLog/ProjectLog/bin/
+ProjectLog/ProjectLog/obj/
+Common.Enums/obj/
+Common.Enums/bin/
+Template.UnitTests/bin/
+Template.UnitTests/obj/
+TestResults/
+KendoServerGrouping.Data/bin/
+WebUI/bin/
+WebUI/obj/
+WebUI/WebUI.csproj.user
+packages/
+PTG.FIN.v12.suo
+WebUI/uploads/
+.vs/

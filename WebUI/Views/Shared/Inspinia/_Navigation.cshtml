@@ -1,0 +1,99 @@
+﻿
+@{
+    var cookie = Request.Cookies["targetOption"];
+    string val = "";
+    if (cookie != null)
+    {
+        val = cookie.Value;
+    }
+}
+@*<nav class="navbar-default navbar-static-side" role="navigation" id="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" src="~/Images/profile_small.jpg" />
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">@User.UserName</strong>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li class="">
+                <a href="#"><i class="fa fa-table"></i> <span class="nav-label" data-i18n="nav.master">Tahap Eksekusi</span></a>
+            </li>
+            <li class="">
+                <a href="#"><i class="fa fa-table"></i> <span class="nav-label" data-i18n="nav.master">Download Report</span></a>
+            </li>
+            <li class="">
+                <a href="#"><i class="fa fa-table"></i> <span class="nav-label" data-i18n="nav.master">Update Data</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="#"><span class="nav-label"><i></i>Proyek</span> </a></li>
+                    <li><a href="#"><span class="nav-label"><i></i>SKTL & Dokumen</span> </a></li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#"><i class="fa fa-table"></i> <span class="nav-label" data-i18n="nav.master">Dokumen</span></a>
+            </li>
+            <li class="">
+                <a href="#"><i class="fa fa-table"></i> <span class="nav-label" data-i18n="nav.master">Bantuan</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="#"><span class="nav-label"><i></i>Daftar Istilah</span> </a></li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#">
+                    <i class="fa fa-refresh"></i>
+                    <span class="nav-label">Sinkronisasi SIIP</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>*@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" src="~/Images/profile_small.jpg" />
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">@User.UserName</strong>
+                            </span>
+                            <span class="text-muted text-xs block">Direktur Utama <b class="caret"></b></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    PD
+                </div>
+            </li>
+            <li>
+                <a href="../dashboard/index.php"><i class="fa fa-table"></i> <span class="nav-label">Dashboard</span></a>
+            </li>
+            <li class="">
+                <a href="javascript:"><i class="fa fa-table"></i> <span class="nav-label">Update Data</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="@Url.Action("Index", "Risk", new { Area = "Risk" })">Risiko</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</nav>

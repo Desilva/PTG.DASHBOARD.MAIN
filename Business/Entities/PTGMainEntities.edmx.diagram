@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c070ae8d85c74b299cd71ad4a8e3ba62" Name="Diagram1">
+        <EntityTypeShape EntityType="PTG.MAINModel.Action" Width="1.5" PointX="0.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.Application" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.Membership" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.Module" Width="1.5" PointX="3" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.ModulesInRole" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.Risk" Width="1.5" PointX="7.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.RiskDocument" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.RiskImpact" Width="1.5" PointX="10" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.RiskMitigation" Width="1.5" PointX="10" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.Role" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PTG.MAINModel.User" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="PTG.MAINModel.MembershipEntity_Application" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.RoleEntity_Application" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.User_Application" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.MembershipEntity_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.FK_ModulesInRoles_Modules" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.FK_ModulesInRoles_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.FK_RiskImpact_Risk" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.FK_RiskMitigation_Risk" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.ActionsInModules" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.ActionsInModulesChosen" ManuallyRouted="false" />
+        <AssociationConnector Association="PTG.MAINModel.UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PTG.MAINModel.log" Width="1.5" PointX="3.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,10 @@
+﻿@{
+    WebUI.Infrastructure.DisplayFormatHelper dfh = new WebUI.Infrastructure.DisplayFormatHelper();
+}
+
+<script type="text/javascript">
+    const APP_ADDRESS = "@ViewBag.AppAddress",
+        JS_TIME_FORMAT = "@dfh.JsTimeFormat",
+        JS_COMPACT_DATE_TIME_FORMAT = "@dfh.JsCompactDateTimeFormat",
+        USER_LOGIN = "@User.UserName";
+</script>

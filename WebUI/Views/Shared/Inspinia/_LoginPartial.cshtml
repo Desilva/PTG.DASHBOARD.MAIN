@@ -1,0 +1,55 @@
+﻿
+<ul class="nav navbar-top-links navbar-right">
+    <li class="dropdown dropdown-target">
+        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false">
+            Pertagas Dashboard - Dashboard Utama
+        </a>
+        <ul class="dropdown-menu dropdown-alerts">
+            <li>
+                <a id="target125"><div class="target">Target 125</div></a>
+            </li>
+            <li>
+                <a id="target150"><div class="target">Target 150</div></a>
+            </li>
+        </ul>
+    </li>
+    <li>
+
+        @*<a href="" onclick="event.preventDefault(); logout();" style="margin-left: 220px;" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser">
+            <i class="fa fa-sign-out"></i>Log out
+        </a>*@
+        <a href="javascript:document.getElementById('logoutForm').submit()" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i>Sign Out</a>
+
+        @using (Html.BeginForm("LogOff", "SGAccount", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+        }
+    </li>
+</ul>
+
+@section scripts{
+    <script type="text/javascript">
+        function UrlAction() {
+
+        }
+        $(function () {
+            alert("asdf");
+        });
+        @*function logout() {
+            $.SmartMessageBox({
+                "title": "<i class='fa fa-sign-out txt-color-orangeDark'></i> Logout <span class='txt-color-orangeDark'><strong>" + '@User.Identity.Name' + "</strong></span> ?",
+                "content": "You can improve your security further after logging out by closing this opened browser",
+                "buttons": "[No][Yes]"
+            }, function (a) {
+                if (a == "Yes") {
+                    $('body').addClass("animated fadeOutUp");
+                    setTimeout(function () {
+                    }, 1e3)
+                }
+                });
+        }*@
+    </script>
+}
+
+
+
