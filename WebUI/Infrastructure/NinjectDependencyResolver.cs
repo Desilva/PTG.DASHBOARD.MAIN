@@ -44,6 +44,8 @@ namespace WebUI.Infrastructure
             kernel.Bind<IAuthProvider>().To<DummyAuthProvider>();
             kernel.Bind<IUserRepository>().To<EFUserRepository>();
             kernel.Bind<IRiskRepository>().To<EFRiskRepository>();
+            kernel.Bind<IRiskImpactRepository>().To<EFRiskImpactRepository>();
+            kernel.Bind<IRiskMitigationRepository>().To<EFRiskMitigationRepository>();
 
         }
     }

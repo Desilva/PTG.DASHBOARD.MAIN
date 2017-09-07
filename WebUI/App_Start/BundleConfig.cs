@@ -129,6 +129,10 @@ namespace WebUI
                        "~/Scripts/PTG.FIN/Download/financeDownload.js"
             ));
 
+            bundles.Add(new ScriptBundle("~/bundles/risk").Include(
+                       "~/Scripts/PTG.DASHBOARD.MAIN/risk.js"
+            ));
+
             #endregion
 
             bundles.IgnoreList.Clear();

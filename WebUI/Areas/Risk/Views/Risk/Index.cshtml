@@ -1,22 +1,41 @@
-﻿<div class="wrapper wrapper-content">
+﻿@model WebUI.Areas.Risk.Models.Risk.RiskPresentationStub
+@using WebUI.Areas.Risk.Models.Risk
+@using WebUI.Areas.Risk.Models.RiskMitigation
+@using Common.Enums
+@using System.Reflection
+@using WebUI.Extension
+@{
+    ViewBag.Title = "Risiko";
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+    var thisController = (WebUI.Areas.Risk.Controllers.RiskController)ViewContext.Controller;
+
+    Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+
+    List<RiskPresentationStub> risks = new List<RiskPresentationStub>();
+    if (ViewBag.Risks != null)
+    {
+        risks = (List<RiskPresentationStub>) ViewBag.Risks;
+    }
+}
+
+<div class="wrapper wrapper-content">
     <div class="ibox ">
         <div class="ibox-content">
             <div class="form-inline">
+@using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRisk", @class = "left-align not-track-change" }))
+{
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="form-group">
-                            <label for="exampleInputName2">Periode</label>
-                            <select class="form-control">
-                                <option>2017</option>
-                            </select>
+                            @Html.LabelFor(model => model.Year) &nbsp;
+                            @Html.DropDownListFor(model => model.Year, new SelectList(Model.YearOptions, "Value", "Text"), new { @class = "form-control" })
                         </div>
-                        <button class="btn btn-primary">Pilih Periode</button>
                     </div>
                     <div class="col-xs-6 text-right">
-                        <!-- <span>Cut-off date: Kuartal 3</span><br>
-                        <a href="form-cutoff.php">ubah Cut-off date</a> -->
                     </div>
                 </div>
+}
             </div>
         </div>
     </div>
@@ -27,991 +46,88 @@
         </div>
         <div class="ibox-content">
             <div class="mb-15">
-                <a href="form.php" class="btn btn-primary">Tambah Risiko</a>
+                <a href="/Risk/Risk/AddRisk" class="btn btn-primary">Tambah Risiko</a>
 
                 <!-- <div class="pull-right">
                     <a href="excel.php" class="btn btn-primary">Upload Excel</a>
                 </div> -->
             </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Proses Bisnis</th>
-                        <th>Kejadian Risiko (Risk Event)</th>
-                        <th>Klasifikasi Risiko (Residual)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tr>
-                    <td>1</td>
-                    <td>Pendapatan Operasi</td>
-                    <td>Potensi risiko keterlambatan penerimaan dana atas piutang dagang</td>
-                    <td><span class="circle circle-yellow"></span></a></td>
-                    <td><a href="detail.php"><i class="fa fa-folder-open"></i></a> <a href="#"><i class="fa fa-trash"></i></a></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="4">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" colspan="2">Rencana Mitigasi</th>
-                                    <th colspan="12">Bulan</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>4</th>
-                                    <th>5</th>
-                                    <th>6</th>
-                                    <th>7</th>
-                                    <th>8</th>
-                                    <th>9</th>
-                                    <th>10</th>
-                                    <th>11</th>
-                                    <th>12</th>
-                                </tr>
-                            </thead>
+            @if (risks.Count() > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Proses Bisnis</th>
+                            <th>Kejadian Risiko (Risk Event)</th>
+                            <th>Klasifikasi Risiko (Residual)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (RiskPresentationStub risk in risks)
+                    {
+                        <tr>
+                            <td>@risk.RiskNumber</td>
+                            <td>@risk.ProcessBusiness</td>
+                            <td>@risk.RiskEvent</td>
+                            <td><span class="circle circle-@risk.RiskClasification.ToLower()"></span></td>
+                            <td><a href="@Url.Action("RiskDetail", currentController, new { Area = "Risk", riskId = risk.RiskId })"><i class="fa fa-folder-open"></i></a> <a href="#"><i class="fa fa-trash"></i></a></td>
+                        </tr>
+                        if (risk.RiskMitigations.Count() > 0)
+                        {
                             <tr>
-                                <td rowspan="2">Pertagas telah mengirimkan surat somasi ke ME pada bulan September 2016, setelah somasi dilayangkan dan direspon oleh pihak ME berupa ketidaksanggupan pelunasan piutang sesuai somasi, maka akan dilanjutkan dengan mediasi.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class="bg-blue"></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Pertagas akan melakukan somasi kepada Odira untuk melakukan pelunasan piutang.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class="bg-blue"></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class="bg-green"></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Mencari peluang melakukan pelunasan piutang ME & Odira melalui offseting di Pertamina Group.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class="bg-blue"></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class="bg-green"></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Transportasi Gas</td>
-                    <td>Potensi risiko tidak tercapainya target volume pengaliran gas</td>
-                    <td><span class="circle circle-yellow"></span></a></td>
-                    <td><i class="fa fa-folder-open"></i> <i class="fa fa-trash"></i></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="4">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" colspan="2">Rencana Mitigasi</th>
-                                    <th colspan="12">Bulan</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>4</th>
-                                    <th>5</th>
-                                    <th>6</th>
-                                    <th>7</th>
-                                    <th>8</th>
-                                    <th>9</th>
-                                    <th>10</th>
-                                    <th>11</th>
-                                    <th>12</th>
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td rowspan="2">Melakukan komunikasi dan koordinasi secara intensif dengan Pertagas Niaga untuk meningkatkan penyerapan pasar eksisting & pasar baru dan dengan KKKS untuk memastikan suplai gas lancar</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">
-                                    Melakukan percepatan proses penyelesaian proyek:
-                                    <ul>
-                                        <li>Konstruksi pada proyek Pipa Semare</li>
-                                        <li>Konstruksi pada ruas Gresik-Semarang</li>
-                                        <li>Konstruksi pada ruas Grissik-Pusri</li>
-                                        <li>Konstruksi pada ruas PKG Looping</li>
-                                    </ul>
+                                <td></td>
+                                <td colspan="4">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" colspan="2">Rencana Mitigasi</th>
+                                                <th colspan="12">Bulan</th>
+                                            </tr>
+                                            <tr>
+                                                <th>1</th>
+                                                <th>2</th>
+                                                <th>3</th>
+                                                <th>4</th>
+                                                <th>5</th>
+                                                <th>6</th>
+                                                <th>7</th>
+                                                <th>8</th>
+                                                <th>9</th>
+                                                <th>10</th>
+                                                <th>11</th>
+                                                <th>12</th>
+                                            </tr>
+                                        </thead>
+                                        @foreach (RiskMitigationFormStub riskMitigation in risk.RiskMitigations)
+                                        {
+                                            <tr>
+                                                <td rowspan="2">@riskMitigation.MitigationPlan</td>
+                                                <td class="">Plan</td>
+                                                @for (int i = 1; i <= 12; i++)
+                                                {
+                                                    <td class="@((riskMitigation.Plan == i) ? "bg-blue" : "")"></td>
+                                                }
+                                            </tr>
+                                            <tr>
+                                                <td class="">Actual</td>
+                                                @for (int i = 1; i <= 12; i++)
+                                                {
+                                                    <td class="@((riskMitigation.Actual == i) ? "bg-green" : "")"></td>
+                                                }
+                                            </tr>
+                                        }
+                                    </table>
                                 </td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
                             </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">
-                                    Melakukan kegiatan maintenance untuk kehandalan pipa:<br>
-                                    <ul>
-                                        <li>Perbaikan Erosi ROW Jalur Pipa Gas Distrik Bitung KP 157 (WJA)</li>
-                                        <li>Perbaikan erosi,saluran air dan jembatan di ruas wilayah Cilamaya KP 03.9,KP 005,KP 029.9,KP 00.9,KP 002.4, Erosi di KP 037.5 (WJA)</li>
-                                        <li>Pemasangan Fasilitas Corrosion Monitoring System pada Pipa Penyalur di Wilayah PT Pertamina Gas SSA</li>
-                                        <li>In Line Inspection dengan Intelligent Pig untuk Pipa 20” Betung - Benuang, 20” Benuang – Prabumulih Barat, 20” Simpang Y – PUSRI(Looping), 12” Limau Timur – Prabumulih Barat, 12” Prabumulih Barat - Cambai</li>
-                                    </ul>
-                                </td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Membuat kajian skema bisnis terintegrasi dari hulu ke hilir atas penurunan toll fee untuk meningkatkatkan volume penjualan gas di Sumatera Bagian Utara</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Gas Processing</td>
-                    <td>otensi risiko tidak tercapainya target volume produksi LPG </td>
-                    <td><span class="circle circle-yellow"></span></td>
-                    <td><i class="fa fa-folder-open"></i> <i class="fa fa-trash"></i></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="4">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" colspan="2">Rencana Mitigasi</th>
-                                    <th colspan="12">Bulan</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>4</th>
-                                    <th>5</th>
-                                    <th>6</th>
-                                    <th>7</th>
-                                    <th>8</th>
-                                    <th>9</th>
-                                    <th>10</th>
-                                    <th>11</th>
-                                    <th>12</th>
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td rowspan="2">Melakukan negosiasi kenaikan feed gas dengan kompensasi penurunan tarif condensat handling fee</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Melakukan koordinasi dengan PT Pertamina EP untuk mencari sumber gas baru yang mengandung C3 dan C4 tinggi (misalkan Limau Timur/Paku Gajah/Pagar Dewa)</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Melakukan koordinasi dengan PT Pertamina EP terkait optimalisasi operasi Dehydration Unit (DHU) di Musi Barat secara intensif</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Melakukan koordinasi dengan PT Pertamina EP terkait kondisi upstream yang dapat menurunkan supply gas.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Melakukan koordinasi dengan PT Pertamina EP terkait pengadaan tambahan slug catcher baru di Prabumulih Barat</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Penjualan Gas</td>
-                    <td>Potensi risiko tidak tercapainya target volume niaga gas</td>
-                    <td><span class="circle circle-yellow"></span></td>
-                    <td><i class="fa fa-folder-open"></i> <i class="fa fa-trash"></i></td>
-                </tr>
-                <tr>
-                    <td class=""></td>
-                    <td colspan="4">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" colspan="2">Rencana Mitigasi</th>
-                                    <th colspan="12">Bulan</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>4</th>
-                                    <th>5</th>
-                                    <th>6</th>
-                                    <th>7</th>
-                                    <th>8</th>
-                                    <th>9</th>
-                                    <th>10</th>
-                                    <th>11</th>
-                                    <th>12</th>
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td rowspan="2">Koordinasi dengan konsumen eksisting tekait fluktuasi volume penyerapan dan tindak lanjutnya.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Melakukan inspeksi jaringan pipa dan transportasi darat secara rutin .</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Koordinasi secara intensif terkait alokasi LNG dan gas pipa dengan fungsi LNG dan fungsi Gas Sourcing Dit. GEBT serta melalui forum CIG.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">
-                                    Mempercepat realisasi PJBG baru dengan:
-                                    <ul>
-                                        <li>Monitoring progress perikatan komersial dengan calon konsumen baru. </li>
-                                        <li>Menggunakan portofolio pasokan untuk mencapai harga yang kompetitif (di wilayah yang memiliki lebih dari 2 sumber pasokan) jika dimungkinkan.</li>
-                                        <li>Mempersiapkan konsumen baru dengan volume demand yang lebih besar dari target volume RKAP.</li>
-                                    </ul>
-                                </td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Koordinasi intensif dengan konsumen baru terkait kesiapan mereka menyerap gas sesuai target waktu yang disepakati.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Koordinasi dengan fungsi terkait di Pertagas beserta afiliasi dan konsumen terkait pembangunan infrastruktur. </td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Koordinasi dengan Ditjen Migas dan Pelaksanana pembangunan infrastruktur jargas dan fungsi City Gas Dit. GEBT.</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Koordinasi dengan fungsi Business Development Pertagas terkait peningkatan kapasitas penyaluran plant </td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Regasifikasi</td>
-                    <td>Potensi risiko tidak tercapainya target volume penyerapan gas hasil regasifikasi Perta Arun Gas</td>
-                    <td><span class="circle circle-green"></span></td>
-                    <td><i class="fa fa-folder-open"></i> <i class="fa fa-trash"></i></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="4">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" colspan="2">Rencana Mitigasi</th>
-                                    <th colspan="12">Bulan</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>4</th>
-                                    <th>5</th>
-                                    <th>6</th>
-                                    <th>7</th>
-                                    <th>8</th>
-                                    <th>9</th>
-                                    <th>10</th>
-                                    <th>11</th>
-                                    <th>12</th>
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td rowspan="2">Memasukkan klausul Use or Pay 90% (94.5 MMSCFD) dalam perjanjian (saat ini masih Kesepakatan Bersama) kepada para konsumen</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Melakukan koordinasi dan komunikasi dengan PLN terkait dengan unscheduled shutdown</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Melakukan Planned Maintenance sesuai dengan rekomendasi pabrikan</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Menyusun kajian pola serapan bulanan konsumen (PLN & PTGN)</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2">Membuat jalur alternatif LNG Filling Station (temporary) untuk meningkatkan serapan volume LNG konsumen</td>
-                                <td class="">Plan</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                            <tr>
-                                <td class="">Actual</td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                                <td class=""></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+                        }
+                    }
+                </table>
+            }
+            else
+            {
+                <div id="grid-nkk" data-role="grid" class="label label-warning" style="">Data belum ada</div>
+            }
         </div>
     </div>
 
@@ -1046,7 +162,6 @@
     </div>
 </div>
 
-<script type="text/javascript">
-</script>
-
-<?php include('../footer.php'); ?>
+@section scripts{
+    @Scripts.Render("~/bundles/risk")
+}

@@ -1588,6 +1588,9 @@
     <Content Include="Areas\Risk\Views\web.config" />
     <Content Include="Areas\Risk\Views\_viewstart.cshtml" />
     <Content Include="Areas\Risk\Views\Risk\Index.cshtml" />
+    <Content Include="Areas\Risk\Views\Risk\_FormRisk.cshtml" />
+    <Content Include="Areas\Risk\Views\Risk\_RiskDetails.cshtml" />
+    <Content Include="Areas\Risk\Views\Risk\_FormRiskMitigation.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2049,6 +2052,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\PTG.DASHBOARD.MAIN\risk.js" />
     <Content Include="Scripts\PTG.FIN\companyHealthDashboard.js" />
     <Content Include="Scripts\PTG.FIN\companyHealthDetail.js" />
     <Content Include="Scripts\PTG.FIN\dashboardTable.js" />
@@ -2573,6 +2577,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Risk\Controllers\RiskController.cs" />
+    <Compile Include="Areas\Risk\Models\RiskImpact\RiskImpactPresentationStub.cs" />
+    <Compile Include="Areas\Risk\Models\RiskImpact\RiskImpactFormStub.cs" />
+    <Compile Include="Areas\Risk\Models\RiskMitigation\RiskMitigationPresentationStub.cs" />
+    <Compile Include="Areas\Risk\Models\RiskMitigation\RiskMitigationFormStub.cs" />
+    <Compile Include="Areas\Risk\Models\Risk\RiskFormStub.cs" />
+    <Compile Include="Areas\Risk\Models\Risk\RiskPresentationStub.cs" />
     <Compile Include="Areas\Risk\RiskAreaRegistration.cs" />
     <Compile Include="Areas\SecurityGuard\Controllers\ActionController.cs" />
     <Compile Include="Areas\SecurityGuard\Controllers\BaseController.cs" />
@@ -2671,7 +2681,6 @@
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Risk\Models\" />
     <Folder Include="Areas\Risk\Views\Shared\" />
     <Folder Include="Content\import\" />
     <Folder Include="Scripts\app\controllers\" />

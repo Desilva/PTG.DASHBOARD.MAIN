@@ -1,0 +1,83 @@
+﻿@model WebUI.Areas.Risk.Models.RiskMitigation.RiskMitigationFormStub
+@{
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+    Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+}
+
+@using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRiskMitigationAdd", @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(model => model.MitigationId);
+    @Html.HiddenFor(model => model.RiskId);
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Form</h5>
+        </div>
+        <div class="ibox-content">
+            <form class="form-horizontal" method="get" action="detail.php">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RiskEvent, new { @class = "control-label col-lg-3" }) &nbsp;
+                    <div class="col-lg-4">
+                        <p class="form-control-static">@Model.RiskEvent</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MitigationPlan, new { @class = "control-label col-lg-3" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.MitigationPlan, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Plan, new { @class = "control-label col-lg-3" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.Plan, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-4 col-xs-offset-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="" id="RiskTreatmentDone"> Risk treatment sudah dilaksanakan
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="RiskTreatmentDetail">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Actual, new { @class = "control-label col-lg-3" }) &nbsp;
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(model => model.Actual, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-3">Evidence</label>
+                        <div class="col-lg-4">
+                            <input type="file">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.notes, new { @class = "control-label col-lg-3" }) &nbsp;
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(model => model.notes, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-lg-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="/Risk/Risk/EditRisk" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}

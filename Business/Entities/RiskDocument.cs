@@ -21,6 +21,6 @@ namespace Business.Entities
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<bool> IdDeleted { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     }
 }

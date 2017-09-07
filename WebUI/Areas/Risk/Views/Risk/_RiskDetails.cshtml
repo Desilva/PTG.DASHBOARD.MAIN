@@ -1,0 +1,157 @@
+﻿@model WebUI.Areas.Risk.Models.Risk.RiskFormStub
+@using WebUI.Areas.Risk.Models.RiskImpact;
+@using WebUI.Areas.Risk.Models.RiskMitigation;
+@using Common.Enums;
+@using WebUI.Areas.Risk.Models.Risk;
+@{
+    ViewBag.Title = "Risiko";
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+    //string linkUbahRisk = "EditRisk";
+    Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+
+    string qqRisk = "-";
+    string riskClas = "-";
+
+    qqRisk = eh.GetEnumDescription((Common.Enums.Measurement)Enum.Parse(typeof(Common.Enums.Measurement), Model.QualitatifQuantitatifRisk));
+    riskClas = eh.GetEnumDescription((Common.Enums.RiskClasification)Enum.Parse(typeof(Common.Enums.RiskClasification), Model.RiskClasification));
+    Console.Out.Write("impact: ");
+    Console.Out.WriteLine(ViewBag.riskImpacts);
+    Console.Out.Write("mitigation: ");
+    Console.Out.WriteLine(ViewBag.riskMitigations);
+    List<RiskImpactFormStub> riskImpacts = (List<RiskImpactFormStub>) (ViewBag.riskImpacts ?? new List<RiskImpactFormStub>());
+    List<RiskMitigationFormStub> riskMitigations = (List<RiskMitigationFormStub>) (ViewBag.riskMitigations ?? new List<RiskMitigationFormStub>());
+}
+
+<div class="wrapper wrapper-content">
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Rincian</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="form-group">
+                @Html.LabelFor(model => model.QualitatifQuantitatifRisk) &nbsp;
+                <p>@qqRisk</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RiskNumber) &nbsp;
+                <p>@Model.RiskNumber</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProcessBusiness) &nbsp;
+                <p>@Model.ProcessBusiness</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RiskCategory) &nbsp;
+                <p>@Model.RiskCategory</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RiskEvent) &nbsp;
+                <p>@Model.RiskEvent</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RiskAgent) &nbsp;
+                <p>@Model.RiskAgent</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.KRI) &nbsp;
+                <p>@Model.KRI</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Controll) &nbsp;
+                <p>@Model.Controll</p>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.QualitatifImpact) &nbsp;
+                <p>@Model.QualitatifImpact</p>
+            </div>
+
+            <a href="@Url.Action("EditRisk", currentController, new { Area = "Risk", id = Model.RiskId })" class="btn btn-primary">Ubah</a>
+
+        </div>
+    </div>
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Dampak</h5>
+        </div>
+        <div class="ibox-content">
+            @if (riskImpacts.Count() > 0)
+            {
+                <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Dampak Kuantitatif (Ribu USD)</th>
+                        <th>Probabilitas</th>
+                        <th>Dampak</th>
+                        <th>RPN</th>
+                    </tr>
+                </thead>
+                    @foreach (RiskImpactFormStub riskImpact in riskImpacts)
+                    {
+                        <tr>
+                            <td>@riskImpact.Type</td>
+                            <td>@riskImpact.QuantitatifImpact</td>
+                            <td>@riskImpact.Probability</td>
+                            <td>@riskImpact.Impact</td>
+                            <td>@riskImpact.RPN</td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>
+                    <div id="grid-nkk" data-role="grid" class="label label-warning" style="">Data belum ada</div>
+                </p>
+            }
+            <p>
+                <a href="#" class="btn btn-primary">Ubah</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Mitigasi</h5>
+        </div>
+        <div class="ibox-content">
+            <p>
+                <a href="@Url.Action("AddRiskMitigation", currentController, new { Area = "Risk", riskId = Model.RiskId })" class="btn btn-primary">Tambah Mitigasi</a>
+            </p>
+            @if (riskMitigations.Count() > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Rencana Mitigasi</th>
+                            <th>Rencana Pelaksanaan Risk Treatment</th>
+                            <th>Actual Pelaksanaan Risk Treatment</th>
+                            <th>Evidence</th>
+                            <th>Keterangan</th>
+                            <th class="col-xs-1"></th>
+                        </tr>
+                    </thead>
+                    @foreach (RiskMitigationFormStub riskMitigation in riskMitigations)
+                    {
+                        <tr>
+                            <td>@riskMitigation.MitigationPlan</td>
+                            <td>@riskMitigation.Plan</td>
+                            <td>@riskMitigation.Actual</td>
+                            <td>@riskMitigation.Evidence</td>
+                            <td>@riskMitigation.notes</td>
+                            <td><a href="#"><i class="fa fa-edit" aria-hidden="true"></i></a><a href="#"> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <div id="grid-nkk" data-role="grid" class="label label-warning" style="">Data belum ada</div>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+</script>

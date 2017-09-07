@@ -102,11 +102,13 @@
           <Property Name="Controll" Type="varchar(max)" />
           <Property Name="QualitatifImpact" Type="varchar(max)" />
           <Property Name="RiskClasification" Type="varchar" MaxLength="20" />
+          <Property Name="QualitatifQuantitatifRisk" Type="varchar" MaxLength="50" />
+          <Property Name="RiskNumber" Type="varchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="IdDeleted" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="RiskDocument">
           <Key>
@@ -119,7 +121,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="IdDeleted" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="RiskImpact">
           <Key>
@@ -136,7 +138,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="IdDeleted" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="RiskMitigation">
           <Key>
@@ -153,7 +155,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="IdDeleted" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -526,9 +528,11 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IdDeleted" Type="Boolean" />
           <NavigationProperty Name="RiskImpacts" Relationship="Self.FK_RiskImpact_Risk" FromRole="Risk" ToRole="RiskImpact" />
           <NavigationProperty Name="RiskMitigations" Relationship="Self.FK_RiskMitigation_Risk" FromRole="Risk" ToRole="RiskMitigation" />
+          <Property Name="QualitatifQuantitatifRisk" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RiskNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="RiskDocument">
           <Key>
@@ -541,7 +545,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IdDeleted" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="RiskImpact">
           <Key>
@@ -558,8 +562,8 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IdDeleted" Type="Boolean" />
           <NavigationProperty Name="Risk" Relationship="Self.FK_RiskImpact_Risk" FromRole="RiskImpact" ToRole="Risk" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="RiskMitigation">
           <Key>
@@ -576,8 +580,8 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="IdDeleted" Type="Boolean" />
           <NavigationProperty Name="Risk" Relationship="Self.FK_RiskMitigation_Risk" FromRole="RiskMitigation" ToRole="Risk" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -857,6 +861,9 @@
           <EntitySetMapping Name="Risks">
             <EntityTypeMapping TypeName="PTG.MAINModel.Risk">
               <MappingFragment StoreEntitySet="Risk">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="RiskNumber" ColumnName="RiskNumber" />
+                <ScalarProperty Name="QualitatifQuantitatifRisk" ColumnName="QualitatifQuantitatifRisk" />
                 <ScalarProperty Name="RiskId" ColumnName="RiskId" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="ProcessBusiness" ColumnName="ProcessBusiness" />
@@ -871,13 +878,13 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="IdDeleted" ColumnName="IdDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RiskDocuments">
             <EntityTypeMapping TypeName="PTG.MAINModel.RiskDocument">
               <MappingFragment StoreEntitySet="RiskDocument">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
                 <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
@@ -885,13 +892,13 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="IdDeleted" ColumnName="IdDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RiskImpacts">
             <EntityTypeMapping TypeName="PTG.MAINModel.RiskImpact">
               <MappingFragment StoreEntitySet="RiskImpact">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ImpactId" ColumnName="ImpactId" />
                 <ScalarProperty Name="RiskId" ColumnName="RiskId" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -903,13 +910,13 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="IdDeleted" ColumnName="IdDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RiskMitigations">
             <EntityTypeMapping TypeName="PTG.MAINModel.RiskMitigation">
               <MappingFragment StoreEntitySet="RiskMitigation">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="MitigationId" ColumnName="MitigationId" />
                 <ScalarProperty Name="RiskId" ColumnName="RiskId" />
                 <ScalarProperty Name="MitigationPlan" ColumnName="MitigationPlan" />
@@ -921,7 +928,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="IdDeleted" ColumnName="IdDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

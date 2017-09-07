@@ -1,0 +1,102 @@
+﻿@model WebUI.Areas.Risk.Models.Risk.RiskFormStub
+@using Common.Enums;
+@using WebUI.Areas.Risk.Models.Risk;
+@{
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+    //string linkTambahRisk = "AddRisk";
+    //string linkEditRisk = "EditRisk";
+    //Boolean isEdit = (ViewBag.Risk != null) ? true : false;
+    //string linkForm = isEdit ? linkEditRisk : linkTambahRisk;
+    //RiskFormStub risk = new RiskFormStub();
+    Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+}
+
+@using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRiskAdd", @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(model => model.RiskId);
+    //if (ViewBag.Risk != null)
+    //{
+    //    risk = (RiskFormStub) ViewBag.Risk;
+    //}
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Form</h5>
+        </div>
+        <div class="ibox-content">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RiskNumber, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.RiskNumber, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.RiskNumber)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QualitatifQuantitatifRisk, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.QualitatifQuantitatifRisk, new SelectList(Model.QualitatifQuantitatifRiskOptions, "Value", "Text"), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProcessBusiness, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.ProcessBusiness, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProcessBusiness)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RiskCategory, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.RiskCategory, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RiskClasification, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.RiskClasification, new SelectList(Model.RiskClasificationOptions, "Value", "Text"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RiskClasification)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RiskEvent, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.RiskEvent, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RiskEvent)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RiskAgent, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(model => model.RiskAgent, new { @class = "form-control"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.KRI, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.KRI, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Controll, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(model => model.Controll, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QualitatifImpact, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(model => model.QualitatifImpact, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="/Risk/Risk" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+}
