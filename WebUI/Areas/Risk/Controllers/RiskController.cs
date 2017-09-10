@@ -142,7 +142,7 @@ namespace WebUI.Areas.Risk.Controllers
         }
 
 
-        [MvcSiteMapNode(Title = "Ubah Risiko", ParentKey = "riskDetail", Key = "editRisk")]
+        [MvcSiteMapNode(Title = "Ubah Risiko", ParentKey = "IndexRisk", Key = "editRisk")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult EditRisk(int id)
         {
@@ -157,8 +157,8 @@ namespace WebUI.Areas.Risk.Controllers
             ResponseModel response = new ResponseModel(true);
             Business.Entities.Risk dbItem = new Business.Entities.Risk();
 
-            model.CreatedBy = model.ModifiedBy = User.UserName;
-            model.CreatedDate = model.ModifiedDate = DateTime.Now;
+            model.ModifiedBy = User.UserName;
+            model.ModifiedDate = DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -171,10 +171,6 @@ namespace WebUI.Areas.Risk.Controllers
 
                     ViewBag.riskImpacts = GetRiskImpacts(model.RiskId);
                     ViewBag.riskMitigations = GetRiskMitigations(model.RiskId);
-                    Console.Write("impact: ");
-                    Console.WriteLine(ViewBag.riskImpacts);
-                    Console.Write("mitigation: ");
-                    Console.WriteLine(ViewBag.riskMitigations);
 
                     return View("_RiskDetails", model);
                 }
@@ -190,7 +186,7 @@ namespace WebUI.Areas.Risk.Controllers
         }
 
 
-        [MvcSiteMapNode(Title = "Tambah Mitigasi", ParentKey = "riskDetail", Key = "addRiskMitigation")]
+        [MvcSiteMapNode(Title = "Tambah Mitigasi", ParentKey = "IndexRisk", Key = "addRiskMitigation")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult AddRiskMitigation(int riskId)
         {
@@ -234,6 +230,84 @@ namespace WebUI.Areas.Risk.Controllers
             }
         }
 
+
+        [MvcSiteMapNode(Title = "Ubah Mitigasi", ParentKey = "IndexRisk", Key = "editRiskMitigation")]
+        [SiteMapTitle("Breadcrumb")]
+        public ActionResult EditRiskMitigation(int id)
+        {
+            RiskMitigationFormStub models = new RiskMitigationFormStub(RiskMitigationRepo.FindByPk(id));
+            ViewBag.Title = "Ubah Mitigasi";
+
+            return View("_FormRiskMitigation", models);
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditRiskMitigation(RiskMitigationFormStub model)
+        {
+            ResponseModel response = new ResponseModel(true);
+            Business.Entities.RiskMitigation dbItem = new Business.Entities.RiskMitigation();
+
+            model.ModifiedBy = User.UserName;
+            model.ModifiedDate = DateTime.Now;
+
+            RiskFormStub riskModel = new RiskFormStub(RiskRepo.FindByPk(model.RiskId));
+
+            if (ModelState.IsValid)
+            {
+                dbItem = model.GetDbObject();
+                await RiskMitigationRepo.UpdateAsync(dbItem);
+
+                if (RiskMitigationRepo.Id != 0)
+                {
+                    ViewBag.riskImpacts = GetRiskImpacts(model.RiskId);
+                    ViewBag.riskMitigations = GetRiskMitigations(model.RiskId);
+
+                    return View("_RiskDetails", riskModel);
+                }
+                else
+                {
+                    return View("_FormRiskMitigation", model);
+                }
+            }
+            else
+            {
+                return View("_FormRiskMitigation", model);
+            }
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> DeleteRiskMitigation(int id)
+        {
+            ResponseModel response = new ResponseModel(true);
+            Business.Entities.RiskMitigation dbItem = new Business.Entities.RiskMitigation();
+
+            RiskMitigationFormStub model = new RiskMitigationFormStub(RiskMitigationRepo.FindByPk(id));
+            model.IsDeleted = true;
+
+            RiskFormStub riskModel = new RiskFormStub(RiskRepo.FindByPk(model.RiskId));
+
+            if (ModelState.IsValid)
+            {
+                dbItem = model.GetDbObject();
+                await RiskMitigationRepo.UpdateAsync(dbItem);
+
+                if (RiskMitigationRepo.Id != 0)
+                {
+                    ViewBag.riskImpacts = GetRiskImpacts(model.RiskId);
+                    ViewBag.riskMitigations = GetRiskMitigations(model.RiskId);
+
+                    return View("_RiskDetails", riskModel);
+                }
+                else
+                {
+                    return View("_FormRiskMitigation", model);
+                }
+            }
+            else
+            {
+                return View("_FormRiskMitigation", model);
+            }
+        }
+
         public List<RiskImpactFormStub> GetRiskImpacts(int riskId)
         {
             List<RiskImpactFormStub> riskImpacts = new List<RiskImpactFormStub>();
@@ -244,7 +318,7 @@ namespace WebUI.Areas.Risk.Controllers
             //    Operator = "eq",
             //    Value = riskId.ToString()
             //};
-            foreach (Business.Entities.RiskImpact riskImpact in RiskImpactRepo.Find(null, null, null, null, true).FindAll(x => x.RiskId == riskId))
+            foreach (Business.Entities.RiskImpact riskImpact in RiskImpactRepo.Find(null, null, null, null, false).FindAll(x => x.RiskId == riskId))
             {
                 riskImpacts.Add(new RiskImpactFormStub(riskImpact));
             }
@@ -262,7 +336,7 @@ namespace WebUI.Areas.Risk.Controllers
             //    Operator = "neq",
             //    Value = riskId.ToString()
             //};
-            foreach (Business.Entities.RiskMitigation riskMitigation in RiskMitigationRepo.Find(null, null, null, null, true).FindAll(x => x.RiskId == riskId))
+            foreach (Business.Entities.RiskMitigation riskMitigation in RiskMitigationRepo.Find(null, null, null, null, false).FindAll(x => x.RiskId == riskId))
             {
                 riskMitigations.Add(new RiskMitigationFormStub(riskMitigation));
             }

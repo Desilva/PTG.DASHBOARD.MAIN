@@ -15,10 +15,7 @@
 
     qqRisk = eh.GetEnumDescription((Common.Enums.Measurement)Enum.Parse(typeof(Common.Enums.Measurement), Model.QualitatifQuantitatifRisk));
     riskClas = eh.GetEnumDescription((Common.Enums.RiskClasification)Enum.Parse(typeof(Common.Enums.RiskClasification), Model.RiskClasification));
-    Console.Out.Write("impact: ");
-    Console.Out.WriteLine(ViewBag.riskImpacts);
-    Console.Out.Write("mitigation: ");
-    Console.Out.WriteLine(ViewBag.riskMitigations);
+    
     List<RiskImpactFormStub> riskImpacts = (List<RiskImpactFormStub>) (ViewBag.riskImpacts ?? new List<RiskImpactFormStub>());
     List<RiskMitigationFormStub> riskMitigations = (List<RiskMitigationFormStub>) (ViewBag.riskMitigations ?? new List<RiskMitigationFormStub>());
 }
@@ -140,7 +137,7 @@
                             <td>@riskMitigation.Actual</td>
                             <td>@riskMitigation.Evidence</td>
                             <td>@riskMitigation.notes</td>
-                            <td><a href="#"><i class="fa fa-edit" aria-hidden="true"></i></a><a href="#"> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td><a href="@Url.Action("EditRiskMitigation", currentController, new { Area = "Risk", id = riskMitigation.MitigationId })"><i class="fa fa-edit" aria-hidden="true"></i></a><a href="#" onclick="delete_mitigation(@riskMitigation.MitigationId); return false;"> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                     }
                 </table>
@@ -153,5 +150,13 @@
     </div>
 </div>
 
-<script type="text/javascript">
-</script>
+@section Scripts{
+    <script type="text/javascript">
+        function delete_mitigation(mitigationId)
+        {
+            var url = "@Url.Action("DeleteRiskMitigation", currentController, new { Area = "Risk" })";
+            var data = { id: mitigationId };
+            deleteThenRedirect(url, data, "@currentAction");
+        }
+    </script>
+}

@@ -15,6 +15,7 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
 
         public RiskMitigationFormStub()
         {
+            IsDeleted = false;
         }
         public RiskMitigationFormStub(Business.Entities.RiskMitigation riskMitigation)
         {
@@ -29,6 +30,7 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
             ModifiedDate        = riskMitigation.ModifiedDate;
             CreatedBy           = riskMitigation.CreatedBy;
             CreatedDate         = riskMitigation.CreatedDate;
+            IsDeleted           = riskMitigation.IsDeleted;
         }
 
         public Business.Entities.RiskMitigation GetDbObject()
@@ -45,6 +47,7 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
             dbItem.ModifiedDate = ModifiedDate;
             dbItem.CreatedBy = CreatedBy;
             dbItem.CreatedDate = CreatedDate;
+            dbItem.IsDeleted = IsDeleted;
 
             return dbItem;
         }

@@ -15,6 +15,10 @@
 @using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRiskAdd", @class = "form-horizontal" }))
 {
     @Html.HiddenFor(model => model.RiskId);
+    @Html.HiddenFor(model => model.Year);
+    @Html.HiddenFor(model => model.IsDeleted);
+    @Html.HiddenFor(model => model.CreatedBy);
+    @Html.HiddenFor(model => model.CreatedDate);
     //if (ViewBag.Risk != null)
     //{
     //    risk = (RiskFormStub) ViewBag.Risk;

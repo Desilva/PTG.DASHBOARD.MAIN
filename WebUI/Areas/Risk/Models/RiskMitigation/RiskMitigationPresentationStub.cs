@@ -8,7 +8,7 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
 
         public RiskMitigationPresentationStub()
         {
-
+            IsDeleted = false;
         }
 
         public int MitigationId { get; set; }

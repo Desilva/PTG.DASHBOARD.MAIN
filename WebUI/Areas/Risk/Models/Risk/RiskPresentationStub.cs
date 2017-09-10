@@ -14,7 +14,9 @@ namespace WebUI.Areas.Risk.Models.Risk
         public int Year { get; set; }
         public List<SelectListItem> YearOptions { get; set; }     
 
-        public RiskPresentationStub() {
+        public RiskPresentationStub()
+        {
+            IsDeleted = false;
             Year = DateTime.Now.Year;
             FillYearOptions();
         }
@@ -36,6 +38,7 @@ namespace WebUI.Areas.Risk.Models.Risk
             ModifiedDate = risk.ModifiedDate;
             CreatedBy = risk.CreatedBy;
             CreatedDate = risk.CreatedDate;
+            IsDeleted = risk.IsDeleted;
 
             FillYearOptions();
         }

@@ -17,6 +17,7 @@ namespace WebUI.Areas.Risk.Models.Risk
 
         public RiskFormStub()
         {
+            IsDeleted = false;
             FillQualitatifQuantitatifRiskOptions();
             FillRiskClasificationOptions();
         }
@@ -40,6 +41,7 @@ namespace WebUI.Areas.Risk.Models.Risk
             ModifiedDate                 = risk.ModifiedDate;
             CreatedBy                    = risk.CreatedBy;
             CreatedDate                  = risk.CreatedDate;
+            IsDeleted                    = risk.IsDeleted;
 
             FillQualitatifQuantitatifRiskOptions();
             FillRiskClasificationOptions();
@@ -124,6 +126,7 @@ namespace WebUI.Areas.Risk.Models.Risk
             dbItem.ModifiedDate = ModifiedDate;
             dbItem.CreatedBy = CreatedBy;
             dbItem.CreatedDate = CreatedDate;
+            dbItem.IsDeleted = IsDeleted;
 
             return dbItem;
         }

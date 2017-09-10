@@ -7,7 +7,7 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
 
         public RiskImpactPresentationStub()
         {
-
+            IsDeleted = false;
         }
 
         public int ImpactId { get; set; }

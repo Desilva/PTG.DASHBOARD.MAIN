@@ -15,6 +15,7 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
 
         public RiskImpactFormStub()
         {
+            IsDeleted = false;
         }
         public RiskImpactFormStub(Business.Entities.RiskImpact riskImpact)
         {
@@ -30,6 +31,7 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
             ModifiedDate        = riskImpact.ModifiedDate;
             CreatedBy           = riskImpact.CreatedBy;
             CreatedDate         = riskImpact.CreatedDate;
+            IsDeleted           = riskImpact.IsDeleted;
         }
 
         public Business.Entities.RiskImpact GetDbObject()
@@ -46,6 +48,7 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
             dbItem.ModifiedDate = ModifiedDate;
             dbItem.CreatedBy = CreatedBy;
             dbItem.CreatedDate = CreatedDate;
+            dbItem.IsDeleted = IsDeleted;
 
             return dbItem;
         }

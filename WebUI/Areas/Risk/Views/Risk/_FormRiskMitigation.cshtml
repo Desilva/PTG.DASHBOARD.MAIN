@@ -9,6 +9,9 @@
 {
     @Html.HiddenFor(model => model.MitigationId);
     @Html.HiddenFor(model => model.RiskId);
+    @Html.HiddenFor(model => model.IsDeleted);
+    @Html.HiddenFor(model => model.CreatedBy);
+    @Html.HiddenFor(model => model.CreatedDate);
 <div class="wrapper wrapper-content">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
