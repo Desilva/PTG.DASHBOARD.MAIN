@@ -134,6 +134,10 @@
           <Property Name="Probability" Type="int" />
           <Property Name="Impact" Type="int" />
           <Property Name="RPN" Type="int" />
+          <Property Name="QuantitatifImpactRes" Type="float" />
+          <Property Name="ProbabilityRes" Type="int" />
+          <Property Name="ImpactRes" Type="int" />
+          <Property Name="RPNRes" Type="int" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
@@ -564,6 +568,10 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Risk" Relationship="Self.FK_RiskImpact_Risk" FromRole="RiskImpact" ToRole="Risk" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="QuantitatifImpactRes" Type="Double" />
+          <Property Name="ProbabilityRes" Type="Int32" />
+          <Property Name="ImpactRes" Type="Int32" />
+          <Property Name="RPNRes" Type="Int32" />
         </EntityType>
         <EntityType Name="RiskMitigation">
           <Key>
@@ -898,6 +906,10 @@
           <EntitySetMapping Name="RiskImpacts">
             <EntityTypeMapping TypeName="PTG.MAINModel.RiskImpact">
               <MappingFragment StoreEntitySet="RiskImpact">
+                <ScalarProperty Name="RPNRes" ColumnName="RPNRes" />
+                <ScalarProperty Name="ImpactRes" ColumnName="ImpactRes" />
+                <ScalarProperty Name="ProbabilityRes" ColumnName="ProbabilityRes" />
+                <ScalarProperty Name="QuantitatifImpactRes" ColumnName="QuantitatifImpactRes" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ImpactId" ColumnName="ImpactId" />
                 <ScalarProperty Name="RiskId" ColumnName="RiskId" />

@@ -1,0 +1,82 @@
+﻿@model WebUI.Areas.Risk.Models.RiskImpact.RiskImpactFormStub
+@{
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+    Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+}
+
+@using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRiskImpactAdd", @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(model => model.ImpactId);
+    @Html.HiddenFor(model => model.RiskId);
+    @Html.HiddenFor(model => model.Type);
+    @Html.HiddenFor(model => model.IsDeleted);
+    @Html.HiddenFor(model => model.CreatedBy);
+    @Html.HiddenFor(model => model.CreatedDate);
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Form</h5>
+        </div>
+        <div class="ibox-content">
+            <form class="form-horizontal" method="get" action="detail.php">
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Dampak</label>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>@Html.LabelFor(model => model.QuantitatifImpact)</th>
+                            <th>@Html.LabelFor(model => model.Probability)</th>
+                            <th>@Html.LabelFor(model => model.Impact)</th>
+                            <th>@Html.LabelFor(model => model.RPN)</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>Inherent</td>
+                        <td>
+                            @Html.TextBoxFor(model => model.QuantitatifImpact, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.QuantitatifImpact)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Probability, new SelectList(Model.ProbabilityOptions, "Value", "Text"), new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Impact, new SelectList(Model.ImpactOptions, "Value", "Text"), new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.RPN, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RPN)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Residual</td>
+                        <td>
+                            @Html.TextBoxFor(model => model.QuantitatifImpactRes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.QuantitatifImpactRes)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.ProbabilityRes, new SelectList(Model.ProbabilityOptions, "Value", "Text"), new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(model => model.ImpactRes, new SelectList(Model.ImpactOptions, "Value", "Text"), new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.RPNRes, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RPNRes)
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="@Url.Action("RiskDetail", currentController, new { Area = "Risk", riskId = Model.RiskId })" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}
