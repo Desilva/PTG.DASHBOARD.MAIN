@@ -65,4 +65,12 @@ namespace Common.Enums
         [Description("Kuantitatif")]
         QUANTITATIVE
     }
+
+    public enum ImpactTypes
+    {
+        [Description("Inherent")]
+        INHERENT,
+        [Description("Residual")]
+        RESIDUAL
+    }
 }

@@ -308,17 +308,122 @@ namespace WebUI.Areas.Risk.Controllers
             }
         }
 
+        [MvcSiteMapNode(Title = "Tambah Dampak", ParentKey = "IndexRisk", Key = "addRiskImpact")]
+        [SiteMapTitle("Breadcrumb")]
+        public ActionResult AddRiskImpact(int riskId)
+        {
+            RiskImpactFormStub models = new RiskImpactFormStub();
+            models.RiskEvent = RiskRepo.FindByPk(riskId).RiskEvent;
+            ViewBag.Title = "Tambah Dampak";
+
+            return View("_FormRiskImpact", models);
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddRiskImpact(RiskImpactFormStub model)
+        {
+            ResponseModel response = new ResponseModel(true);
+            Business.Entities.RiskImpact dbItem = new Business.Entities.RiskImpact();
+
+            model.CreatedBy = model.ModifiedBy = User.UserName;
+            model.CreatedDate = model.ModifiedDate = DateTime.Now;
+
+            RiskFormStub riskModel = new RiskFormStub(RiskRepo.FindByPk(model.RiskId));
+
+            if (ModelState.IsValid)
+            {
+                dbItem = model.GetDbObject();
+                await RiskImpactRepo.CreateAsync(dbItem);
+
+                if (RiskImpactRepo.Id != 0)
+                {
+                    ViewBag.riskMitigations = GetRiskMitigations(model.RiskId);
+                    ViewBag.riskImpacts = GetRiskImpacts(model.RiskId);
+
+                    return View("_RiskDetails", riskModel);
+                }
+                else
+                {
+                    return View("_RiskDetails", riskModel);
+                }
+            }
+            else
+            {
+                return View("_RiskDetails", riskModel);
+            }
+        }
+
+
+        [MvcSiteMapNode(Title = "Ubah Dampak", ParentKey = "IndexRisk", Key = "editRiskImpact")]
+        [SiteMapTitle("Breadcrumb")]
+        public ActionResult EditRiskImpact(int riskId)
+        {
+            var filters = new Business.Infrastructure.FilterInfo
+            {
+                Logic = "and",
+                Filters = new List<Business.Infrastructure.FilterInfo>()
+            };
+            filters.Filters.Add(new Business.Infrastructure.FilterInfo
+            {
+                Field = "RiskId",
+                Operator = "eq",
+                Value = riskId.ToString()
+            });
+            RiskImpactFormStub models = new RiskImpactFormStub(RiskImpactRepo.Find(null, null, null, filters, false).FirstOrDefault());
+            models.RiskEvent = RiskRepo.FindByPk(riskId).RiskEvent;
+            ViewBag.Title = "Ubah Dampak";
+
+            return View("_FormRiskImpact", models);
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditRiskImpact(RiskImpactFormStub model)
+        {
+            ResponseModel response = new ResponseModel(true);
+            Business.Entities.RiskImpact dbItem = new Business.Entities.RiskImpact();
+
+            model.ModifiedBy = User.UserName;
+            model.ModifiedDate = DateTime.Now;
+
+            RiskFormStub riskModel = new RiskFormStub(RiskRepo.FindByPk(model.RiskId));
+
+            if (ModelState.IsValid)
+            {
+                dbItem = model.GetDbObject();
+                await RiskImpactRepo.UpdateAsync(dbItem);
+
+                if (RiskImpactRepo.Id != 0)
+                {
+                    ViewBag.riskMitigations = GetRiskMitigations(model.RiskId);
+                    ViewBag.riskImpacts = GetRiskImpacts(model.RiskId);
+
+                    return View("_RiskDetails", riskModel);
+                }
+                else
+                {
+                    return View("_FormRiskImpact", model);
+                }
+            }
+            else
+            {
+                return View("_FormRiskImpact", model);
+            }
+        }
+
         public List<RiskImpactFormStub> GetRiskImpacts(int riskId)
         {
             List<RiskImpactFormStub> riskImpacts = new List<RiskImpactFormStub>();
 
-            //var filters = new Business.Infrastructure.FilterInfo
-            //{
-            //    Field = "RiskId",
-            //    Operator = "eq",
-            //    Value = riskId.ToString()
-            //};
-            foreach (Business.Entities.RiskImpact riskImpact in RiskImpactRepo.Find(null, null, null, null, false).FindAll(x => x.RiskId == riskId))
+            var filters = new Business.Infrastructure.FilterInfo
+            {
+                Logic = "and",
+                Filters = new List<Business.Infrastructure.FilterInfo>()
+            };
+            filters.Filters.Add(new Business.Infrastructure.FilterInfo
+            {
+                Field = "RiskId",
+                Operator = "eq",
+                Value = riskId.ToString()
+            });
+            foreach (Business.Entities.RiskImpact riskImpact in RiskImpactRepo.Find(null, null, null, filters, false))
             {
                 riskImpacts.Add(new RiskImpactFormStub(riskImpact));
             }
@@ -330,13 +435,18 @@ namespace WebUI.Areas.Risk.Controllers
         {
             List<RiskMitigationFormStub> riskMitigations = new List<RiskMitigationFormStub>();
 
-            //var filters = new Business.Infrastructure.FilterInfo
-            //{
-            //    Field = "RiskId",
-            //    Operator = "neq",
-            //    Value = riskId.ToString()
-            //};
-            foreach (Business.Entities.RiskMitigation riskMitigation in RiskMitigationRepo.Find(null, null, null, null, false).FindAll(x => x.RiskId == riskId))
+            var filters = new Business.Infrastructure.FilterInfo
+            {
+                Logic = "and",
+                Filters = new List<Business.Infrastructure.FilterInfo>()
+            };
+            filters.Filters.Add(new Business.Infrastructure.FilterInfo
+            {
+                Field = "RiskId",
+                Operator = "eq",
+                Value = riskId.ToString()
+            });
+            foreach (Business.Entities.RiskMitigation riskMitigation in RiskMitigationRepo.Find(null, null, null, filters, false))
             {
                 riskMitigations.Add(new RiskMitigationFormStub(riskMitigation));
             }

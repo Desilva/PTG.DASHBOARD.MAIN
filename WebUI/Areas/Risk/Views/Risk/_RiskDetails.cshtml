@@ -74,37 +74,47 @@
         <div class="ibox-content">
             @if (riskImpacts.Count() > 0)
             {
-                <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Dampak Kuantitatif (Ribu USD)</th>
-                        <th>Probabilitas</th>
-                        <th>Dampak</th>
-                        <th>RPN</th>
-                    </tr>
-                </thead>
-                    @foreach (RiskImpactFormStub riskImpact in riskImpacts)
-                    {
+                foreach(RiskImpactFormStub riskImpact in riskImpacts)
+                {
+                    <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>@riskImpact.Type</td>
+                            <th></th>
+                            <th>Dampak Kuantitatif (Ribu USD)</th>
+                            <th>Probabilitas</th>
+                            <th>Dampak</th>
+                            <th>RPN</th>
+                        </tr>
+                    </thead>
+                        <tr>
+                            <td>Inherent</td>
                             <td>@riskImpact.QuantitatifImpact</td>
                             <td>@riskImpact.Probability</td>
                             <td>@riskImpact.Impact</td>
                             <td>@riskImpact.RPN</td>
                         </tr>
-                    }
-                </table>
+                        <tr>
+                            <td>Residual</td>
+                            <td>@riskImpact.QuantitatifImpactRes</td>
+                            <td>@riskImpact.ProbabilityRes</td>
+                            <td>@riskImpact.ImpactRes</td>
+                            <td>@riskImpact.RPNRes</td>
+                        </tr>
+                    </table>
+                }
+                <p>
+                    <a href="@Url.Action("EditRiskImpact", currentController, new { Area = "Risk", riskId = Model.RiskId})" class="btn btn-primary">Ubah Dampak</a>
+                </p>
             }
             else
             {
                 <p>
                     <div id="grid-nkk" data-role="grid" class="label label-warning" style="">Data belum ada</div>
                 </p>
+                <p>
+                    <a href="@Url.Action("AddRiskImpact", currentController, new { Area = "Risk", riskId = Model.RiskId})" class="btn btn-primary">Tambah Dampak</a>
+                </p>
             }
-            <p>
-                <a href="#" class="btn btn-primary">Ubah</a>
-            </p>
         </div>
     </div>
 
