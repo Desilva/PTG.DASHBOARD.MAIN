@@ -54,19 +54,23 @@ namespace WebUI.Areas.Risk.Models.Risk
         }
 
         public int RiskId { get; set; }
+        [Display(Name = "Proses Bisnis")]
         public string ProcessBusiness { get; set; }
         public string RiskCategory { get; set; }
+        [Display(Name = "Kejadian Risiko (Risk Event)")]
         public string RiskEvent { get; set; }
         public string RiskAgent { get; set; }
         public string KRI { get; set; }
         public string Controll { get; set; }
         public string QualitatifImpact { get; set; }
+        [Display(Name = "Klasifikasi Risiko (Residual)")]
         public string RiskClasification { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string QualitatifQuantitatifRisk { get; set; }
+        [Display(Name = "No.")]
         public string RiskNumber { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
 

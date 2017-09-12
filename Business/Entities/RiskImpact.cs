@@ -26,10 +26,6 @@ namespace Business.Entities
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<double> QuantitatifImpactRes { get; set; }
-        public Nullable<int> ProbabilityRes { get; set; }
-        public Nullable<int> ImpactRes { get; set; }
-        public Nullable<int> RPNRes { get; set; }
     
         public virtual Risk Risk { get; set; }
     }

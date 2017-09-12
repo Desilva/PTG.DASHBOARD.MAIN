@@ -1,0 +1,56 @@
+﻿@model List<WebUI.Areas.Risk.Models.RiskDocument.RiskDocumentPresentationStub>
+@using WebUI.Controllers
+@using WebUI.Areas.Risk.Models.RiskDocument
+
+@{
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+    var thisController = (WebUI.Areas.Risk.Controllers.RiskController)ViewContext.Controller;
+
+    FileNameProcessController fn = new FileNameProcessController();
+}
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Dokumen Risiko</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="mb-15">
+                <a href="@Url.Action("AddRiskDocument", currentController, new { Area = "Risk" })"  class="btn btn-primary">Upload Dokumen</a>
+            </div>
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3">@Html.LabelFor(models => models.FirstOrDefault().FilePath)</th>
+                            <th class="col-xs-3">@Html.LabelFor(models => models.FirstOrDefault().Notes)</th>
+                            <th class=""></th>
+                        </tr>
+                    </thead>
+                    @foreach (RiskDocumentPresentationStub riskDocument in Model)
+                    {
+
+                    <tr>
+                        <td><a href="@fn.AbsolutePath(riskDocument.FilePath ?? "")">@fn.FriendlyName(riskDocument.FilePath ?? "")</a></td>
+                        <td>@Html.Raw(riskDocument.Notes)</td>
+                        <td>
+                            <a href="@Url.Action("EditRiskDocument", currentController, new { Area = "Risk", id = riskDocument.DocumentId })"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                            <a href="#" onclick="delete_risk_document(@riskDocument.DocumentId); return false;"> <i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <div id="grid-nkk" data-role="grid" class="label label-warning" style="">Data belum ada</div>
+            }
+        </div>
+    </div>
+
+@section scripts
+{
+    <script>
+        
+    </script>
+}

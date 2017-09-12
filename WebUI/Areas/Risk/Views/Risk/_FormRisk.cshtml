@@ -65,7 +65,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.RiskEvent, new { @class = "control-label col-lg-2" }) &nbsp;
                     <div class="col-lg-4">
-                        @Html.TextBoxFor(model => model.RiskEvent, new { @class = "form-control" })
+                        @Html.TextAreaFor(model => model.RiskEvent, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.RiskEvent)
                     </div>
                 </div>
@@ -103,4 +103,16 @@
         </div>
     </div>
 </div>
+}
+
+@section Scripts{
+    <script>
+        $("textarea").kendoEditor({
+            encoded: false,
+            resizable: {
+                content: true,
+                toolbar: true
+            }
+        });
+    </script>
 }
