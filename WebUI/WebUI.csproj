@@ -159,7 +159,6 @@
     <Content Include="App_Start\App_Data\log.sql" />
     <Content Include="App_Start\App_Data\log.txt" />
     <Content Include="App_Start\App_Data\user_management.sql" />
-    <Content Include="CodeTemplates\Scaffolders\ModelStub\RekadiaPS.dll" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-tour\bootstrap-tour-standalone.css" />
     <Content Include="Content\bootstrap-tour\bootstrap-tour-standalone.min.css" />
@@ -1599,7 +1598,7 @@
     <Content Include="Scripts\Inspinia\plugins\chartist\chartist.min.js.map" />
     <Content Include="Scripts\Inspinia\plugins\diff_match_patch\COPYING" />
     <Content Include="Scripts\Inspinia\plugins\justified-gallery\README.md" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\Dashboard Main.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\Inspinia\app\inspinia.js" />
     <Content Include="Scripts\Inspinia\app\skin.config.min.js" />
