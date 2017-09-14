@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebUI.Controllers;
 
 namespace WebUI.Areas.Risk.Models.RiskMitigation
 {
@@ -16,6 +17,7 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
         public RiskMitigationFormStub()
         {
             IsDeleted = false;
+            FillMonthOptions();
         }
         public RiskMitigationFormStub(Business.Entities.RiskMitigation riskMitigation)
         {
@@ -31,6 +33,7 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
             CreatedBy           = riskMitigation.CreatedBy;
             CreatedDate         = riskMitigation.CreatedDate;
             IsDeleted           = riskMitigation.IsDeleted;
+            FillMonthOptions();
         }
 
         public Business.Entities.RiskMitigation GetDbObject()
@@ -54,12 +57,17 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
 
         public int MitigationId { get; set; }
         public int RiskId { get; set; }
+        [AllowHtml]
         [Display(Name = "Rencana Mitigasi")]
         public string MitigationPlan { get; set; }
         [Display(Name = "Rencana Pelaksanaan Risk Treatment")]
         public Nullable<int> Plan { get; set; }
+        [Display(Name = "Actual Pelaksanaan Risk Treatment")]
         public Nullable<int> Actual { get; set; }
+        [Display(Name = "Bukti (Evidence)")]
         public string Evidence { get; set; }
+        [AllowHtml]
+        [Display(Name = "Keterangan")]
         public string notes { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -70,5 +78,19 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
         public virtual Business.Entities.Risk Risk { get; set; }
         [Display(Name = "Kejadian Risiko")]
         public string RiskEvent { get; set; }
+        
+        public List<SelectListItem> MonthOptions { get; set; }
+
+        public void FillMonthOptions()
+        {
+            MonthOptions = new List<SelectListItem>();
+
+            EnumHelper eh = new EnumHelper();
+            MonthOptions = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().Select(x => new SelectListItem
+            {
+                Text = eh.GetEnumDescription((MONTH)Enum.Parse(typeof(MONTH), x.ToString())),
+                Value = ((int) x).ToString()
+            }).ToList();
+        }
     }
 }

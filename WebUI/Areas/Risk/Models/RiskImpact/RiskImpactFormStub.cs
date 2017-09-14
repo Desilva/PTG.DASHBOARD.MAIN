@@ -21,18 +21,26 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
             FillImpactOptions();
             IsDeleted = false;
         }
+        public RiskImpactFormStub(string type)
+        {
+            FillProbabilityOptions();
+            FillImpactOptions();
+            IsDeleted = false;
+            Type = type;
+        }
         public RiskImpactFormStub(Business.Entities.RiskImpact riskImpact)
         {
             RiskId                  = riskImpact.RiskId;
             ImpactId                = riskImpact.ImpactId;
+            this.Type               = riskImpact.Type;
             QuantitatifImpact       = riskImpact.QuantitatifImpact;
             Probability             = riskImpact.Probability;
             Impact                  = riskImpact.Impact;
             RPN                     = riskImpact.RPN;
-            QuantitatifImpactRes    = riskImpact.QuantitatifImpactRes;
-            ProbabilityRes          = riskImpact.ProbabilityRes;
-            ImpactRes               = riskImpact.ImpactRes;
-            RPNRes                  = riskImpact.RPNRes;
+            //QuantitatifImpactRes    = riskImpact.QuantitatifImpactRes;
+            //ProbabilityRes          = riskImpact.ProbabilityRes;
+            //ImpactRes               = riskImpact.ImpactRes;
+            //RPNRes                  = riskImpact.RPNRes;
             ModifiedBy              = riskImpact.ModifiedBy;
             ModifiedDate            = riskImpact.ModifiedDate;
             CreatedBy               = riskImpact.CreatedBy;
@@ -46,17 +54,17 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
         public Business.Entities.RiskImpact GetDbObject()
         {
             Business.Entities.RiskImpact dbItem = new Business.Entities.RiskImpact();
-            dbItem.Type = "";
+            dbItem.Type = Type;
             dbItem.ImpactId = ImpactId;
             dbItem.RiskId = RiskId;
             dbItem.QuantitatifImpact = QuantitatifImpact;
             dbItem.Probability = Probability;
             dbItem.Impact = Impact;
             dbItem.RPN = RPN;
-            dbItem.QuantitatifImpactRes = QuantitatifImpactRes;
-            dbItem.ProbabilityRes = ProbabilityRes;
-            dbItem.ImpactRes = ImpactRes;
-            dbItem.RPNRes = RPNRes;
+            //dbItem.QuantitatifImpactRes = QuantitatifImpactRes;
+            //dbItem.ProbabilityRes = ProbabilityRes;
+            //dbItem.ImpactRes = ImpactRes;
+            //dbItem.RPNRes = RPNRes;
             dbItem.ModifiedBy = ModifiedBy;
             dbItem.ModifiedDate = ModifiedDate;
             dbItem.CreatedBy = CreatedBy;
@@ -68,6 +76,7 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
         
         public int ImpactId { get; set; }
         public int RiskId { get; set; }
+        public string Type { get; set; }
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
         [Display(Name = "Dampak Kuantitatif (Ribu USD)")]
         public Nullable<double> QuantitatifImpact { get; set; }
@@ -78,16 +87,16 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
         [Display(Name = "RPN")]
         public Nullable<int> RPN { get; set; }
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
-        [Display(Name = "Dampak Kuantitatif (Ribu USD)")]
-        public Nullable<double> QuantitatifImpactRes { get; set; }
-        [Display(Name = "Probabilitas")]
-        public Nullable<int> ProbabilityRes { get; set; }
-        [Display(Name = "Dampak")]
-        public Nullable<int> ImpactRes { get; set; }
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
-        [Display(Name = "RPN")]
-        public Nullable<int> RPNRes { get; set; }
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
+        //[Display(Name = "Dampak Kuantitatif (Ribu USD)")]
+        //public Nullable<double> QuantitatifImpactRes { get; set; }
+        //[Display(Name = "Probabilitas")]
+        //public Nullable<int> ProbabilityRes { get; set; }
+        //[Display(Name = "Dampak")]
+        //public Nullable<int> ImpactRes { get; set; }
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
+        //[Display(Name = "RPN")]
+        //public Nullable<int> RPNRes { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -107,7 +116,8 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
             ProbabilityOptions = new List<SelectListItem>();
             for(int it = 1; it <= MAX_PROBABILITAS; it++)
             {
-                ProbabilityOptions.Add(new SelectListItem(){
+                ProbabilityOptions.Add(new SelectListItem
+                {
                     Text = it.ToString(),
                     Value = it.ToString()
                 });
@@ -118,7 +128,7 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
             ImpactOptions = new List<SelectListItem>();
             for (int it = 1; it <= MAX_DAMPAK; it++)
             {
-                ImpactOptions.Add(new SelectListItem()
+                ImpactOptions.Add(new SelectListItem
                 {
                     Text = it.ToString(),
                     Value = it.ToString()

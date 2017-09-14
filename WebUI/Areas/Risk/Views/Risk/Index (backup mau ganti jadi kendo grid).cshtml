@@ -33,19 +33,19 @@
     <div class="ibox ">
         <div class="ibox-content">
             <div class="form-inline">
-                @using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRisk", @class = "left-align not-track-change" }))
-                {
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Year) &nbsp;
-                                @Html.DropDownListFor(model => model.Year, new SelectList(Model.YearOptions, "Value", "Text"), new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-xs-6 text-right">
+@using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRisk", @class = "left-align not-track-change" }))
+{
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Year) &nbsp;
+                            @Html.DropDownListFor(model => model.Year, new SelectList(Model.YearOptions, "Value", "Text"), new { @class = "form-control" })
                         </div>
                     </div>
-                }
+                    <div class="col-xs-6 text-right">
+                    </div>
+                </div>
+}
             </div>
         </div>
     </div>
@@ -72,6 +72,84 @@
                         </tr>
                     </thead>
                 </table>
+                
+                // OLD TABLE 
+                @*<table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Proses Bisnis</th>
+                            <th>Kejadian Risiko (Risk Event)</th>
+                            <th>Klasifikasi Risiko (Residual)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @{
+                        int row = 0;
+                        foreach (RiskPresentationStub risk in risks)
+                        {
+                            <tr class="row_panelbar" row="@row">
+                                <td>@risk.RiskNumber</td>
+                                <td>@risk.ProcessBusiness</td>
+                                <td>@Html.Raw(risk.RiskEvent)</td>
+                                <td><span class="circle circle-@risk.RiskClasification.ToLower()"></span></td>
+                                <td>
+                                    <a href="@Url.Action("RiskDetail", currentController, new { Area = "Risk", riskId = risk.RiskId })"><i class="fa fa-folder-open"></i></a>
+                                    <a href="#" onclick="delete_risk(@risk.RiskId); return false;"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            if (risk.RiskMitigations.Count() > 0)
+                            {
+                                <tr id="row_mitigation-@row">
+                                    <td></td>
+                                    <td colspan="4">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" colspan="2">Rencana Mitigasi</th>
+                                                    <th colspan="12">Bulan</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>1</th>
+                                                    <th>2</th>
+                                                    <th>3</th>
+                                                    <th>4</th>
+                                                    <th>5</th>
+                                                    <th>6</th>
+                                                    <th>7</th>
+                                                    <th>8</th>
+                                                    <th>9</th>
+                                                    <th>10</th>
+                                                    <th>11</th>
+                                                    <th>12</th>
+                                                </tr>
+                                            </thead>
+                                            @foreach (RiskMitigationFormStub riskMitigation in risk.RiskMitigations)
+                                            {
+                                                <tr>
+                                                    <td rowspan="2">@Html.Raw(riskMitigation.MitigationPlan)</td>
+                                                    <td class="">Plan</td>
+                                                    @for (int i = 1; i <= 12; i++)
+                                                    {
+                                                        <td class="@((riskMitigation.Plan == i) ? "bg-blue" : "")"></td>
+                                                    }
+                                                </tr>
+                                                <tr>
+                                                    <td class="">Actual</td>
+                                                    @for (int i = 1; i <= 12; i++)
+                                                    {
+                                                        <td class="@((riskMitigation.Actual == i) ? "bg-green" : "")"></td>
+                                                    }
+                                                </tr>
+                                            }
+                                        </table>
+                                    </td>
+                                </tr>
+                            }
+                            row++;
+                        }
+                    }
+                </table>*@
             }
             else
             {

@@ -1,0 +1,106 @@
+﻿@model WebUI.Areas.Risk.Models.RiskDocument.RiskDocumentFormStub
+@{
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+}
+
+@using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRiskDocumentAdd", @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(model => model.DocumentId);
+    @Html.HiddenFor(model => model.IsDeleted);
+    @Html.HiddenFor(model => model.CreatedBy);
+    @Html.HiddenFor(model => model.CreatedDate);
+
+    <div class="wrapper wrapper-content">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Form</h5>
+            </div>
+            <div class="ibox-content">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FilePath, new { @class = "control-label col-lg-2" })
+                    <div class="col-lg-4">
+                        @Html.HiddenFor(model => model.FilePath)
+                        @Html.TextBox("files", "", new { type = "file", id = "KendoUploader" })
+                        @Html.ValidationMessageFor(model => model.FilePath)
+                    </div >
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Notes, new { @class = "control-label col-lg-2" }) &nbsp;
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(model => model.Notes, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-lg-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="@Url.Action("", currentController, new { Area = "Risk" })" class="btn btn-default">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $("textarea").kendoEditor({
+            encoded: false,
+            resizable: {
+                content: true,
+                toolbar: true
+            }
+        });
+
+        var inputFileSelector = "#FilePath";
+
+        function onRemove(e) {
+            $(inputFileSelector).val("");
+        }
+
+        function onSelectFile(e) {
+            var flagExtension = 0;
+            var flagSize = 0;
+            var allowedExtension = [".pdf"];
+            var file = e.files;
+
+            if (file[0].size > 10485760) {
+                flagSize = 1;
+            }
+
+            if ($.inArray((file[0].extension).toLowerCase(), allowedExtension) === -1) {
+                flagExtension = 1;
+            }
+
+            if (flagExtension == 1) {
+                alert("Only .pdf files are allowed");
+                e.preventDefault();
+            }
+            if (flagSize == 1) {
+                alert("File size cannot exceed 10 MB");
+                e.preventDefault();
+            }
+
+        }
+
+        function onSuccessFile(e) {
+            var filepath = e.response.filepath;
+            $(inputFileSelector).val(filepath);
+        }
+
+        $("#KendoUploader").kendoUpload({
+            multiple: false,
+            async: {
+                saveUrl: "@Url.Action("Save", "FileManagement", new { area = "" })",
+                removeUrl: "@Url.Action("Remove", "FileManagement", new { area = "" })",
+                autoUpload: true
+            },
+            select: onSelectFile,
+            success: onSuccessFile,
+            remove: onRemove
+        });
+    </script>
+}

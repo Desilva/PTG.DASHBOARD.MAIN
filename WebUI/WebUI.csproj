@@ -1591,6 +1591,8 @@
     <Content Include="Areas\Risk\Views\Risk\_RiskDetails.cshtml" />
     <Content Include="Areas\Risk\Views\Risk\_FormRiskMitigation.cshtml" />
     <Content Include="Areas\Risk\Views\Risk\_FormRiskImpact.cshtml" />
+    <Content Include="Areas\Risk\Views\Risk\_FormRiskDocument.cshtml" />
+    <Content Include="Areas\Risk\Views\Risk\_RiskDocument.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -2577,6 +2579,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Risk\Controllers\RiskController.cs" />
+    <Compile Include="Areas\Risk\Models\RiskDocument\RiskDocumentFormStub.cs" />
+    <Compile Include="Areas\Risk\Models\RiskDocument\RiskDocumentPresentationStub.cs" />
     <Compile Include="Areas\Risk\Models\RiskImpact\RiskImpactPresentationStub.cs" />
     <Compile Include="Areas\Risk\Models\RiskImpact\RiskImpactFormStub.cs" />
     <Compile Include="Areas\Risk\Models\RiskMitigation\RiskMitigationPresentationStub.cs" />
@@ -2620,6 +2624,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FileNameProcessController.cs" />
     <Compile Include="Controllers\FileManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstallController.cs" />

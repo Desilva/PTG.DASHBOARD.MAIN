@@ -46,6 +46,7 @@ namespace WebUI.Infrastructure
             kernel.Bind<IRiskRepository>().To<EFRiskRepository>();
             kernel.Bind<IRiskImpactRepository>().To<EFRiskImpactRepository>();
             kernel.Bind<IRiskMitigationRepository>().To<EFRiskMitigationRepository>();
+            kernel.Bind<IRiskDocumentRepository>().To<EFRiskDocumentRepository>();
 
         }
     }

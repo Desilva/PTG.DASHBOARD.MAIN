@@ -17,6 +17,7 @@ namespace WebUI.Areas.Risk.Models.Risk
 
         public RiskFormStub()
         {
+            RiskId = 0;
             IsDeleted = false;
             FillQualitatifQuantitatifRiskOptions();
             FillRiskClasificationOptions();
@@ -79,15 +80,19 @@ namespace WebUI.Areas.Risk.Models.Risk
         public string ProcessBusiness { get; set; }
         [Display(Name = "Kategori Risiko")]
         public string RiskCategory { get; set; }
+        [AllowHtml]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
         [Display(Name = "Kejadian Risiko (Risk Event)")]
         public string RiskEvent { get; set; }
+        [AllowHtml]
         [Display(Name = "Penyebab Risiko (Risk Agent)")]
         public string RiskAgent { get; set; }
         [Display(Name = "Gejala Risiko (KRI)")]
         public string KRI { get; set; }
+        [AllowHtml]
         [Display(Name = "Faktor Positif (Control)")]
         public string Controll { get; set; }
+        [AllowHtml]
         [Display(Name = "Dampak Kualitatif")]
         public string QualitatifImpact { get; set; }
 

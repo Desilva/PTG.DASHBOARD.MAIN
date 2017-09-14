@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IRiskDocumentRepository.cs" />
     <Compile Include="Abstract\IRiskMitigationRepository.cs" />
     <Compile Include="Abstract\IRiskImpactRepository.cs" />
     <Compile Include="Abstract\IRiskRepository.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Abstract\BaseRepository.cs" />
     <Compile Include="Concrete\EFActionRepository.cs" />
+    <Compile Include="Concrete\EFRiskDocumentRepository.cs" />
     <Compile Include="Concrete\EFRiskMitigationRepository.cs" />
     <Compile Include="Concrete\EFRiskImpactRepository.cs" />
     <Compile Include="Concrete\EFRiskRepository.cs" />
