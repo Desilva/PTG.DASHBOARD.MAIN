@@ -25,6 +25,7 @@ namespace WebUI.Areas.Risk.Models.RiskDocument
         
         public int DocumentId { get; set; }
         [Display(Name = "Dokumen")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
         public string FilePath { get; set; }
         [AllowHtml]
         [Display(Name = "Keterangan")]

@@ -87,7 +87,7 @@ namespace WebUI.Areas.Risk.Controllers
             var sorting = new Business.Infrastructure.SortingInfo
             {
                 SortOn = "RiskId",
-                SortOrder = "ASC"
+                SortOrder = "DESC"
             };
             sortings.Add(sorting);
 
@@ -118,12 +118,14 @@ namespace WebUI.Areas.Risk.Controllers
         
         [MvcSiteMapNode(Title = "Tambah Risiko", ParentKey = "IndexRisk", Key = "addRisk")]
         [SiteMapTitle("Breadcrumb")]
-        public ActionResult AddRisk()
+        public ActionResult AddRisk(int? year)
         {
-            RiskFormStub models = new RiskFormStub();
+            RiskFormStub model = new RiskFormStub();
+            if (year == null) year = DateTime.Now.Year;
+            model.Year = year.Value;
             ViewBag.Title = "Tambah Risiko";
 
-            return View("_FormRisk", models);
+            return View("_FormRisk", model);
         }
         [HttpPost]
         public async Task<ActionResult> AddRisk(RiskFormStub model)
@@ -266,12 +268,12 @@ namespace WebUI.Areas.Risk.Controllers
                 }
                 else
                 {
-                    return View("_RiskDetails", riskModel);
+                    return View("_FormRiskMitigation", model);
                 }
             }
             else
             {
-                return View("_RiskDetails", riskModel);
+                return View("_FormRiskMitigation", model);
             }
         }
 

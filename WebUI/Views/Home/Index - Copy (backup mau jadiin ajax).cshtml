@@ -7,18 +7,107 @@
     string currentAction = (string)ViewContext.RouteData.Values["action"];
 
     Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+
+    HomeFinanceModel homeFinanceModel = new HomeFinanceModel();
+    if (ViewBag.HomeFinanceModel != null)
+    {
+        homeFinanceModel = (HomeFinanceModel)ViewBag.HomeFinanceModel;
+    }
+    HomeFinanceItemModel homeFinanceItemModel = new HomeFinanceItemModel();
+
+    HomeOperationModel homeOperationModel = new HomeOperationModel();
+    if (ViewBag.HomeOperationModel != null)
+    {
+        homeOperationModel = (HomeOperationModel)ViewBag.HomeOperationModel;
+    }
+    HomeOperationItemModel homeOperationItemModel = new HomeOperationItemModel();
 }
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row" id="financeContent">
-        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
-        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
-        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
-        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("Pertumbuhan Pendapatan Usaha", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("EBITDA Margin", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("Laba Bersih", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("EBITDA", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-4" id="operationContent"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeOperationModel.LastUpdate != "")
+                        {
+                            @Html.Partial("_OperationIndex", homeOperationModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -139,14 +228,10 @@
 
 @section scripts{
     <script>
-        $(document).ready(function (e) {
-            $.post("@Url.Action("GetFinanceInfo", currentController)", function (data) {
-                $("#financeContent").html(data);
-            });
-            $.post("@Url.Action("GetOperationInfo", currentController)", function (data) {
-                $("#operationContent").html(data);
-            });
-        });
+        $(function () {
+        })
+
+
     </script>
 }
 

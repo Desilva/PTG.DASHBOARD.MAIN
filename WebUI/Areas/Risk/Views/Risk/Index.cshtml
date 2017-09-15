@@ -56,7 +56,7 @@
         </div>
         <div class="ibox-content">
             <div class="mb-15">
-                <a href="/Risk/Risk/AddRisk" class="btn btn-primary">Tambah Risiko</a>
+                <a href="@Url.Action("AddRisk", currentController, new { Area = "Risk", year = Model.Year })" class="btn btn-primary">Tambah Risiko</a>
             </div>
             @if (risks.Count() > 0)
             {

@@ -19,6 +19,9 @@ namespace WebUI
             bundles.Add(new StyleBundle("~/Content/popup").Include(
                   "~/Content/popup.css"));
 
+            bundles.Add(new StyleBundle("~/Content/loader").Include(
+                  "~/Content/loader.css"));
+
             bundles.Add(new StyleBundle("~/font-awesome/css").Include(
                     "~/Content/inspinia/fonts/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
 

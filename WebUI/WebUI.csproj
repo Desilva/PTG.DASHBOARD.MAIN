@@ -436,6 +436,7 @@
     <Content Include="Content\patterns\otis_redding.png" />
     <Content Include="Content\patterns\shattered.png" />
     <Content Include="Content\patterns\triangular.png" />
+    <Content Include="Content\loader.css" />
     <Content Include="Content\popup.css" />
     <Content Include="Content\SecurityGuard\images\blue_ico.png" />
     <Content Include="Content\SecurityGuard\images\blue_message.gif" />
@@ -2556,6 +2557,8 @@
     <Content Include="Views\Shared\_GlobalObejctJs.cshtml" />
     <Content Include="Views\Shared\Inspinia\_Breadcrumb.cshtml" />
     <Content Include="Views\Shared\Inspinia\_PopupOption.cshtml" />
+    <Content Include="Views\Home\_FinanceIndex.cshtml" />
+    <Content Include="Views\Home\_OperationIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2679,6 +2682,7 @@
     <Compile Include="Models\Log\LogFormStub.cs" />
     <Compile Include="Models\Log\LogPresentationStub.cs" />
     <Compile Include="Models\ModuleAction.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

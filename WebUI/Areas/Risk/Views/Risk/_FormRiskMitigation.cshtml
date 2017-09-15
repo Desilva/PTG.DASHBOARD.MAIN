@@ -1,8 +1,11 @@
 ﻿@model WebUI.Areas.Risk.Models.RiskMitigation.RiskMitigationFormStub
+@using WebUI.Controllers
 @{
     string currentController = (string)ViewContext.RouteData.Values["controller"];
     string currentAction = (string)ViewContext.RouteData.Values["action"];
+
     Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+    FileNameProcessController fn = new FileNameProcessController();
 }
 
 @using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRiskMitigationAdd", @class = "form-horizontal" }))
@@ -22,7 +25,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.RiskEvent, new { @class = "control-label col-lg-3" }) &nbsp;
                     <div class="col-lg-4">
-                        <p class="form-control-static">@Model.RiskEvent</p>
+                        <p class="form-control-static">@Html.Raw(Model.RiskEvent)</p>
                     </div>
                 </div>
 
@@ -30,6 +33,7 @@
                     @Html.LabelFor(model => model.MitigationPlan, new { @class = "control-label col-lg-3" }) &nbsp;
                     <div class="col-lg-4">
                         @Html.TextAreaFor(model => model.MitigationPlan, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MitigationPlan, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -37,6 +41,7 @@
                     @Html.LabelFor(model => model.Plan, new { @class = "control-label col-lg-3" }) &nbsp;
                     <div class="col-lg-4">
                         @Html.DropDownListFor(model => model.Plan, new SelectList(Model.MonthOptions, "Value", "Text"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Plan, "", new { @class = "text-danger" })
                         @*@Html.TextBoxFor(model => model.Plan, new { @class = "form-control" })*@
                     </div>
                 </div>
@@ -54,8 +59,10 @@
                         @Html.LabelFor(model => model.Evidence, new { @class = "control-label col-lg-3" })
                         <div class="col-lg-4">
                             @Html.HiddenFor(model => model.Evidence)
+                            <a href="@fn.AbsolutePath(Model.Evidence ?? "")">@fn.FriendlyName(Model.Evidence ?? "")</a>
                             @Html.TextBox("files", "", new { type = "file", id = "KendoUploader" })
-                            @Html.ValidationMessageFor(model => model.Evidence)
+                            @Html.ValidationMessageFor(model => model.Evidence, "", new { @class = "text-danger" })
+                            <div class="text-info">*) ukuran file maksimal 10 MB</div>
                         </div >
                         @*<label class="control-label col-lg-3">Evidence</label>
                         <div class="col-lg-4">
@@ -118,19 +125,19 @@
         function onSelectFile(e) {
             var flagExtension = 0;
             var flagSize = 0;
-            var allowedExtension = [".pdf"];
+            var allowedExtension = [];
             var file = e.files;
 
             if (file[0].size > 10485760) {
                 flagSize = 1;
             }
 
-            if ($.inArray((file[0].extension).toLowerCase(), allowedExtension) === -1) {
-                flagExtension = 1;
-            }
+            //if ($.inArray((file[0].extension).toLowerCase(), allowedExtension) === -1) {
+            //    flagExtension = 1;
+            //}
 
             if (flagExtension == 1) {
-                alert("Only .pdf files are allowed");
+                alert("All files are allowed");
                 e.preventDefault();
             }
             if (flagSize == 1) {

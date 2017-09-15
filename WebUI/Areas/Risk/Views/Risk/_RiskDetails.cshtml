@@ -25,7 +25,14 @@
 <div class="wrapper wrapper-content">
     <div class="ibox ">
         <div class="ibox-title">
-            <h5>Rincian</h5>
+            <div class="col-lg-10">
+                <h5>Rincian</h5>
+            </div>
+            <div class="col-lg-2">
+                <a href="@Url.Action("", currentController, new { Area = "Risk" })">
+                    <i class="fa fa-arrow-circle-left"></i> kembali
+                </a>
+            </div>
         </div>
         <div class="ibox-content">
             <div class="form-group">
@@ -147,7 +154,12 @@
                         <tr>
                             <td>@Html.Raw(riskMitigation.MitigationPlan)</td>
                             <td>@eh.GetEnumDescription((Common.Enums.MONTH) Enum.Parse(typeof(Common.Enums.MONTH), riskMitigation.Plan.ToString()))</td>
-                            <td>@eh.GetEnumDescription((Common.Enums.MONTH)Enum.Parse(typeof(Common.Enums.MONTH), riskMitigation.Actual.ToString()))</td>
+                            <td>
+                                @if (riskMitigation.Actual != null)
+                                {
+                                    @eh.GetEnumDescription((Common.Enums.MONTH)Enum.Parse(typeof(Common.Enums.MONTH), riskMitigation.Actual.ToString()));
+                                }
+                            </td>
                             <td><a href="@fn.AbsolutePath(riskMitigation.Evidence ?? "")">@fn.FriendlyName(riskMitigation.Evidence ?? "")</a></td>
                             <td>@Html.Raw(riskMitigation.notes)</td>
                             <td><a href="@Url.Action("EditRiskMitigation", currentController, new { Area = "Risk", id = riskMitigation.MitigationId })"><i class="fa fa-edit" aria-hidden="true"></i></a><a href="#" onclick="delete_mitigation(@riskMitigation.MitigationId); return false;"> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
