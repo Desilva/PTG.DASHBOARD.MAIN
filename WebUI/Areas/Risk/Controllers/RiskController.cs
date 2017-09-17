@@ -41,7 +41,7 @@ namespace WebUI.Areas.Risk.Controllers
             //ambil2in risk
             if (year == null) year = DateTime.Now.Year;
             List<RiskPresentationStub> listRisk = GoToIndex(year);
-            
+
             return Json(listRisk, JsonRequestBehavior.AllowGet);
         }
 
@@ -717,6 +717,44 @@ namespace WebUI.Areas.Risk.Controllers
             }
 
             return riskImpacts;
+        }
+
+        public ActionResult GetJsonTopRiskDetailIndex(string riskIdList)
+        {
+            //ambil2in risk
+            var filters = new Business.Infrastructure.FilterInfo
+            {
+                Logic = "and",
+                Filters = new List<Business.Infrastructure.FilterInfo>()
+            };
+            filters.Filters.Add(new Business.Infrastructure.FilterInfo
+            {
+                Logic = "or",
+                Filters = new List<Business.Infrastructure.FilterInfo>()
+            });
+
+            int riskId = 0;
+            foreach (string riskIdStr in riskIdList.Split(','))
+            {
+                if (int.TryParse(riskIdStr, out riskId))
+                {
+                    filters.Filters[0].Filters.Add(new Business.Infrastructure.FilterInfo
+                    {
+                        Field = "RiskId",
+                        Operator = "eq",
+                        Value = riskId.ToString()
+                    });
+                }
+            }
+            
+            List<RiskPresentationStub> listRisk = new List<RiskPresentationStub>();
+            List<Business.Entities.Risk> risks = RiskRepo.Find(null, null, null, filters, false);
+            foreach (Business.Entities.Risk risk in risks)
+            {
+                listRisk.Add(new RiskPresentationStub(risk));
+            }
+
+            return Json(listRisk, JsonRequestBehavior.AllowGet);
         }
     }
 }

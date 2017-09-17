@@ -10,6 +10,21 @@
 }
 
 <div class="wrapper wrapper-content animated fadeInRight">
+
+    <div id="riskDetailPopup">
+        <table id="riskGrid">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Proses Bisnis</th>
+                    <th>Kejadian Risiko (Risk Event)</th>
+                    <th>Klasifikasi Risiko (Residual)</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
     <div class="row" id="financeContent">
         <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
         <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
@@ -90,7 +105,18 @@
 
 @section scripts{
     <script>
+        //var riskGrid;
         $(document).ready(function (e) {
+            riskDetailPopUpHtml = $("#riskDetailPopup").html();
+            //riskGridHtml = $("#riskGrid").html();
+
+            $("#riskDetailPopup").kendoWindow({
+                width: "75%",
+                height: "auto",
+                title: "Risiko",
+                visible: false
+            });
+
             $.post("@Url.Action("GetFinanceInfo", currentController)", function (data) {
                 $("#financeContent").html(data);
             });
@@ -116,6 +142,159 @@
                 }
             );
         }
+
+        function openRiskDetailPopup(riskIdList) {
+
+            //inisialisasi ulang
+            // kalo udah ke set, destroy dulu
+            if ($("#riskGrid").data("kendoGrid") !== undefined)
+            {
+                $("#riskGrid").data("kendoGrid").destroy();
+                $("#riskGrid").empty();
+            }
+            $("#riskDetailPopup").html(riskDetailPopUpHtml);
+            $("#riskDetailPopup").kendoWindow({
+                width: "75%",
+                height: "auto",
+                title: "Risiko"
+            });
+
+            $("#riskGrid").kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "@Url.Action("GetJsonTopRiskDetailIndex", "Risk", new { Area = "Risk" })" + "?riskIdList=" + riskIdList
+                    },
+                    pageSize: 3,
+                    serverPaging: false,
+                    serverSorting: true
+                },
+                rowTemplate: kendo.template($("#riskRowTemplate").html()),
+                sortable: true,
+                pageable: true,
+                columns:
+                [
+                    { title: "No.", width: 100 },
+                    { title: "Proses Bisnis", width: 200 },
+                    { title: "Kejadian Risiko (Risk Event)", width: 200 },
+                    { title: "Klasifikasi Risiko (Residual)", width: 120 },
+                    { width: 40 }
+                ],
+                detailInit: detailInit
+            });
+
+            $("#riskDetailPopup").data("kendoWindow").center().open();
+        };
+        
+        function detailInit(e) {
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "/Risk/Risk/GetJsonRiskMitigations?riskId=" + e.data.RiskId
+                    },
+                    serverPaging: false,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    pageSize: 10
+                },
+                rowTemplate: kendo.template($("#riskRowMitigationTemplate").html()),
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns:
+                [
+                    {
+                        title: "Rencana Mitigasi",
+                        columns:
+                        [
+                            {},
+                            {width: 60}
+                        ]
+                    },
+                    {
+                        title: "Bulan",
+                        columns:
+                        [
+                            { title:  "1", width: 30 },
+                            { title:  "2", width: 30 },
+                            { title:  "3", width: 30 },
+                            { title:  "4", width: 30 },
+                            { title:  "5", width: 30 },
+                            { title:  "6", width: 30 },
+                            { title:  "7", width: 30 },
+                            { title:  "8", width: 30 },
+                            { title:  "9", width: 30 },
+                            { title: "10", width: 30 },
+                            { title: "11", width: 30 },
+                            { title: "12", width: 30 }
+                        ]
+                    }
+                ]
+            });
+        }
+
+        function delete_risk(riskId) {
+            var url = "@Url.Action("DeleteRisk", "Risk", new { Area = "Risk" })";
+            var data = { id: riskId };
+            var url_redirect = "@Url.Action("Index", "Risk", new { Area = "Risk" })";
+            deleteThenRedirect(url, data, url_redirect);
+        }
+    </script>
+    
+    @Scripts.Render("~/bundles/risk")
+
+    @* Template untuk row risk *@
+    <script id="riskRowTemplate" type="text/x-kendo-tmpl">
+        <tr class="k-master-row" data-RiskId="#: RiskId #">
+            <td class="k-hierarchy-cell"><a href="\#" class="k-icon k-plus"></a></td>
+            <td>#:RiskNumber#</td>
+            <td>#:ProcessBusiness#</td>
+            <td>#=RiskEvent#</td>
+            # RiskClasification = RiskClasification.toLowerCase() #
+            <td><span class="circle circle-#:RiskClasification#"></span></td>
+            <td>
+                <a href="/Risk/Risk/RiskDetail?riskId=#=RiskId#"><i class="fa fa-folder-open"></i></a>
+                <a href="\#" onclick="delete_risk(#=RiskId#); return false;"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    </script>
+
+    @* Template untuk row risk mitigation *@
+    <script id="riskRowMitigationTemplate" type="text/x-kendo-tmpl">
+        <tr data-MitigationId="#: MitigationId #">
+            <td rowspan="2">#=MitigationPlan#</td>
+            <td>Plan</td>
+            #
+            var curClass = "";
+            for (i = 1; i <= 12; i++)
+            {
+            if (Plan == i)
+            curClass = "bg-blue";
+            else
+            curClass = "";
+            #
+            <td class="#=curClass#"></td>
+            #
+            }
+            #
+        </tr>
+        <tr>
+            <td style="border-left-width: thin">Actual</td>
+            #
+            curClass = "";
+            for (i = 1; i <= 12; i++)
+            {
+            if (Actual == i)
+            curClass = "bg-green";
+            else
+            curClass = "";
+            #
+            <td class="#=curClass#"></td>
+            #
+            }
+            #
+        </tr>
     </script>
 }
 

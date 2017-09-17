@@ -4,11 +4,10 @@
 
 }
 
-
 <div class="clearfix mb-15">
     <div class="pull-left">
         <div class="text-vertical risk-impact">
-            Dampak
+            Probabilitas
         </div>
     </div>
     <div class="pull-left">
@@ -20,7 +19,7 @@
                     {
                         int riskCount = Model.TopRiskTableCell[i][j].RiskImpactList.Count();
                         <td class="@Model.TopRiskTableCell[i][j].CellClass">
-                            <a href="#" class="riskcount">
+                            <a href="#" onclick="openRiskDetailPopup('@string.Join(",", Model.TopRiskTableCell[i][j].GetRiskIdList())'); return false;" class="riskcount">
                                 @((riskCount > 0)?riskCount.ToString():"")
                             </a>
                         </td>
@@ -29,7 +28,7 @@
             }
         </table>
         <div class="text-center">
-            Probabilitas
+            Dampak
         </div>
     </div>
 </div>

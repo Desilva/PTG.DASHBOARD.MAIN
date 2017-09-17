@@ -224,5 +224,15 @@ namespace WebUI.Models
             else //if (RiskPoint <= 25)
                 CellClass = "high";
         }
+
+        public List<int> GetRiskIdList()
+        {
+            List<int> riskIdList = new List<int>();
+            foreach (RiskImpactPresentationStub riskImpact in RiskImpactList)
+            {
+                riskIdList.Add(riskImpact.RiskId);
+            }
+            return riskIdList.Distinct().ToList();
+        }
     }
 }

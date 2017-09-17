@@ -1595,6 +1595,7 @@
     <Content Include="Areas\Risk\Views\Risk\_FormRiskImpact.cshtml" />
     <Content Include="Areas\Risk\Views\Risk\_FormRiskDocument.cshtml" />
     <Content Include="Areas\Risk\Views\Risk\_RiskDocument.cshtml" />
+    <Content Include="Areas\Risk\Views\Risk\_TopRiskDetailIndex.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
