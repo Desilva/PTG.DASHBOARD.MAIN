@@ -24,5 +24,22 @@ namespace WebUI.Areas.Risk.Models.RiskImpact
         public Nullable<bool> IsDeleted { get; set; }
 
         public virtual Business.Entities.Risk Risk { get; set; }
+
+        public RiskImpactPresentationStub(Business.Entities.RiskImpact riskImpact)
+        {
+            RiskId = riskImpact.RiskId;
+            ImpactId = riskImpact.ImpactId;
+            this.Type = riskImpact.Type;
+            QuantitatifImpact = riskImpact.QuantitatifImpact;
+            Probability = riskImpact.Probability;
+            Impact = riskImpact.Impact;
+            RPN = riskImpact.RPN;
+            ModifiedBy = riskImpact.ModifiedBy;
+            ModifiedDate = riskImpact.ModifiedDate;
+            CreatedBy = riskImpact.CreatedBy;
+            CreatedDate = riskImpact.CreatedDate;
+            IsDeleted = riskImpact.IsDeleted;
+        }
+        
     }
 }

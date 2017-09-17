@@ -18,7 +18,10 @@
     </div>
 
     <div class="row">
+        @*Kolom Operasi*@
         <div class="col-lg-4" id="operationContent"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
+        
+        @*Kolom Investasi*@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -53,83 +56,31 @@
                 </div>
             </div>
         </div>
+
+        @*Kolom Top Risk*@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <span class="label label-success pull-right">Mei '17</span>
+                    <span class="label label-success pull-right">
+                        @DateTime.Now.ToString("MMM \\'yy")
+                    </span>
                     <h5>Top Risiko</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="form-inline mb-15">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="RiskType"> Inherent
+                                <input type="radio" name="RiskType" value="INHERENT"> Inherent
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="RiskType" checked> Residual
+                                <input type="radio" name="RiskType" value="RESIDUAL" checked> Residual
                             </label>
                         </div>
                     </div>
-                    <div class="risk-matrix">
-                        <div class="clearfix mb-15">
-                            <div class="pull-left">
-                                <div class="text-vertical risk-impact">
-                                    Dampak
-                                </div>
-                            </div>
-                            <div class="pull-left">
-                                <table class="">
-                                    <tr>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="high"></td>
-                                        <td class="high"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low">1</td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="high"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low"></td>
-                                        <td class="low">4</td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="med">
-                                            <a data-toggle="popover" title="Kejadian Risiko" data-content="Potensi risiko keterlambatan penerimaan dana atas piutang dagang" data-placement="top" data-html="true">2</a>
-                                            <a data-toggle="popover" title="Kejadian Risiko" data-content="Potensi risiko tidak tercapainya target volume pengaliran gas" data-placement="top">5</a>
-                                        </td>
-                                        <td class="med"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low">3</td>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="med"></td>
-                                    </tr>
-                                </table>
-                                <div class="text-center">
-                                    Probabilitas
-                                </div>
-                            </div>
-                        </div>
-                        <div class="risk-legend">
-                            <span class="circle low"></span>Low
-                            <span class="circle med"></span>Medium
-                            <span class="circle high"></span>High
-                        </div>
+                    <div class="risk-matrix" id="risk_table">
+                        <div class="loader"></div>
                     </div>
                 </div>
             </div>
@@ -146,7 +97,25 @@
             $.post("@Url.Action("GetOperationInfo", currentController)", function (data) {
                 $("#operationContent").html(data);
             });
+            GetTopRisk();
         });
+
+        $("input[name=RiskType]").change(function () {
+            $("#risk_table").html("<div class='loader'></div>");
+            GetTopRisk();
+        });
+
+        function GetTopRisk() {
+            $.post(
+                "@Url.Action("GetTopRisk", "Risk", new { Area = "Risk" })",
+                {
+                    type: $("input[name=RiskType]:checked").val()
+                },
+                function (data) {
+                    $("#risk_table").html(data);
+                }
+            );
+        }
     </script>
 }
 

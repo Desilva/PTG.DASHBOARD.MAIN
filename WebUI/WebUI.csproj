@@ -2559,6 +2559,7 @@
     <Content Include="Views\Shared\Inspinia\_PopupOption.cshtml" />
     <Content Include="Views\Home\_FinanceIndex.cshtml" />
     <Content Include="Views\Home\_OperationIndex.cshtml" />
+    <Content Include="Areas\Risk\Views\Risk\_TopRiskIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

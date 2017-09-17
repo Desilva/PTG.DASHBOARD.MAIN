@@ -10,6 +10,7 @@ using Common.Enums;
 using WebUI.Infrastructure.Validation;
 using System.Globalization;
 using System.Threading;
+using WebUI.Areas.Risk.Models.RiskImpact;
 
 namespace WebUI.Models
 {
@@ -154,6 +155,74 @@ namespace WebUI.Models
             Account = account;
             Value = value;
             Persen = persen;
+        }
+    }
+
+    public class TopRiskTableModel
+    {
+        public int ROW_COUNT = 5;
+        public int COL_COUNT = 5;
+        public TopRiskTableCellModel[][] TopRiskTableCell;
+
+        public TopRiskTableModel(List<RiskImpactPresentationStub> riskImpactList)
+        {
+            TopRiskTableCell = new TopRiskTableCellModel[ROW_COUNT][];
+            for (int i = 0; i < ROW_COUNT; i++)
+            {
+                TopRiskTableCell[i] = new TopRiskTableCellModel[COL_COUNT];
+                for (int j = 0; j < COL_COUNT; j++)
+                {
+                    TopRiskTableCell[i][j] = new TopRiskTableCellModel(i+1, j+1);
+                }
+            }
+
+            int row = 0;
+            int col = 0;
+            foreach (RiskImpactPresentationStub riskImpact in riskImpactList)
+            {
+                row = 6 - riskImpact.Probability.Value; //prob 5 jadi row 1, prob 1 jadi row 5
+                col = riskImpact.Impact.Value; //impact 1 jadi col 1, impact 5 jadi row 5
+                row = (row >= 1) ? ((row <= 5) ? row : 5) : 1; // row harus di antara 1-5
+                col = (col >= 1) ? ((col <= 5) ? col : 5) : 1; // col harus di antara 1-5
+                
+                TopRiskTableCell[row - 1][col - 1].RiskImpactList.Add(riskImpact);
+            }
+        }
+    }
+
+    public class TopRiskTableCellModel
+    {
+        public List<RiskImpactPresentationStub> RiskImpactList;
+        public int RiskPoint;
+        public string CellClass;
+
+        public TopRiskTableCellModel()
+        {
+            RiskImpactList = new List<RiskImpactPresentationStub>();
+            RiskPoint = 0;
+            CellClass = "";
+        }
+
+        public TopRiskTableCellModel(int row, int col)
+        {
+            RiskImpactList = new List<RiskImpactPresentationStub>();
+
+            //row = (row >= 1) ? ((row <= 5) ? row : 5) : 1; // row harus di antara 1-5
+            //col = (col >= 1) ? ((col <= 5) ? col : 5) : 1; // col harus di antara 1-5
+            int probability = 6 - row; //row 1 utk prob 5, row 5 utk prob 1
+            int impact = col; //col 1 utk impact 1, col 5 utk impact 5
+
+            RiskPoint = probability * impact;
+            if (RiskPoint <= 3)
+                CellClass = "low";
+            else if (RiskPoint <= 4)
+                CellClass = "medlow";
+            else if (RiskPoint <= 9)
+                CellClass = "med";
+            else if (RiskPoint <= 12)
+                CellClass = "medhigh";
+            else //if (RiskPoint <= 25)
+                CellClass = "high";
         }
     }
 }

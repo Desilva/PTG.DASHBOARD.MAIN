@@ -662,5 +662,61 @@ namespace WebUI.Areas.Risk.Controllers
             }
             return riskDocuments;
         }
+        
+        [HttpPost]
+        public ActionResult GetTopRisk(string type)
+        {
+            List<RiskPresentationStub> riskList = GoToIndex(DateTime.Now.Year);
+            List<RiskImpactPresentationStub> riskImpactList = new List<RiskImpactPresentationStub>();
+            foreach (RiskPresentationStub risk in riskList)
+            {
+                riskImpactList.AddRange(GetRiskImpactPresentationStubs(risk.RiskId, type));
+            }
+
+            TopRiskTableModel topRiskTable = new TopRiskTableModel(riskImpactList);
+            
+            return PartialView("_TopRiskIndex", topRiskTable);
+        }
+
+        public List<RiskImpactPresentationStub> GetRiskImpactPresentationStubs(int? riskId, string type)
+        {
+            List<RiskImpactPresentationStub> riskImpacts = new List<RiskImpactPresentationStub>();
+
+            var filters = new Business.Infrastructure.FilterInfo
+            {
+                Logic = "and",
+                Filters = new List<Business.Infrastructure.FilterInfo>()
+            };
+            if (riskId != null)
+            {
+                filters.Filters.Add(new Business.Infrastructure.FilterInfo
+                {
+                    Field = "RiskId",
+                    Operator = "eq",
+                    Value = riskId.ToString()
+                });
+            }
+            if (type != "")
+            {
+                filters.Filters.Add(new Business.Infrastructure.FilterInfo
+                {
+                    Field = "Type",
+                    Operator = "eq",
+                    Value = type
+                });
+            }
+            List<SortingInfo> sortings = new List<SortingInfo>();
+            sortings.Add(new SortingInfo
+            {
+                SortOn = "Type",
+                SortOrder = "ASC"
+            });
+            foreach (Business.Entities.RiskImpact riskImpact in RiskImpactRepo.Find(null, null, sortings, filters, false))
+            {
+                riskImpacts.Add(new RiskImpactPresentationStub(riskImpact));
+            }
+
+            return riskImpacts;
+        }
     }
 }

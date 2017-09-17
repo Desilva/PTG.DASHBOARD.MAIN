@@ -114,8 +114,5 @@ namespace WebUI.Controllers
 
             return PartialView("_OperationIndex", new HomeOperationModel());
         }
-
-
-
     }
 }
