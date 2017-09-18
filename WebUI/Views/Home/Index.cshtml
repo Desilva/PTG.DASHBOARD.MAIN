@@ -75,25 +75,20 @@
         @*Kolom Top Risk*@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
-                <div class="ibox-title">
+                <div id="panel-toprisk" class="ibox-title">
                     <span class="label label-success pull-right">
                         @DateTime.Now.ToString("MMM \\'yy")
                     </span>
-                    <h5>Top Risiko</h5>
+                    <h5>
+                        Top Risiko
+                        <span id="tooltipTopRisk" class="glyphicon glyphicon-question-sign m-l-xs" aria-hidden="true" data-toggle="tooltip" data-html="true" data-placement="top" data-container="body" title="Top Risiko"></span>
+                    </h5>
+                    <div class="form-inline pull-left mb-15">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="RiskType" value="INHERENT"> Inherent
+                        <input type="radio" name="RiskType" value="RESIDUAL" checked> Residual
+                    </div>
                 </div>
                 <div class="ibox-content">
-                    <div class="form-inline mb-15">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="RiskType" value="INHERENT"> Inherent
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="RiskType" value="RESIDUAL" checked> Residual
-                            </label>
-                        </div>
-                    </div>
                     <div class="risk-matrix" id="risk_table">
                         <div class="loader"></div>
                     </div>
@@ -107,6 +102,8 @@
     <script>
         //var riskGrid;
         $(document).ready(function (e) {
+            initTooltipText();
+
             riskDetailPopUpHtml = $("#riskDetailPopup").html();
             //riskGridHtml = $("#riskGrid").html();
 
@@ -114,6 +111,7 @@
                 width: "75%",
                 height: "auto",
                 title: "Risiko",
+                modal: true,
                 visible: false
             });
 
@@ -156,7 +154,8 @@
             $("#riskDetailPopup").kendoWindow({
                 width: "75%",
                 height: "auto",
-                title: "Risiko"
+                title: "Risiko",
+                modal: true
             });
 
             $("#riskGrid").kendoGrid({
@@ -240,6 +239,13 @@
             var url_redirect = "@Url.Action("Index", "Risk", new { Area = "Risk" })";
             deleteThenRedirect(url, data, url_redirect);
         }
+
+        function initTooltipText() {
+            $("#tooltipTopRisk").kendoTooltip({
+                position: "top",
+                content: kendo.template($("#tooltipTopRiskTemplate").html())
+            });
+        }
     </script>
     
     @Scripts.Render("~/bundles/risk")
@@ -296,6 +302,15 @@
             #
         </tr>
     </script>
+    <script id="tooltipTopRiskTemplate" type="text/x-kendo-tmpl">
+        <div class="risk-legend">
+            <span class="circle low"></span>&nbsp;Low<br />
+            <span class="circle medlow"></span>&nbsp;Low to Moderate<br />
+            <span class="circle med"></span>&nbsp;Moderate<br />
+            <span class="circle medhigh"></span>&nbsp;Moderate to High<br />
+            <span class="circle high"></span>&nbsp;High
+        </div>
+    </script>
 }
 
-@Styles.Render("~/Content/loader");
+    @Styles.Render("~/Content/loader")

@@ -4405,6 +4405,117 @@ ol.unstyled {
         margin-left: 220px;
     }
 
+    .footer.nav.dummy {
+        position: relative;
+        height: 101px;
+    }
+
+    .footer.nav.narrow.dummy {
+        height: 84px;
+    }
+
+    .footer.fixed.nav {
+        /*background-image: url('../Images/landing/PTG-web 02-08.png');*/
+        position: fixed;
+        background-color: #2f4050;
+        height: 101px;
+        padding: 0 0 0 0;
+        border: 0;
+        bottom: 52px;
+    }
+
+    .footer.fixed.narrow{
+        height: 36px;
+    }
+
+    .footer.fixed.nav.narrow {
+        background-image: url('../Images/landing/PTG-web 02-08.png');
+        background-size:cover;
+        height: 84px;
+        bottom: 36px;
+    }
+
+    .footer.nav .navketerangan {
+        height: 100%;
+        width: 28%;
+        float: right;
+    }
+
+    .footer #navKeuangan {
+        background-image: url('../Images/landing/PTG-web 02-09.png');
+    }
+
+    .footer #navOperasi {
+        background-image: url('../Images/landing/PTG-web 02-10.png');
+    }
+
+    .footer #navInvestasi {
+        background-image: url('../Images/landing/PTG-web 02-11.png');
+    }
+
+    .footer #navResiko {
+        background-image: url('../Images/landing/PTG-web 02-12.png');
+    }
+
+    .footer #navKeuangan:hover {
+        background-image: url('../Images/landing/PTG-web 02-13.png');
+    }
+
+    .footer #navOperasi:hover {
+        background-image: url('../Images/landing/PTG-web 02-14.png');
+    }
+
+    .footer #navInvestasi:hover {
+        background-image: url('../Images/landing/PTG-web 02-15.png');
+    }
+
+    .footer #navResiko:hover {
+        background-image: url('../Images/landing/PTG-web 02-16.png');
+    }
+
+    .footer .lastupdate-ico {
+        background-image: url('../Images/landing/PTG-web 02-17.png');
+        background-repeat: no-repeat;
+        background-position-y: center;
+    }
+
+    /*.footer.nav .navchoice {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }*/
+
+.nav .row {
+    min-width: 800px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav .navitem {
+    padding-left: 40px;
+}
+
+.nav .navchild {
+    float: left;
+}
+
+.nav .navimg {
+    width: 68px;
+    height: 68px;
+    background-repeat: no-repeat;
+    background-position-y: center;
+}
+
+.nav .navtitle {
+    text-align: left;
+    color: white;
+    margin-left: 78px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 body.mini-navbar .footer.fixed,
 body.body-small.mini-navbar .footer.fixed {
     margin: 0 0 0 70px;
@@ -10313,6 +10424,14 @@ body.md-skin {
     display: inline-block;
 }
 
+.circle.big {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 10px;
+    display: inline-block;
+}
+
 .circle-bordered {
     border: solid 1px #666;
     width: 12px;
@@ -10432,6 +10551,10 @@ body.md-skin {
     border-radius: 0;
 }
 
+.risk-legend {
+    text-align: left;
+}
+
 .risk-matrix td {
     width: 40px;
     height: 40px;
@@ -10440,29 +10563,28 @@ body.md-skin {
     text-align: center;
 }
 
-.risk-matrix .high {
+.risk-matrix .high, .risk-legend .high {
     background: red;
 }
 
-.risk-matrix .medhigh {
+.risk-matrix .medhigh, .risk-legend .medhigh {
     background: #FF7F00;
 }
 
-.risk-matrix .med {
+.risk-matrix .med, .risk-legend .med {
     background: #FFFF00;
 }
 
-.risk-matrix .medlow {
+.risk-matrix .medlow, .risk-legend .medlow {
     background: #92D050;
 }
 
-.risk-matrix .low {
+.risk-matrix .low, .risk-legend .low {
     background: #00B050;
 }
 
 .risk-matrix .riskcount {
-    font-size: larger;
-    color: black;
+    font-size: small;
 }
 
 .rk-heading-action {
