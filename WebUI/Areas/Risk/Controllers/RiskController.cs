@@ -719,7 +719,7 @@ namespace WebUI.Areas.Risk.Controllers
             return riskImpacts;
         }
 
-        public ActionResult GetJsonTopRiskDetailIndex(string riskIdList)
+        public async Task<JsonResult> GetJsonTopRiskDetailIndex(string riskIdList)
         {
             //ambil2in risk
             var filters = new Business.Infrastructure.FilterInfo
@@ -748,7 +748,7 @@ namespace WebUI.Areas.Risk.Controllers
             }
             
             List<RiskPresentationStub> listRisk = new List<RiskPresentationStub>();
-            List<Business.Entities.Risk> risks = RiskRepo.Find(null, null, null, filters, false);
+            List<Business.Entities.Risk> risks = await RiskRepo.FindAsync(null, null, null, filters, false);
             foreach (Business.Entities.Risk risk in risks)
             {
                 listRisk.Add(new RiskPresentationStub(risk));

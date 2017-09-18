@@ -54,7 +54,10 @@ namespace WebUI.Controllers
             try
             {
                 response = await client.GetAsync(LINK_FIN);
-                respString = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    respString = await response.Content.ReadAsStringAsync();
+                }
             }
             catch (HttpRequestException e)
             {
@@ -91,7 +94,10 @@ namespace WebUI.Controllers
             try
             {
                 response = await client.GetAsync(LINK_OPS);
-                respString = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    respString = await response.Content.ReadAsStringAsync();
+                }
             }
             catch (HttpRequestException e)
             {
