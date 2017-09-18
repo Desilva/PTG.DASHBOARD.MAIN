@@ -1,0 +1,238 @@
+﻿@using Common.Enums
+@using System.Reflection
+@using WebUI.Models
+@{
+    ViewBag.Title = "Dashboard";
+    string currentController = (string)ViewContext.RouteData.Values["controller"];
+    string currentAction = (string)ViewContext.RouteData.Values["action"];
+
+    Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
+
+    HomeFinanceModel homeFinanceModel = new HomeFinanceModel();
+    if (ViewBag.HomeFinanceModel != null)
+    {
+        homeFinanceModel = (HomeFinanceModel)ViewBag.HomeFinanceModel;
+    }
+    HomeFinanceItemModel homeFinanceItemModel = new HomeFinanceItemModel();
+
+    HomeOperationModel homeOperationModel = new HomeOperationModel();
+    if (ViewBag.HomeOperationModel != null)
+    {
+        homeOperationModel = (HomeOperationModel)ViewBag.HomeOperationModel;
+    }
+    HomeOperationItemModel homeOperationItemModel = new HomeOperationItemModel();
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("Pertumbuhan Pendapatan Usaha", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("EBITDA Margin", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("Laba Bersih", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeFinanceModel.financeItems.TryGetValue("EBITDA", out homeFinanceItemModel))
+                        {
+                            @Html.Partial("_FinanceIndex", homeFinanceItemModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    @{
+                        if (homeOperationModel.LastUpdate != "")
+                        {
+                            @Html.Partial("_OperationIndex", homeOperationModel)
+                        }
+                        else
+                        {
+                            <div class="loader"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-success pull-right">Mei '17</span>
+                    <h5>Investasi</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="stat-list">
+                        <li>
+                            <h2 class="no-margins">Rp. 1.421 Triliun</h2>
+                            <small>Realisasi Investasi (vs drawdown)</small>
+                            <div class="stat-percent">93.5%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 94%;" class="progress-bar"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <small>Realisasi Investasi (vs phasing out)</small>
+                            <div class="stat-percent">51.9%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 52%;" class="progress-bar"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <small>Progress Fisik</small>
+                            <div class="stat-percent">65.3%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 65%;" class="progress-bar"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-success pull-right">Mei '17</span>
+                    <h5>Top Risiko</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-inline mb-15">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="RiskType"> Inherent
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="RiskType" checked> Residual
+                            </label>
+                        </div>
+                    </div>
+                    <div class="risk-matrix">
+                        <div class="clearfix mb-15">
+                            <div class="pull-left">
+                                <div class="text-vertical risk-impact">
+                                    Dampak
+                                </div>
+                            </div>
+                            <div class="pull-left">
+                                <table class="">
+                                    <tr>
+                                        <td class="med"></td>
+                                        <td class="med"></td>
+                                        <td class="med"></td>
+                                        <td class="high"></td>
+                                        <td class="high"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="low">1</td>
+                                        <td class="med"></td>
+                                        <td class="med"></td>
+                                        <td class="med"></td>
+                                        <td class="high"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="low"></td>
+                                        <td class="low">4</td>
+                                        <td class="med"></td>
+                                        <td class="med"></td>
+                                        <td class="med"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="low"></td>
+                                        <td class="low"></td>
+                                        <td class="low"></td>
+                                        <td class="med">
+                                            <a data-toggle="popover" title="Kejadian Risiko" data-content="Potensi risiko keterlambatan penerimaan dana atas piutang dagang" data-placement="top" data-html="true">2</a>
+                                            <a data-toggle="popover" title="Kejadian Risiko" data-content="Potensi risiko tidak tercapainya target volume pengaliran gas" data-placement="top">5</a>
+                                        </td>
+                                        <td class="med"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="low">3</td>
+                                        <td class="low"></td>
+                                        <td class="low"></td>
+                                        <td class="low"></td>
+                                        <td class="med"></td>
+                                    </tr>
+                                </table>
+                                <div class="text-center">
+                                    Probabilitas
+                                </div>
+                            </div>
+                        </div>
+                        <div class="risk-legend">
+                            <span class="circle low"></span>Low
+                            <span class="circle med"></span>Medium
+                            <span class="circle high"></span>High
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+        })
+
+
+    </script>
+}
+
+@Styles.Render("~/Content/loader");

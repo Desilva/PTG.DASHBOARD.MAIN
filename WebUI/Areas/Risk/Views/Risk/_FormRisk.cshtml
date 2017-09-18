@@ -33,7 +33,7 @@
                     @Html.LabelFor(model => model.RiskNumber, new { @class = "control-label col-lg-2" }) &nbsp;
                     <div class="col-lg-4">
                         @Html.TextBoxFor(model => model.RiskNumber, new {@class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.RiskNumber)
+                        @Html.ValidationMessageFor(model => model.RiskNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,7 +46,7 @@
                     @Html.LabelFor(model => model.ProcessBusiness, new { @class = "control-label col-lg-2" }) &nbsp;
                     <div class="col-lg-4">
                         @Html.TextBoxFor(model => model.ProcessBusiness, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProcessBusiness)
+                        @Html.ValidationMessageFor(model => model.ProcessBusiness, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,15 +58,31 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.RiskClasification, new { @class = "control-label col-lg-2" }) &nbsp;
                     <div class="col-lg-4">
-                        @Html.DropDownListFor(model => model.RiskClasification, new SelectList(Model.RiskClasificationOptions, "Value", "Text"), new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.RiskClasification)
+                        @*<select class="form-control valid" data-val="true" data-val-required="Klasifikasi Risiko wajib diisi." id="RiskClasification" name="RiskClasification" aria-required="true" aria-describedby="RiskClasification-error" aria-invalid="false">*@
+                            @foreach (SelectListItem riskClasificationOption in Model.RiskClasificationOptions)
+                            {
+                                <div class="radio">
+                                    <label>
+                                        <span style="color: @riskClasificationOption.Value.ToLower();"><b>&#11044;</b></span>
+                                        <input type="radio" name="RiskClasification" value="@riskClasificationOption.Value" @((Model.RiskClasification != null) ? (Model.RiskClasification.Equals(riskClasificationOption.Value) ? "checked=checked" : "") : "")>
+                                        &nbsp;@riskClasificationOption.Text
+                                    </label>
+                                </div>
+                                @*@Html.RadioButtonFor(model => model.RiskClasification, riskClasificationOption.Value)
+                                <div class="col-lg-1" style="color: @riskClasificationOption.Value.ToLower();">&#11035;&nbsp;@riskClasificationOption.Text</div>*@
+                                
+                                @*<option style="color: @riskClasificationOption.Value.ToLower(); font-weight: bold;" value="@riskClasificationOption.Value">&#11044;&nbsp;@riskClasificationOption.Text</option>*@
+                           }
+                        @*</select>*@
+                        @*@Html.DropDownListFor(model => model.RiskClasification, new SelectList(Model.RiskClasificationOptions, "Value", "Text"), new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.RiskClasification, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.RiskEvent, new { @class = "control-label col-lg-2" }) &nbsp;
                     <div class="col-lg-4">
                         @Html.TextAreaFor(model => model.RiskEvent, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.RiskEvent)
+                        @Html.ValidationMessageFor(model => model.RiskEvent, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">

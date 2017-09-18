@@ -73,4 +73,5 @@ namespace Common.Enums
         [Description("Residual")]
         RESIDUAL
     }
+    
 }

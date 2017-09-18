@@ -57,9 +57,11 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
 
         public int MitigationId { get; set; }
         public int RiskId { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
         [AllowHtml]
         [Display(Name = "Rencana Mitigasi")]
         public string MitigationPlan { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.MyGlobalErrors))]
         [Display(Name = "Rencana Pelaksanaan Risk Treatment")]
         public Nullable<int> Plan { get; set; }
         [Display(Name = "Actual Pelaksanaan Risk Treatment")]
@@ -85,12 +87,18 @@ namespace WebUI.Areas.Risk.Models.RiskMitigation
         {
             MonthOptions = new List<SelectListItem>();
 
+            MonthOptions.Add(new SelectListItem
+            {
+                Text = "",
+                Value = ""
+            });
+
             EnumHelper eh = new EnumHelper();
-            MonthOptions = Enum.GetValues(typeof(MONTH)).Cast<MONTH>().Select(x => new SelectListItem
+            MonthOptions.AddRange(Enum.GetValues(typeof(MONTH)).Cast<MONTH>().Select(x => new SelectListItem
             {
                 Text = eh.GetEnumDescription((MONTH)Enum.Parse(typeof(MONTH), x.ToString())),
                 Value = ((int) x).ToString()
-            }).ToList();
+            }).ToList());
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿@model WebUI.Areas.Risk.Models.Risk.RiskPresentationStub
 @using WebUI.Areas.Risk.Models.Risk
-@using WebUI.Areas.Risk.Models.RiskMitigation
-@using WebUI.Areas.Risk.Models.RiskDocument
-@using Common.Enums
-@using System.Reflection
-@using WebUI.Extension
 @using WebUI.Controllers
 
 @{
@@ -21,65 +16,28 @@
     {
         risks = (List<RiskPresentationStub>) ViewBag.Risks;
     }
-
-    List<RiskDocumentPresentationStub> riskDocuments = new List<RiskDocumentPresentationStub>();
-    if (ViewBag.RiskDocuments != null)
-    {
-        riskDocuments = (List<RiskDocumentPresentationStub>)ViewBag.RiskDocuments;
-    }
 }
 
 <div class="wrapper wrapper-content">
     <div class="ibox ">
-        <div class="ibox-content">
-            <div class="form-inline">
-                @using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRisk", @class = "left-align not-track-change" }))
-                {
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Year) &nbsp;
-                                @Html.DropDownListFor(model => model.Year, new SelectList(Model.YearOptions, "Value", "Text"), new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-
-    <div class="ibox ">
         <div class="ibox-title">
-            <h5>Top Risiko</h5>
+            <h5>Risiko</h5>
         </div>
         <div class="ibox-content">
-            <div class="mb-15">
-                <a href="@Url.Action("AddRisk", currentController, new { Area = "Risk", year = Model.Year })" class="btn btn-primary">Tambah Risiko</a>
-            </div>
-            @if (risks.Count() > 0)
-            {
-                // NEW MODERN TECHNOLOGY 2017 KENDO UI GRID !!! WOOOOOOOOOOOOOOOO
-                <table id="riskGrid">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Proses Bisnis</th>
-                            <th>Kejadian Risiko (Risk Event)</th>
-                            <th>Klasifikasi Risiko (Residual)</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>
-            }
-            else
-            {
-                <div id="grid-nkk" data-role="grid" class="label label-warning" style="">Data belum ada</div>
-            }
+            @*NEW MODERN TECHNOLOGY 2017 KENDO UI GRID !!! WOOOOOOOOOOOOOOOO*@
+            <table id="riskGrid">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Proses Bisnis</th>
+                        <th>Kejadian Risiko (Risk Event)</th>
+                        <th>Klasifikasi Risiko (Residual)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
-    @Html.Partial("_RiskDocument", riskDocuments)
 </div>
 
 @section scripts{
@@ -161,29 +119,8 @@
                     { title: "Klasifikasi Risiko (Residual)", width: 120 },
                     { width: 40 }
                 ],
-                detailInit: detailInit,
-                dataBound: function () {
-                    //ga usah di expand kan defaultnya
-                    //this.expandRow(this.tbody.find("tr.k-master-row").first());
-                }
+                detailInit: detailInit
             });
-
-
-            // OLD TABLE FUCTION :(
-            //$("[id|='row_mitigation']").hide();
-
-            //var bgcolor = "#fff";
-            //$(".row_panelbar").hover(
-            //    function () {
-            //        bgcolor = $(this).css("background-color");
-            //        $(this).css("background-color", "#ccc");
-            //    },
-            //    function () {
-            //        $(this).css("background-color", bgcolor);
-            //    });
-            //$(".row_panelbar").click(function () {
-            //    $("#row_mitigation-" + $(this).attr("row")).slideToggle(0);
-            //});
         });
 
         function detailInit(e) {
@@ -237,13 +174,6 @@
         function delete_risk(riskId) {
             var url = "@Url.Action("DeleteRisk", currentController, new { Area = "Risk" })";
             var data = { id: riskId };
-            var url_redirect = "@Url.Action("Index", currentController, new { Area = "Risk" })";
-            deleteThenRedirect(url, data, url_redirect);
-        }
-
-        function delete_risk_document(documentId) {
-            var url = "@Url.Action("DeleteRiskDocument", currentController, new { Area = "Risk" })";
-            var data = { id: documentId };
             var url_redirect = "@Url.Action("Index", currentController, new { Area = "Risk" })";
             deleteThenRedirect(url, data, url_redirect);
         }

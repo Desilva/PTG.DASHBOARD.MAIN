@@ -1,120 +1,42 @@
 ﻿@using Common.Enums
 @using System.Reflection
+@using WebUI.Models
 @{
     ViewBag.Title = "Dashboard";
     string currentController = (string)ViewContext.RouteData.Values["controller"];
     string currentAction = (string)ViewContext.RouteData.Values["action"];
 
     Common.Enums.EnumHelper eh = new Common.Enums.EnumHelper();
-
 }
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">Mei '17</span>
-                    <h5>Pendapatan</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">386,200</h1>
-                    <div class="stat-percent font-bold text-success">98%</div>
-                    <small>Kumulatif</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">Mei '17</span>
-                    <h5>Laba Usaha</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">386,200</h1>
-                    <div class="stat-percent font-bold text-success">98%</div>
-                    <small>Kumulatif</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">Mei '17</span>
-                    <h5>Laba Bersih</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">386,200</h1>
-                    <div class="stat-percent font-bold text-success">98%</div>
-                    <small>Kumulatif</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">Mei '17</span>
-                    <h5>EBITDA</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">386,200</h1>
-                    <div class="stat-percent font-bold text-success">98%</div>
-                    <small>Kumulatif</small>
-                </div>
-            </div>
-        </div>
+
+    <div id="riskDetailPopup">
+        <table id="riskGrid">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Proses Bisnis</th>
+                    <th>Kejadian Risiko (Risk Event)</th>
+                    <th>Klasifikasi Risiko (Residual)</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="row" id="financeContent">
+        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
+        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
+        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
+        <div class="col-lg-3"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-warning pull-right">April '17</span>
-                    <h5>Operasi</h5>
-                </div>
-                <div class="ibox-content">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Jenis Usaha</th>
-                                <th>Volume</th>
-                                <th>% Real</th>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>Niaga Gas (BBTU)</td>
-                            <td>30.482</td>
-                            <td>97%</td>
-                        </tr>
-                        <tr>
-                            <td>Transportasi Gas (BSCF)</td>
-                            <td>30.482</td>
-                            <td>97%</td>
-                        </tr>
-                        <tr>
-                            <td>Transportasi Minyak (MMBO)</td>
-                            <td>30.482</td>
-                            <td>97%</td>
-                        </tr>
-                        <tr>
-                            <td>Regasifikasi Gas (BBTU)</td>
-                            <td>30.482</td>
-                            <td>97%</td>
-                        </tr>
-                        <tr>
-                            <td>Processing Gas LPG (MTON)</td>
-                            <td>30.482</td>
-                            <td>97%</td>
-                        </tr>
-                        <tr>
-                            <td>Kompresi Gas CNG (BBTU)</td>
-                            <td>30.482</td>
-                            <td>97%</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
+        @*Kolom Operasi*@
+        <div class="col-lg-4" id="operationContent"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
+        
+        @*Kolom Investasi*@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -149,83 +71,31 @@
                 </div>
             </div>
         </div>
+
+        @*Kolom Top Risk*@
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <span class="label label-success pull-right">Mei '17</span>
+                    <span class="label label-success pull-right">
+                        @DateTime.Now.ToString("MMM \\'yy")
+                    </span>
                     <h5>Top Risiko</h5>
                 </div>
                 <div class="ibox-content">
                     <div class="form-inline mb-15">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="RiskType"> Inherent
+                                <input type="radio" name="RiskType" value="INHERENT"> Inherent
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="RiskType" checked> Residual
+                                <input type="radio" name="RiskType" value="RESIDUAL" checked> Residual
                             </label>
                         </div>
                     </div>
-                    <div class="risk-matrix">
-                        <div class="clearfix mb-15">
-                            <div class="pull-left">
-                                <div class="text-vertical risk-impact">
-                                    Dampak
-                                </div>
-                            </div>
-                            <div class="pull-left">
-                                <table class="">
-                                    <tr>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="high"></td>
-                                        <td class="high"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low">1</td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="high"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low"></td>
-                                        <td class="low">4</td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                        <td class="med"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="med">
-                                            <a data-toggle="popover" title="Kejadian Risiko" data-content="Potensi risiko keterlambatan penerimaan dana atas piutang dagang" data-placement="top" data-html="true">2</a>
-                                            <a data-toggle="popover" title="Kejadian Risiko" data-content="Potensi risiko tidak tercapainya target volume pengaliran gas" data-placement="top">5</a>
-                                        </td>
-                                        <td class="med"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="low">3</td>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="low"></td>
-                                        <td class="med"></td>
-                                    </tr>
-                                </table>
-                                <div class="text-center">
-                                    Probabilitas
-                                </div>
-                            </div>
-                        </div>
-                        <div class="risk-legend">
-                            <span class="circle low"></span>Low
-                            <span class="circle med"></span>Medium
-                            <span class="circle high"></span>High
-                        </div>
+                    <div class="risk-matrix" id="risk_table">
+                        <div class="loader"></div>
                     </div>
                 </div>
             </div>
@@ -235,9 +105,197 @@
 
 @section scripts{
     <script>
-        $(function () {
-        })
+        //var riskGrid;
+        $(document).ready(function (e) {
+            riskDetailPopUpHtml = $("#riskDetailPopup").html();
+            //riskGridHtml = $("#riskGrid").html();
 
+            $("#riskDetailPopup").kendoWindow({
+                width: "75%",
+                height: "auto",
+                title: "Risiko",
+                visible: false
+            });
 
+            $.post("@Url.Action("GetFinanceInfo", currentController)", function (data) {
+                $("#financeContent").html(data);
+            });
+            $.post("@Url.Action("GetOperationInfo", currentController)", function (data) {
+                $("#operationContent").html(data);
+            });
+            GetTopRisk();
+        });
+
+        $("input[name=RiskType]").change(function () {
+            $("#risk_table").html("<div class='loader'></div>");
+            GetTopRisk();
+        });
+
+        function GetTopRisk() {
+            $.post(
+                "@Url.Action("GetTopRisk", "Risk", new { Area = "Risk" })",
+                {
+                    type: $("input[name=RiskType]:checked").val()
+                },
+                function (data) {
+                    $("#risk_table").html(data);
+                }
+            );
+        }
+
+        function openRiskDetailPopup(riskIdList) {
+
+            //inisialisasi ulang
+            // kalo udah ke set, destroy dulu
+            if ($("#riskGrid").data("kendoGrid") !== undefined)
+            {
+                $("#riskGrid").data("kendoGrid").destroy();
+                $("#riskGrid").empty();
+            }
+            $("#riskDetailPopup").html(riskDetailPopUpHtml);
+            $("#riskDetailPopup").kendoWindow({
+                width: "75%",
+                height: "auto",
+                title: "Risiko"
+            });
+
+            $("#riskGrid").kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "@Url.Action("GetJsonTopRiskDetailIndex", "Risk", new { Area = "Risk" })" + "?riskIdList=" + riskIdList
+                    },
+                    pageSize: 3,
+                    serverPaging: false,
+                    serverSorting: true
+                },
+                rowTemplate: kendo.template($("#riskRowTemplate").html()),
+                sortable: true,
+                pageable: true,
+                columns:
+                [
+                    { title: "No.", width: 100 },
+                    { title: "Proses Bisnis", width: 200 },
+                    { title: "Kejadian Risiko (Risk Event)", width: 200 },
+                    { title: "Klasifikasi Risiko (Residual)", width: 120 },
+                    { width: 40 }
+                ],
+                detailInit: detailInit
+            });
+
+            $("#riskDetailPopup").data("kendoWindow").center().open();
+        };
+        
+        function detailInit(e) {
+            $("<div/>").appendTo(e.detailCell).kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read: "/Risk/Risk/GetJsonRiskMitigations?riskId=" + e.data.RiskId
+                    },
+                    serverPaging: false,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    pageSize: 10
+                },
+                rowTemplate: kendo.template($("#riskRowMitigationTemplate").html()),
+                scrollable: false,
+                sortable: true,
+                pageable: true,
+                columns:
+                [
+                    {
+                        title: "Rencana Mitigasi",
+                        columns:
+                        [
+                            {},
+                            {width: 60}
+                        ]
+                    },
+                    {
+                        title: "Bulan",
+                        columns:
+                        [
+                            { title:  "1", width: 30 },
+                            { title:  "2", width: 30 },
+                            { title:  "3", width: 30 },
+                            { title:  "4", width: 30 },
+                            { title:  "5", width: 30 },
+                            { title:  "6", width: 30 },
+                            { title:  "7", width: 30 },
+                            { title:  "8", width: 30 },
+                            { title:  "9", width: 30 },
+                            { title: "10", width: 30 },
+                            { title: "11", width: 30 },
+                            { title: "12", width: 30 }
+                        ]
+                    }
+                ]
+            });
+        }
+
+        function delete_risk(riskId) {
+            var url = "@Url.Action("DeleteRisk", "Risk", new { Area = "Risk" })";
+            var data = { id: riskId };
+            var url_redirect = "@Url.Action("Index", "Risk", new { Area = "Risk" })";
+            deleteThenRedirect(url, data, url_redirect);
+        }
+    </script>
+    
+    @Scripts.Render("~/bundles/risk")
+
+    @* Template untuk row risk *@
+    <script id="riskRowTemplate" type="text/x-kendo-tmpl">
+        <tr class="k-master-row" data-RiskId="#: RiskId #">
+            <td class="k-hierarchy-cell"><a href="\#" class="k-icon k-plus"></a></td>
+            <td>#:RiskNumber#</td>
+            <td>#:ProcessBusiness#</td>
+            <td>#=RiskEvent#</td>
+            # RiskClasification = RiskClasification.toLowerCase() #
+            <td><span class="circle circle-#:RiskClasification#"></span></td>
+            <td>
+                <a href="/Risk/Risk/RiskDetail?riskId=#=RiskId#"><i class="fa fa-folder-open"></i></a>
+                <a href="\#" onclick="delete_risk(#=RiskId#); return false;"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    </script>
+
+    @* Template untuk row risk mitigation *@
+    <script id="riskRowMitigationTemplate" type="text/x-kendo-tmpl">
+        <tr data-MitigationId="#: MitigationId #">
+            <td rowspan="2">#=MitigationPlan#</td>
+            <td>Plan</td>
+            #
+            var curClass = "";
+            for (i = 1; i <= 12; i++)
+            {
+            if (Plan == i)
+            curClass = "bg-blue";
+            else
+            curClass = "";
+            #
+            <td class="#=curClass#"></td>
+            #
+            }
+            #
+        </tr>
+        <tr>
+            <td style="border-left-width: thin">Actual</td>
+            #
+            curClass = "";
+            for (i = 1; i <= 12; i++)
+            {
+            if (Actual == i)
+            curClass = "bg-green";
+            else
+            curClass = "";
+            #
+            <td class="#=curClass#"></td>
+            #
+            }
+            #
+        </tr>
     </script>
 }
+
+@Styles.Render("~/Content/loader");

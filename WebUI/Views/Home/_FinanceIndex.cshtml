@@ -1,0 +1,39 @@
+﻿@model WebUI.Models.HomeFinanceModel
+@using WebUI.Models
+@{ 
+        HomeFinanceItemModel homeFinanceItemModel = new HomeFinanceItemModel();
+        HomeOperationItemModel homeOperationItemModel = new HomeOperationItemModel();
+
+        string[] columnNames = new string[] { "Pertumbuhan Pendapatan Usaha", "EBITDA Margin", "Laba Bersih", "EBITDA" };
+    }
+
+@foreach (string columnName in columnNames)
+{
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            @if (Model.financeItems.TryGetValue(columnName, out homeFinanceItemModel))
+            {
+                <div class="ibox-title">
+                    <span class="label label-@((Model.LastUpdateDate.AddMonths(1) >= DateTime.Now)?"success":"warning") pull-right">
+                        @Model.LastUpdateDate.ToString("MMM \\'yy")
+                    </span>
+                    <h5>@homeFinanceItemModel.Account</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@homeFinanceItemModel.Value</h1>
+                    <div class="stat-percent font-bold text-success">@homeFinanceItemModel.Persen</div>
+                    <small>Kumulatif</small>
+                </div>
+            }
+            else
+            {
+                <div class="ibox-title">
+                    <h5>@columnName</h5>
+                </div>
+                <div class="ibox-content">
+                    <div id="grid-nkk" data-role="grid" class="label label-danger" style="">Gagal mengambil data</div>
+                </div>
+            }
+        </div>
+    </div>
+}

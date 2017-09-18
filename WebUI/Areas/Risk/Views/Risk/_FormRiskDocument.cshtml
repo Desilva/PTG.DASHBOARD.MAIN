@@ -1,7 +1,11 @@
-﻿@model WebUI.Areas.Risk.Models.RiskDocument.RiskDocumentFormStub
+﻿@using WebUI.Controllers
+
+@model WebUI.Areas.Risk.Models.RiskDocument.RiskDocumentFormStub
 @{
     string currentController = (string)ViewContext.RouteData.Values["controller"];
     string currentAction = (string)ViewContext.RouteData.Values["action"];
+
+    FileNameProcessController fn = new FileNameProcessController();
 }
 
 @using (@Html.BeginForm(currentAction, currentController, FormMethod.Post, new { @id = "formRiskDocumentAdd", @class = "form-horizontal" }))
@@ -22,8 +26,10 @@
                     @Html.LabelFor(model => model.FilePath, new { @class = "control-label col-lg-2" })
                     <div class="col-lg-4">
                         @Html.HiddenFor(model => model.FilePath)
+                        <a href="@fn.AbsolutePath(Model.FilePath ?? "")">@fn.FriendlyName(Model.FilePath ?? "")</a>
                         @Html.TextBox("files", "", new { type = "file", id = "KendoUploader" })
-                        @Html.ValidationMessageFor(model => model.FilePath)
+                        @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
+                        <div class="text-info">*) ukuran file maksimal 10 MB dan bertipe (.pdf, .xlsx, .doc, .ppt, .jpg, .jpeg, atau .png)</div>
                     </div >
                 </div>
 
@@ -64,7 +70,7 @@
         function onSelectFile(e) {
             var flagExtension = 0;
             var flagSize = 0;
-            var allowedExtension = [".pdf"];
+            var allowedExtension = [".pdf", ".xlsx", ".doc", ".ppt", ".jpg", ".jpeg", ".png"];
             var file = e.files;
 
             if (file[0].size > 10485760) {
@@ -76,7 +82,7 @@
             }
 
             if (flagExtension == 1) {
-                alert("Only .pdf files are allowed");
+                alert("Only .pdf, .xlsx, .doc, .ppt, .jpg, .jpeg, .png files are allowed");
                 e.preventDefault();
             }
             if (flagSize == 1) {

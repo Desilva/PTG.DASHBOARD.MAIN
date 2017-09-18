@@ -1,0 +1,46 @@
+﻿@model WebUI.Models.HomeOperationModel
+@using WebUI.Models
+
+@if (Model.OperationItems.Count() > 0)
+{
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span class="label label-@((Model.LastUpdateDate.AddMonths(1) >= DateTime.Now)?"success":"warning") pull-right">
+                @Model.LastUpdateDate.ToString("MMM \\'yy")
+            </span>
+            <h5>Operasi</h5>
+        </div>
+        <div class="ibox-content">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Jenis Usaha</th>
+                        <th>Volume</th>
+                        <th>% Real</th>
+                    </tr>
+                </thead>
+                @{
+                    foreach (HomeOperationItemModel homeOperationItemModel in Model.OperationItems.Values)
+                    {
+                        <tr>
+                            <td>@homeOperationItemModel.Account</td>
+                            <td>@homeOperationItemModel.Value</td>
+                            <td>@homeOperationItemModel.Persen</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Operasi</h5>
+        </div>
+        <div class="ibox-content">
+            <div id="grid-nkk" data-role="grid" class="label label-danger" style="">Gagal mengambil data</div>
+        </div>
+    </div>
+}

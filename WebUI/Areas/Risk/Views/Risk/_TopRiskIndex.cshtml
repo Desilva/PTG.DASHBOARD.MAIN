@@ -1,0 +1,41 @@
+﻿@model WebUI.Models.TopRiskTableModel
+@using WebUI.Models
+@{ 
+
+}
+
+<div class="clearfix mb-15">
+    <div class="pull-left">
+        <div class="text-vertical risk-impact">
+            Probabilitas
+        </div>
+    </div>
+    <div class="pull-left">
+        <table class="">
+            @for (int i = 0; i < Model.ROW_COUNT; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < Model.COL_COUNT; j++)
+                    {
+                        int riskCount = Model.TopRiskTableCell[i][j].RiskImpactList.Count();
+                        <td class="@Model.TopRiskTableCell[i][j].CellClass">
+                            <a href="#" onclick="openRiskDetailPopup('@string.Join(",", Model.TopRiskTableCell[i][j].GetRiskIdList())'); return false;" class="riskcount">
+                                @((riskCount > 0)?riskCount.ToString():"")
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+        <div class="text-center">
+            Dampak
+        </div>
+    </div>
+</div>
+<div class="risk-legend">
+    <span class="circle low"></span>&nbsp;Low<br />
+    <span class="circle medlow"></span>&nbsp;Low to Moderate<br />
+    <span class="circle med"></span>&nbsp;Moderate<br />
+    <span class="circle medhigh"></span>&nbsp;Moderate to High<br />
+    <span class="circle high"></span>&nbsp;High
+</div>

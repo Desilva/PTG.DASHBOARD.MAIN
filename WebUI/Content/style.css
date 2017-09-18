@@ -10444,12 +10444,25 @@ body.md-skin {
     background: red;
 }
 
+.risk-matrix .medhigh {
+    background: #FF7F00;
+}
+
 .risk-matrix .med {
     background: #FFFF00;
 }
 
+.risk-matrix .medlow {
+    background: #92D050;
+}
+
 .risk-matrix .low {
-    background: #7FFF00;
+    background: #00B050;
+}
+
+.risk-matrix .riskcount {
+    font-size: larger;
+    color: black;
 }
 
 .rk-heading-action {
