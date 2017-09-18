@@ -115,13 +115,28 @@
                 visible: false
             });
 
-            $.post("@Url.Action("GetFinanceInfo", currentController)", function (data) {
-                $("#financeContent").html(data);
-            });
-            $.post("@Url.Action("GetOperationInfo", currentController)", function (data) {
-                $("#operationContent").html(data);
-            });
+            // ambil data toprisk
             GetTopRisk();
+
+            // ambil data finance
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetFinanceInfo", currentController)",
+                data: "",
+                success: function(result) {
+                    $("#financeContent").html(result);
+                }
+            });
+
+            // ambil data operation
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetOperationInfo", currentController)",
+                data: "",
+                success: function (result) {
+                    $("#operationContent").html(result);
+                }
+            });
         });
 
         $("input[name=RiskType]").change(function () {
@@ -130,15 +145,16 @@
         });
 
         function GetTopRisk() {
-            $.post(
-                "@Url.Action("GetTopRisk", "Risk", new { Area = "Risk" })",
-                {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetTopRisk", "Risk", new { Area = "Risk" })",
+                data: {
                     type: $("input[name=RiskType]:checked").val()
                 },
-                function (data) {
-                    $("#risk_table").html(data);
+                success: function (result) {
+                    $("#risk_table").html(result);
                 }
-            );
+            });
         }
 
         function openRiskDetailPopup(riskIdList) {
@@ -160,10 +176,6 @@
 
             $("#riskGrid").kendoGrid({
                 dataSource: {
-                    type: "json",
-                    transport: {
-                        read: "@Url.Action("GetJsonTopRiskDetailIndex", "Risk", new { Area = "Risk" })" + "?riskIdList=" + riskIdList
-                    },
                     pageSize: 3,
                     serverPaging: false,
                     serverSorting: true
@@ -182,9 +194,19 @@
                 detailInit: detailInit
             });
 
+            $.ajax(
+                {
+                    type: 'GET',
+                    url: "@Url.Action("GetJsonTopRiskDetailIndex", "Risk", new { Area = "Risk" })" + "?riskIdList=" + riskIdList,
+                    dataType: 'json',
+                    success: function (result) {
+                        $("#riskGrid").data("kendoGrid").dataSource.data(result);
+                    }
+                });
+
             $("#riskDetailPopup").data("kendoWindow").center().open();
         };
-        
+
         function detailInit(e) {
             $("<div/>").appendTo(e.detailCell).kendoGrid({
                 dataSource: {
