@@ -2572,6 +2572,7 @@
     <Content Include="Areas\Risk\Views\Risk\_TopRiskIndex.cshtml" />
     <Content Include="Views\Shared\Inspinia\_LayoutDashboard.cshtml" />
     <Content Include="Views\Shared\Inspinia\_FooterDashboard.cshtml" />
+    <Content Include="Views\Shared\Inspinia\_NavigationDashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
