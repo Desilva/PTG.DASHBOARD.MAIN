@@ -102,11 +102,21 @@ namespace WebUI.Models
 
         public HomeFinanceItemModel(string account, string value, string persen)
         {
-            if (account == "Pertumbuhan Pendapatan Usaha") Account = "Pendapatan";
-            else if (account == "EBITDA Margin") Account = "Laba Usaha";
+            if (account == "Pertumbuhan Pendapatan Usaha") Account = "Pertumbuhan Pendapatan";
             else Account = account;
 
-            Value = value;
+            string USDStrReplaced = "USD ";
+            string USDStrReplacer = " (USD)";
+            if (value.StartsWith(USDStrReplaced))
+            {
+                Value = value.Replace(USDStrReplaced, "");
+                Account = Account + USDStrReplacer;
+            }
+            else
+            {
+                Value = value;
+            }
+            
             Persen = persen;
         }
     }
@@ -153,6 +163,13 @@ namespace WebUI.Models
         public HomeOperationItemModel(string account, string value, string persen)
         {
             Account = account;
+
+            double valueTemp = 0;
+            if (double.TryParse(value, out valueTemp))
+            {
+                valueTemp = Math.Round(valueTemp, 2);
+                value = valueTemp.ToString();
+            }
             Value = value;
             Persen = persen;
         }

@@ -19,7 +19,7 @@
                     {
                         int riskCount = Model.TopRiskTableCell[i][j].RiskImpactList.Count();
                         <td class="@Model.TopRiskTableCell[i][j].CellClass">
-                            <a href="#" onclick="openRiskDetailPopup('@string.Join(",", Model.TopRiskTableCell[i][j].GetRiskIdList())'); return false;" class="riskcount">
+                            <a href="#" onclick="openRiskDetailPopup('@string.Join(",", Model.TopRiskTableCell[i][j].GetRiskIdList())'); return false;" class="riskcount @((riskCount > 0)?"circle big circle-white":"")">
                                 @((riskCount > 0)?riskCount.ToString():"")
                             </a>
                         </td>
@@ -31,11 +31,4 @@
             Dampak
         </div>
     </div>
-</div>
-<div class="risk-legend">
-    <span class="circle low"></span>&nbsp;Low<br />
-    <span class="circle medlow"></span>&nbsp;Low to Moderate<br />
-    <span class="circle med"></span>&nbsp;Moderate<br />
-    <span class="circle medhigh"></span>&nbsp;Moderate to High<br />
-    <span class="circle high"></span>&nbsp;High
 </div>
