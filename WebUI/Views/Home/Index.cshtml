@@ -19,7 +19,7 @@
                     <th>Proses Bisnis</th>
                     <th>Kejadian Risiko (Risk Event)</th>
                     <th>Klasifikasi Risiko (Residual)</th>
-                    <th></th>
+                    @*<th></th>*@
                 </tr>
             </thead>
         </table>
@@ -186,10 +186,9 @@
                 columns:
                 [
                     { title: "No.", width: 100 },
-                    { title: "Proses Bisnis", width: 200 },
-                    { title: "Kejadian Risiko (Risk Event)", width: 200 },
-                    { title: "Klasifikasi Risiko (Residual)" },
-                    { width: 0 }
+                    { title: "Proses Bisnis", width: 150 },
+                    { title: "Kejadian Risiko (Risk Event)", width: 250 },
+                    { title: "Klasifikasi Risiko (Residual)", width: 150 }
                 ],
                 detailInit: detailInit
             });
@@ -281,10 +280,10 @@
             <td>#=RiskEvent#</td>
             # RiskClasification = RiskClasification.toLowerCase() #
             <td><span class="circle circle-#:RiskClasification#"></span></td>
-            <td>
+            @*<td>
                 <a href="/Risk/Risk/RiskDetail?riskId=#=RiskId#"><i class="fa fa-folder-open"></i></a>
                 <a href="\#" onclick="delete_risk(#=RiskId#); return false;"><i class="fa fa-trash"></i></a>
-            </td>
+            </td>*@
         </tr>
     </script>
 
