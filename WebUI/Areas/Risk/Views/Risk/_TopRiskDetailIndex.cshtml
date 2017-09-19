@@ -53,7 +53,7 @@
             # RiskClasification = RiskClasification.toLowerCase() #
             <td><span class="circle circle-#:RiskClasification#"></span></td>
             <td>
-                <a href="/Risk/Risk/RiskDetail?riskId=#=RiskId#"><i class="fa fa-folder-open"></i></a>
+                <a href="@Url.Action("RiskDetail", "Risk", new { Area = "Risk" })?riskId=#=RiskId#"><i class="fa fa-folder-open"></i></a>
                 <a href="\#" onclick="delete_risk(#=RiskId#); return false;"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
@@ -128,7 +128,7 @@
                 dataSource: {
                     type: "json",
                     transport: {
-                        read: "/Risk/Risk/GetJsonRiskMitigations?riskId=" + e.data.RiskId
+                        read: "@Url.Action("GetJsonRiskMitigations", "Risk", new { Area = "Risk" })" + "?riskId=" + e.data.RiskId
                     },
                     serverPaging: false,
                     serverSorting: true,
