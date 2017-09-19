@@ -176,21 +176,21 @@
                     { title: "No.", width: 100 },
                     { title: "Proses Bisnis", width: 200 },
                     { title: "Kejadian Risiko (Risk Event)", width: 200 },
-                    { title: "Klasifikasi Risiko (Residual)", width: 120 },
-                    { width: 40 }
+                    { title: "Klasifikasi Risiko (Residual)" },
+                    { width: 0 }
                 ],
                 detailInit: detailInit
             });
 
             $("#riskDetailPopup").data("kendoWindow").center().open();
         };
-        
+
         function detailInit(e) {
             $("<div/>").appendTo(e.detailCell).kendoGrid({
                 dataSource: {
                     type: "json",
                     transport: {
-                        read: "/Risk/Risk/GetJsonRiskMitigations?riskId=" + e.data.RiskId
+                        read: "@Url.Action("GetJsonRiskMitigations", "Risk", new { Area = "Risk" })" + "?riskId=" + e.data.RiskId
                     },
                     serverPaging: false,
                     serverSorting: true,

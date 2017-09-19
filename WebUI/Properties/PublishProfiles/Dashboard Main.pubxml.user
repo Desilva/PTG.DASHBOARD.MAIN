@@ -31,19 +31,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2017 00:12:58</publishTime>
     </File>
     <File Include="Areas/Risk/Views/Risk/Index.cshtml">
-      <publishTime>09/11/2017 14:34:46</publishTime>
+      <publishTime>09/18/2017 08:37:20</publishTime>
     </File>
     <File Include="Areas/Risk/Views/Risk/_FormRisk.cshtml">
-      <publishTime>09/11/2017 14:34:46</publishTime>
+      <publishTime>09/18/2017 08:37:20</publishTime>
+    </File>
+    <File Include="Areas/Risk/Views/Risk/_FormRiskDocument.cshtml">
+      <publishTime>09/18/2017 08:37:20</publishTime>
     </File>
     <File Include="Areas/Risk/Views/Risk/_FormRiskImpact.cshtml">
-      <publishTime>09/11/2017 15:40:07</publishTime>
+      <publishTime>09/14/2017 09:12:02</publishTime>
     </File>
     <File Include="Areas/Risk/Views/Risk/_FormRiskMitigation.cshtml">
-      <publishTime>09/11/2017 14:34:46</publishTime>
+      <publishTime>09/18/2017 08:37:20</publishTime>
     </File>
     <File Include="Areas/Risk/Views/Risk/_RiskDetails.cshtml">
-      <publishTime>09/11/2017 15:40:07</publishTime>
+      <publishTime>09/18/2017 08:37:20</publishTime>
+    </File>
+    <File Include="Areas/Risk/Views/Risk/_RiskDocument.cshtml">
+      <publishTime>09/14/2017 09:12:02</publishTime>
+    </File>
+    <File Include="Areas/Risk/Views/Risk/_TopRiskDetailIndex.cshtml">
+      <publishTime>09/18/2017 08:37:20</publishTime>
+    </File>
+    <File Include="Areas/Risk/Views/Risk/_TopRiskIndex.cshtml">
+      <publishTime>09/18/2017 22:14:09</publishTime>
     </File>
     <File Include="Areas/Risk/Views/web.config">
       <publishTime>09/06/2017 08:44:21</publishTime>
@@ -103,22 +115,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/Business.dll">
-      <publishTime>09/11/2017 15:43:27</publishTime>
+      <publishTime>09/19/2017 13:19:58</publishTime>
     </File>
     <File Include="bin/Business.dll.config">
       <publishTime>09/10/2017 14:09:39</publishTime>
     </File>
     <File Include="bin/Business.pdb">
-      <publishTime>09/11/2017 15:43:27</publishTime>
+      <publishTime>09/19/2017 13:19:58</publishTime>
     </File>
     <File Include="bin/Castle.Core.dll">
       <publishTime>07/12/2017 06:37:22</publishTime>
     </File>
     <File Include="bin/Common.Enums.dll">
-      <publishTime>09/11/2017 15:43:26</publishTime>
+      <publishTime>09/19/2017 13:19:55</publishTime>
     </File>
     <File Include="bin/Common.Enums.pdb">
-      <publishTime>09/11/2017 15:43:26</publishTime>
+      <publishTime>09/19/2017 13:19:55</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -217,10 +229,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/23/2014 13:57:34</publishTime>
     </File>
     <File Include="bin/WebUI.dll">
-      <publishTime>09/11/2017 15:45:17</publishTime>
+      <publishTime>09/19/2017 13:47:56</publishTime>
     </File>
     <File Include="bin/WebUI.pdb">
-      <publishTime>09/11/2017 15:45:17</publishTime>
+      <publishTime>09/19/2017 13:47:56</publishTime>
     </File>
     <File Include="CodeTemplates/Scaffolders/ModelStub/ControllerTemplate.cs.t4">
       <publishTime>08/23/2017 00:12:58</publishTime>
@@ -331,6 +343,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/31/2017 14:23:25</publishTime>
     </File>
     <File Include="Content/img/icon_sprite.png">
+      <publishTime>08/31/2017 14:23:25</publishTime>
+    </File>
+    <File Include="Content/img/image-background transparant.png">
       <publishTime>08/31/2017 14:23:25</publishTime>
     </File>
     <File Include="Content/img/image-background-transparant.png">
@@ -1371,6 +1386,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/kendo/textures/transtexture.png">
       <publishTime>08/31/2017 14:23:26</publishTime>
     </File>
+    <File Include="Content/loader.css">
+      <publishTime>09/18/2017 08:37:20</publishTime>
+    </File>
     <File Include="Content/magnific/magnific-popup.css">
       <publishTime>08/31/2017 14:23:26</publishTime>
     </File>
@@ -1504,7 +1522,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/31/2017 14:23:26</publishTime>
     </File>
     <File Include="Content/style.css">
-      <publishTime>09/06/2017 09:04:35</publishTime>
+      <publishTime>09/18/2017 22:14:09</publishTime>
     </File>
     <File Include="Content/sweet-alert/ajax-loader.gif">
       <publishTime>08/31/2017 14:23:26</publishTime>
@@ -4103,6 +4121,36 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Images/landing/perspective.png">
       <publishTime>08/23/2017 00:12:59</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-08.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-09.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-10.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-11.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-12.png">
+      <publishTime>09/19/2017 00:15:51</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-13.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-14.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-15.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-16.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Images/landing/PTG-web 02-17.png">
+      <publishTime>09/18/2017 22:14:09</publishTime>
     </File>
     <File Include="Images/off_canvas.jpg">
       <publishTime>08/23/2017 00:12:59</publishTime>
@@ -7120,7 +7168,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2017 00:13:00</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>08/23/2017 00:13:00</publishTime>
+      <publishTime>09/19/2017 00:11:22</publishTime>
+    </File>
+    <File Include="Views/Home/_FinanceIndex.cshtml">
+      <publishTime>09/18/2017 22:14:09</publishTime>
+    </File>
+    <File Include="Views/Home/_OperationIndex.cshtml">
+      <publishTime>09/18/2017 08:37:20</publishTime>
     </File>
     <File Include="Views/Install/Index.cshtml">
       <publishTime>08/23/2017 00:13:00</publishTime>
@@ -7260,14 +7314,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/Inspinia/_Footer.cshtml">
       <publishTime>08/23/2017 00:13:00</publishTime>
     </File>
+    <File Include="Views/Shared/Inspinia/_FooterDashboard.cshtml">
+      <publishTime>09/19/2017 08:34:00</publishTime>
+    </File>
     <File Include="Views/Shared/Inspinia/_Layout.cshtml">
-      <publishTime>08/23/2017 00:13:00</publishTime>
+      <publishTime>09/19/2017 00:11:22</publishTime>
+    </File>
+    <File Include="Views/Shared/Inspinia/_LayoutDashboard.cshtml">
+      <publishTime>09/18/2017 23:32:12</publishTime>
     </File>
     <File Include="Views/Shared/Inspinia/_LoginPartial.cshtml">
       <publishTime>08/23/2017 00:13:00</publishTime>
     </File>
     <File Include="Views/Shared/Inspinia/_Navigation.cshtml">
       <publishTime>09/06/2017 09:08:39</publishTime>
+    </File>
+    <File Include="Views/Shared/Inspinia/_NavigationDashboard.cshtml">
+      <publishTime>09/18/2017 23:32:12</publishTime>
     </File>
     <File Include="Views/Shared/Inspinia/_PopupOption.cshtml">
       <publishTime>08/23/2017 00:13:00</publishTime>
@@ -7291,10 +7354,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2017 00:13:00</publishTime>
     </File>
     <File Include="Views/_viewstart.cshtml">
-      <publishTime>08/23/2017 00:13:00</publishTime>
+      <publishTime>09/18/2017 22:14:09</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/11/2017 15:43:45</publishTime>
+      <publishTime>09/19/2017 13:20:19</publishTime>
     </File>
   </ItemGroup>
 </Project>

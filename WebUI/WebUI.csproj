@@ -175,6 +175,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\bg.png" />
     <Content Include="Content\img\bgimg.jpg" />
+    <Content Include="Content\img\image-background transparant.png" />
     <Content Include="Content\img\image-background-transparant.png" />
     <Content Include="Content\img\logo-pge.png" />
     <Content Include="Content\img\Asset 3.png" />

@@ -137,7 +137,8 @@ namespace WebUI.Models
         {
             LastUpdate = data.lastUpdate;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
-            LastUpdateDate = DateTime.ParseExact(LastUpdate, "MMM yyyy", null);
+            if (LastUpdate != "-")
+                LastUpdateDate = DateTime.ParseExact(LastUpdate, "MMM yyyy", null);
 
             OperationItems = new Dictionary<string, HomeOperationItemModel>();
             foreach (HomeItemModel item in data.item)
