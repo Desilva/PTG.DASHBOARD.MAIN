@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Configuration;
 using WebUI.Models;
 using System.Text;
 
@@ -13,8 +14,8 @@ namespace WebUI.Controllers
 {
     public class HomeController : MyController
     {
-        const string LINK_FIN = "http://rekadia.net/PTG.FIN/Api/dashboard/dashboard";
-        const string LINK_OPS = "http://rekadia.net/PTG.OPS/Api/dashboard/dashboard";
+        string LINK_FIN = ConfigurationManager.AppSettings["URL_API_PTGFIN_DASHBOARD"];
+        string LINK_OPS = ConfigurationManager.AppSettings["URL_API_PTGOPS_DASHBOARD"];
 
         public HomeController(ILogRepository repoLog)
             : base(repoLog)

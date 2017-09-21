@@ -1,22 +1,28 @@
-﻿<div class="footer nav narrow dummy"></div>
+﻿@using System.Configuration;
+
+<div class="footer nav narrow dummy"></div>
 
 <div class="footer fixed nav narrow">
     <div class="row">
         <div class="col-xs-3 navitem">
-            <a href="http://rekadia.net/PTG.FIN" class="navchild navimg" id="navKeuangan"></a>
-            <div class="navchild navtitle">KINERJA KEUANGAN</div>
+            <a target="_blank" href="@ConfigurationManager.AppSettings["URL_PTGFIN_DASHBOARD"]" class="navchild navimg" id="navKeuangan">
+                <div class="navchild navtitle">KINERJA KEUANGAN</div>
+            </a>
         </div>
         <div class="col-xs-3 navitem">
-            <a href="http://rekadia.net/PTG.OPS" class="navchild navimg" id="navOperasi"></a>
-            <div class="navchild navtitle">KINERJA OPERASI</div>
+            <a target="_blank" href="@ConfigurationManager.AppSettings["URL_PTGOPS_DASHBOARD"]" class="navchild navimg" id="navOperasi">
+                <div class="navchild navtitle">KINERJA OPERASI</div>
+            </a>
         </div>
         <div class="col-xs-3 navitem">
-            <a href="#" class="navchild navimg" id="navInvestasi"></a>
-            <div class="navchild navtitle">INVESTASI</div>
+            <a target="_blank" href="@ConfigurationManager.AppSettings["URL_PTGINV_DASHBOARD"]" class="navchild navimg" id="navInvestasi">
+                <div class="navchild navtitle">INVESTASI</div>
+            </a>
         </div>
         <div class="col-xs-3 navitem">
-            <a href="@Url.Action("Index", "Risk", new { Area = "Risk" })" class="navchild navimg" id="navResiko"></a>
-            <div class="navchild navtitle">RESIKO</div>
+            <a target="_blank" href="@Url.Action("Index", "Risk", new { Area = "Risk" })" class="navchild navimg" id="navResiko">
+                <div class="navchild navtitle">RESIKO</div>
+            </a>
         </div>
     </div>
     @*<div class="navchoice">
