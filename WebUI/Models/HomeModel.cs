@@ -76,8 +76,10 @@ namespace WebUI.Models
         public HomeFinanceModel(HomeDataModel data)
         {
             LastUpdate = data.lastUpdate;
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
-            LastUpdateDate = DateTime.ParseExact(LastUpdate, "MMM yyyy", null);
+            if (!DateTime.TryParseExact(LastUpdate, "MMM yyyy", new CultureInfo("id-ID"), DateTimeStyles.None, out LastUpdateDate))
+            {
+                LastUpdateDate = DateTime.Now;
+            }
 
             financeItems = new Dictionary<string, HomeFinanceItemModel>();
             foreach (HomeItemModel item in data.item)
@@ -136,9 +138,10 @@ namespace WebUI.Models
         public HomeOperationModel(HomeDataModel data)
         {
             LastUpdate = data.lastUpdate;
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("id-ID");
-            if (LastUpdate != "-")
-                LastUpdateDate = DateTime.ParseExact(LastUpdate, "MMM yyyy", null);
+            if (!DateTime.TryParseExact(LastUpdate, "MMM yyyy", new CultureInfo("id-ID"), DateTimeStyles.None, out LastUpdateDate))
+            {
+                LastUpdateDate = DateTime.Now;
+            }
 
             OperationItems = new Dictionary<string, HomeOperationItemModel>();
             foreach (HomeItemModel item in data.item)
@@ -251,6 +254,69 @@ namespace WebUI.Models
                 riskIdList.Add(riskImpact.RiskId);
             }
             return riskIdList.Distinct().ToList();
+        }
+    }
+
+    public class HomeInvestmentResponseModel
+    {
+        public HomeInvestmentModel data;
+        public int status;
+        public string message;
+
+        public HomeInvestmentResponseModel()
+        {
+            data = new HomeInvestmentModel();
+            status = 0;
+            message = "";
+        }
+    }
+
+    public class HomeInvestmentModel
+    {
+        public string lastUpdate;
+        public string investment;
+        public string currentInvestment;
+        public string uomInvestment;
+        public string progressInvestment;
+        public string uomProgress;
+
+        public DateTime LastUpdateDate;
+        public double CurrentInvestmentValue;
+        public double ProgressInvestmentValue;
+
+        public HomeInvestmentModel()
+        {
+            lastUpdate = "";
+            investment = "";
+            currentInvestment = "";
+            uomInvestment = "";
+            progressInvestment = "";
+            uomProgress = "";
+        }
+
+        public HomeInvestmentModel(HomeInvestmentModel data)
+        {
+            lastUpdate = data.lastUpdate;
+            investment = data.investment;
+            currentInvestment = data.currentInvestment;
+            uomInvestment = data.uomInvestment;
+            progressInvestment = data.progressInvestment;
+            uomProgress = data.uomProgress;
+            
+            if (!DateTime.TryParseExact(lastUpdate, "MMMM yyyy", new CultureInfo("id-ID"), DateTimeStyles.None, out LastUpdateDate))
+            {
+                LastUpdateDate = DateTime.Now;
+            }
+
+            if (!double.TryParse(currentInvestment, NumberStyles.Float, new CultureInfo("en-US"), out CurrentInvestmentValue))
+            {
+                CurrentInvestmentValue = 0;
+            }
+
+            if (!double.TryParse(progressInvestment, NumberStyles.Float, new CultureInfo("en-US"), out ProgressInvestmentValue))
+            {
+                ProgressInvestmentValue = 0;
+            }
         }
     }
 }

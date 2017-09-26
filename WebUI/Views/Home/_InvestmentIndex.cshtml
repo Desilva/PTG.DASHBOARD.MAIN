@@ -1,0 +1,46 @@
+﻿@model WebUI.Models.HomeInvestmentModel
+@using WebUI.Models
+                    
+@if (ViewBag.IsFound)
+{
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span class="label label-@((Model.LastUpdateDate.AddMonths(1) >= DateTime.Now)?"success":"warning") pull-right">
+                @Model.LastUpdateDate.ToString("MMM \\'yy")
+            </span>
+            <h5>Investasi</h5>
+        </div>
+        <div class="ibox-content">
+            <ul class="stat-list">
+                <li>
+                    <h2 class="no-margins">@Model.investment</h2>
+                </li>
+                <li>
+                    <small>Realisasi Investasi</small>
+                    <div class="stat-percent">@(Model.CurrentInvestmentValue.ToString("N2") + Model.uomInvestment)</div>
+                    <div class="progress progress-mini">
+                        <div style="width: @Model.CurrentInvestmentValue.ToString("N0")%;" class="progress-bar"></div>
+                    </div>
+                </li>
+                <li>
+                    <small>Progress Fisik</small>
+                    <div class="stat-percent">@(Model.ProgressInvestmentValue.ToString("N2") + Model.uomProgress)</div>
+                    <div class="progress progress-mini">
+                        <div style="width: @Model.ProgressInvestmentValue.ToString("N0")%;" class="progress-bar"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Investasi</h5>
+        </div>
+        <div class="ibox-content">
+            <div id="grid-nkk" data-role="grid" class="label label-danger" style="">Gagal mengambil data</div>
+        </div>
+    </div>
+}

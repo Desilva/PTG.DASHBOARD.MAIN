@@ -37,40 +37,7 @@
         <div class="col-lg-4" id="operationContent"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
         
         @*Kolom Investasi*@
-        <div class="col-lg-4">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">Mei '17</span>
-                    <h5>Investasi</h5>
-                </div>
-                <div class="ibox-content">
-                    <ul class="stat-list">
-                        <li>
-                            <h2 class="no-margins">Rp. 1.421 Triliun</h2>
-                            <small>Realisasi Investasi (vs drawdown)</small>
-                            <div class="stat-percent">93.5%</div>
-                            <div class="progress progress-mini">
-                                <div style="width: 94%;" class="progress-bar"></div>
-                            </div>
-                        </li>
-                        <li>
-                            <small>Realisasi Investasi (vs phasing out)</small>
-                            <div class="stat-percent">51.9%</div>
-                            <div class="progress progress-mini">
-                                <div style="width: 52%;" class="progress-bar"></div>
-                            </div>
-                        </li>
-                        <li>
-                            <small>Progress Fisik</small>
-                            <div class="stat-percent">65.3%</div>
-                            <div class="progress progress-mini">
-                                <div style="width: 65%;" class="progress-bar"></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <div class="col-lg-4" id="investmentContent"><div class="ibox float-e-margins"><div class="ibox-title"><div class="ibox-content loader"></div></div></div></div>
 
         @*Kolom Top Risk*@
         <div class="col-lg-4">
@@ -135,6 +102,16 @@
                 data: "",
                 success: function (result) {
                     $("#operationContent").html(result);
+                }
+            });
+
+            // ambil data investment
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetInvestmentInfo", currentController)",
+                data: "",
+                success: function (result) {
+                    $("#investmentContent").html(result);
                 }
             });
         });

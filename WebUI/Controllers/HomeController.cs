@@ -16,6 +16,7 @@ namespace WebUI.Controllers
     {
         string LINK_FIN = ConfigurationManager.AppSettings["URL_API_PTGFIN_DASHBOARD"];
         string LINK_OPS = ConfigurationManager.AppSettings["URL_API_PTGOPS_DASHBOARD"];
+        string LINK_INV = ConfigurationManager.AppSettings["URL_API_PTGINV_DASHBOARD"];
 
         public HomeController(ILogRepository repoLog)
             : base(repoLog)
@@ -120,6 +121,48 @@ namespace WebUI.Controllers
             }
 
             return PartialView("_OperationIndex", new HomeOperationModel());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GetInvestmentInfo()
+        {
+            string requestContent = string.Empty;
+            StringContent content = new StringContent(requestContent, Encoding.UTF8, "application/json");
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = new HttpResponseMessage();
+            string respString = "";
+            HomeInvestmentResponseModel homeResponseModel = new HomeInvestmentResponseModel();
+            try
+            {
+                response = await client.GetAsync(LINK_INV);
+                if (response.IsSuccessStatusCode)
+                {
+                    respString = await response.Content.ReadAsStringAsync();
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                // Handle exception.
+            }
+
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            if (respString != "") homeResponseModel = serializer.Deserialize<HomeInvestmentResponseModel>(respString);
+
+            if (homeResponseModel.status == 200)
+            {
+                if (homeResponseModel.message == "Data found")
+                {
+                    if (homeResponseModel.data != null)
+                    {
+                        ViewBag.IsFound = true;
+                        return PartialView("_InvestmentIndex", new HomeInvestmentModel(homeResponseModel.data));
+                    }
+                }
+            }
+
+            ViewBag.IsFound = false;
+            return PartialView("_InvestmentIndex", new HomeInvestmentModel());
         }
     }
 }

@@ -2574,6 +2574,7 @@
     <Content Include="Views\Shared\Inspinia\_LayoutDashboard.cshtml" />
     <Content Include="Views\Shared\Inspinia\_FooterDashboard.cshtml" />
     <Content Include="Views\Shared\Inspinia\_NavigationDashboard.cshtml" />
+    <Content Include="Views\Home\_InvestmentIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
