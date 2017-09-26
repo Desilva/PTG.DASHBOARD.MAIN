@@ -275,12 +275,15 @@ namespace WebUI.Models
     {
         public string lastUpdate;
         public string investment;
+        public string drawdownInvestment;
+        public string uomDrawdown;
         public string currentInvestment;
         public string uomInvestment;
         public string progressInvestment;
         public string uomProgress;
 
         public DateTime LastUpdateDate;
+        public double DrawdownInvestmentValue;
         public double CurrentInvestmentValue;
         public double ProgressInvestmentValue;
 
@@ -288,6 +291,8 @@ namespace WebUI.Models
         {
             lastUpdate = "";
             investment = "";
+            drawdownInvestment = "";
+            uomDrawdown = "";
             currentInvestment = "";
             uomInvestment = "";
             progressInvestment = "";
@@ -298,6 +303,8 @@ namespace WebUI.Models
         {
             lastUpdate = data.lastUpdate;
             investment = data.investment;
+            drawdownInvestment = data.drawdownInvestment;
+            uomDrawdown = data.uomDrawdown;
             currentInvestment = data.currentInvestment;
             uomInvestment = data.uomInvestment;
             progressInvestment = data.progressInvestment;
@@ -306,6 +313,11 @@ namespace WebUI.Models
             if (!DateTime.TryParseExact(lastUpdate, "MMMM yyyy", new CultureInfo("id-ID"), DateTimeStyles.None, out LastUpdateDate))
             {
                 LastUpdateDate = DateTime.Now;
+            }
+
+            if (!double.TryParse(drawdownInvestment, NumberStyles.Float, new CultureInfo("en-US"), out DrawdownInvestmentValue))
+            {
+                DrawdownInvestmentValue = 0;
             }
 
             if (!double.TryParse(currentInvestment, NumberStyles.Float, new CultureInfo("en-US"), out CurrentInvestmentValue))

@@ -16,7 +16,14 @@
                     <h2 class="no-margins">@Model.investment</h2>
                 </li>
                 <li>
-                    <small>Realisasi Investasi</small>
+                    <small>Realisasi Investasi (vs drawdown)</small>
+                    <div class="stat-percent">@(Model.DrawdownInvestmentValue.ToString("N2") + Model.uomDrawdown)</div>
+                    <div class="progress progress-mini">
+                        <div style="width: @Model.DrawdownInvestmentValue.ToString("N0")%;" class="progress-bar"></div>
+                    </div>
+                </li>
+                <li>
+                    <small>Realisasi Investasi (vs RKAP)</small>
                     <div class="stat-percent">@(Model.CurrentInvestmentValue.ToString("N2") + Model.uomInvestment)</div>
                     <div class="progress progress-mini">
                         <div style="width: @Model.CurrentInvestmentValue.ToString("N0")%;" class="progress-bar"></div>
