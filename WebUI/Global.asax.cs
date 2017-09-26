@@ -1,4 +1,5 @@
 ﻿using Business.Entities;
+using SecurityGuard.Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -37,6 +38,7 @@ namespace WebUI
             ClientDataTypeModelValidatorProvider.ResourceClassKey = "MyGlobalErrors";
             DefaultModelBinder.ResourceClassKey = "MyGlobalErrors";
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
+
             //model binder
             //ModelBinders.Binders.Add(typeof(UserLogin), new UserLoginModelBinder());
         }
