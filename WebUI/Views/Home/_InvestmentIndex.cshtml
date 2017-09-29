@@ -8,12 +8,15 @@
             <span class="label label-@((Model.LastUpdateDate.AddMonths(1) >= DateTime.Now)?"success":"warning") pull-right">
                 @Model.LastUpdateDate.ToString("MMM \\'yy")
             </span>
-            <h5>Investasi</h5>
+            <h5>Investasi BD</h5>
         </div>
         <div class="ibox-content">
             <ul class="stat-list">
                 <li>
-                    <h2 class="no-margins">@Model.investment</h2>
+                    <h2 class="no-margins">
+                        @Model.investment
+                        <small><small>(Realisasi)</small></small>
+                    </h2>
                 </li>
                 <li>
                     <small>Realisasi Investasi (vs drawdown)</small>
@@ -44,7 +47,7 @@ else
 {
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>Investasi</h5>
+            <h5>Investasi BD</h5>
         </div>
         <div class="ibox-content">
             <div id="grid-nkk" data-role="grid" class="label label-danger" style="">Gagal mengambil data</div>
