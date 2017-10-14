@@ -28,16 +28,26 @@ namespace WebUI.Infrastructure
             string domain = ConfigurationManager.AppSettings["LDAPHost"].ToString();
             //string loginName = ConfigurationManager.AppSettings["ServerLogin"].ToString();
             //string pass = ConfigurationManager.AppSettings["ServerPassword"].ToString();
-            
-            DirectoryEntry entry = new DirectoryEntry(domain, username, password);
+
+            DirectoryEntry entry = new DirectoryEntry("LDAP://10.11.3.90/DC=pertamina,DC=com", username, password, AuthenticationTypes.Secure);
+
+            //DirectoryEntry entry = new DirectoryEntry(domain, username, password);
             try
             {
                 DirectorySearcher search = new DirectorySearcher(entry);
-                search.Filter = "(sAMAccountName=" + username + ")";
+                string filter = string.Format("(&(ObjectClass={0})(sAMAccountName={1}))", "person", username);
+                string[] properties = new string[] { "fullname", "cn", "mail" };
+                //search.Filter = "(sAMAccountName=" + username + ")";
 
                 //Select property in the server to identify roles
-                search.PropertiesToLoad.Add("cn");
-                search.PropertiesToLoad.Add("mail");
+                search.SearchScope = SearchScope.Subtree;
+                search.ReferralChasing = ReferralChasingOption.All;
+                search.PropertiesToLoad.AddRange(properties);
+                //search.PropertiesToLoad.Add("*");
+                search.Filter = filter;
+
+                //search.PropertiesToLoad.Add("cn");
+                //search.PropertiesToLoad.Add("mail");
 
                 SearchResult result = search.FindOne();
 
