@@ -172,7 +172,7 @@ namespace WebUI.Models
             if (double.TryParse(value, out valueTemp))
             {
                 valueTemp = Math.Round(valueTemp, 2);
-                value = valueTemp.ToString();
+                value = valueTemp.ToString("N2");
             }
             Value = value;
             Persen = persen;
