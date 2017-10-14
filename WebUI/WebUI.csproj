@@ -185,6 +185,7 @@
     <Content Include="Content\img\grid.png" />
     <Content Include="Content\img\header.PNG" />
     <Content Include="Content\img\icon_sprite.png" />
+    <Content Include="Content\img\logo.svg" />
     <Content Include="Content\img\slider_handle.png" />
     <Content Include="Content\inspinia\animate.css" />
     <Content Include="Content\inspinia\bootstrap.css" />
