@@ -51,6 +51,8 @@ namespace Common.Enums
     {
         [Description("Merah")]
         RED,
+        [Description("Orange")]
+        ORANGE,
         [Description("Kuning")]
         YELLOW,
         [Description("Hijau")]
