@@ -115,22 +115,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/Business.dll">
-      <publishTime>10/09/2017 22:28:12</publishTime>
+      <publishTime>10/14/2017 11:40:18</publishTime>
     </File>
     <File Include="bin/Business.dll.config">
       <publishTime>09/10/2017 14:09:39</publishTime>
     </File>
     <File Include="bin/Business.pdb">
-      <publishTime>10/09/2017 22:28:12</publishTime>
+      <publishTime>10/14/2017 11:40:18</publishTime>
     </File>
     <File Include="bin/Castle.Core.dll">
       <publishTime>07/12/2017 06:37:22</publishTime>
     </File>
     <File Include="bin/Common.Enums.dll">
-      <publishTime>10/09/2017 22:28:07</publishTime>
+      <publishTime>10/14/2017 11:40:16</publishTime>
     </File>
     <File Include="bin/Common.Enums.pdb">
-      <publishTime>10/09/2017 22:28:07</publishTime>
+      <publishTime>10/14/2017 11:40:16</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -229,10 +229,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/23/2014 13:57:34</publishTime>
     </File>
     <File Include="bin/WebUI.dll">
-      <publishTime>10/09/2017 22:28:14</publishTime>
+      <publishTime>10/14/2017 11:40:19</publishTime>
     </File>
     <File Include="bin/WebUI.pdb">
-      <publishTime>10/09/2017 22:28:14</publishTime>
+      <publishTime>10/14/2017 11:40:19</publishTime>
     </File>
     <File Include="CodeTemplates/Scaffolders/ModelStub/ControllerTemplate.cs.t4">
       <publishTime>08/23/2017 00:12:58</publishTime>
@@ -1522,7 +1522,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/31/2017 14:23:26</publishTime>
     </File>
     <File Include="Content/style.css">
-      <publishTime>09/18/2017 22:14:09</publishTime>
+      <publishTime>10/12/2017 08:50:56</publishTime>
     </File>
     <File Include="Content/sweet-alert/ajax-loader.gif">
       <publishTime>08/31/2017 14:23:26</publishTime>
@@ -4186,7 +4186,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2017 00:12:59</publishTime>
     </File>
     <File Include="Images/profile_small.jpg">
-      <publishTime>08/23/2017 00:12:59</publishTime>
+      <publishTime>10/14/2017 08:48:43</publishTime>
     </File>
     <File Include="Images/p_big1.jpg">
       <publishTime>08/23/2017 00:12:59</publishTime>
@@ -7210,7 +7210,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2017 00:13:00</publishTime>
     </File>
     <File Include="Views/SGAccount/Login.cshtml">
-      <publishTime>08/31/2017 14:23:28</publishTime>
+      <publishTime>10/14/2017 08:48:43</publishTime>
     </File>
     <File Include="Views/SGAccount/Register.cshtml">
       <publishTime>08/23/2017 00:13:00</publishTime>
@@ -7330,10 +7330,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2017 00:13:00</publishTime>
     </File>
     <File Include="Views/Shared/Inspinia/_Navigation.cshtml">
-      <publishTime>09/06/2017 09:08:39</publishTime>
+      <publishTime>10/14/2017 08:48:43</publishTime>
     </File>
     <File Include="Views/Shared/Inspinia/_NavigationDashboard.cshtml">
-      <publishTime>09/18/2017 23:32:12</publishTime>
+      <publishTime>10/14/2017 11:36:13</publishTime>
     </File>
     <File Include="Views/Shared/Inspinia/_PopupOption.cshtml">
       <publishTime>08/23/2017 00:13:00</publishTime>
@@ -7360,7 +7360,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/18/2017 22:14:09</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/09/2017 22:28:30</publishTime>
+      <publishTime>10/14/2017 11:40:37</publishTime>
     </File>
   </ItemGroup>
 </Project>
