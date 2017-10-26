@@ -23,7 +23,7 @@ namespace WebUI.Infrastructure
         public void Login(string username, string password, bool rememberMe)
         {
             this.IsAuthenticated = false;
-            password = AESEncryptionLibrary.DecryptText(password, "M013i1)!9TpD");
+            //password = AESEncryptionLibrary.DecryptText(password, "M013i1)!9TpD");
 
             string domain = ConfigurationManager.AppSettings["LDAPHost"].ToString();
             //string loginName = ConfigurationManager.AppSettings["ServerLogin"].ToString();
