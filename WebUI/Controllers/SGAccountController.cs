@@ -78,9 +78,9 @@ namespace WebUI.Controllers
             {
                 ActiveDirectoryUtil AdModel = new ActiveDirectoryUtil();
                 MembershipUser user = null;
-                AdModel.Login(model.UserName, AESEncryptionLibrary.EncryptText(model.Password, "M013i1)!9TpD"), model.RememberMe);
+                //AdModel.Login(model.UserName, AESEncryptionLibrary.EncryptText(model.Password, "M013i1)!9TpD"), model.RememberMe);
+                AdModel.Login(model.UserName, model.Password, model.RememberMe);
 
-                
                 if (AdModel.IsAuthenticated)
                 {
                     user = membershipService.GetUser(model.UserName);
