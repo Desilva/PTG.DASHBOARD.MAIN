@@ -1,2 +1,0 @@
-
-    <add name="PTGMainEntities" connectionString="metadata=res://*/Entities.PTGMainEntities.csdl|res://*/Entities.PTGMainEntities.ssdl|res://*/Entities.PTGMainEntities.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.;initial catalog=PTG.MAIN;integrated security=True;multipleactiveresultsets=True;application name=EntityFramework&quot;" providerName="System.Data.EntityClient" />

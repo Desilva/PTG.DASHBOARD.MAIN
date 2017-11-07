@@ -16,9 +16,11 @@ using WebUI.Areas.Risk.Models.RiskMitigation;
 using WebUI.Areas.Risk.Models.RiskDocument;
 using WebUI.Controllers;
 using WebUI.Models;
+using WebUI.Infrastructure;
 
 namespace WebUI.Areas.Risk.Controllers
 {
+    [AuthorizeUser(ModuleName = UserModule.AUTH_MODULE)]
     public class RiskController : MyController
     {
         public IRiskRepository RiskRepo;
@@ -48,7 +50,7 @@ namespace WebUI.Areas.Risk.Controllers
         // GET: Risk/Risk        
         [MvcSiteMapNode(Title = "Risk", ParentKey = "IndexHome", Key = "IndexRisk")]
         [SiteMapTitle("Breadcrumb")]
-        public async Task<ActionResult> Index(int? year)
+        public ActionResult Index(int? year)
         {
             //ambil2in risk
             if (year == null) year = DateTime.Now.Year;
@@ -498,7 +500,7 @@ namespace WebUI.Areas.Risk.Controllers
 
                 if (RiskDocumentRepo.Id != 0)
                 {
-                    return await Index(null);
+                    return Index(null);
                 }
                 else
                 {
@@ -539,7 +541,7 @@ namespace WebUI.Areas.Risk.Controllers
 
                 if (RiskDocumentRepo.Id != 0)
                 {
-                    return await Index(null);
+                    return Index(null);
                 }
                 else
                 {

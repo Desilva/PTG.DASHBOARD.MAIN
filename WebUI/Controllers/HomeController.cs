@@ -9,9 +9,12 @@ using System.Web.Script.Serialization;
 using System.Configuration;
 using WebUI.Models;
 using System.Text;
+using WebUI.Infrastructure;
+using Common.Enums;
 
 namespace WebUI.Controllers
 {
+    [AuthorizeUser(ModuleName = UserModule.AUTH_MODULE)]
     public class HomeController : MyController
     {
         string LINK_FIN = ConfigurationManager.AppSettings["URL_API_PTGFIN_DASHBOARD"];
@@ -27,7 +30,7 @@ namespace WebUI.Controllers
         // GET: /Dashboard/
         [MvcSiteMapNode(Title = "Home", ParentKey = "Dashboard", Key = "IndexHome")]
         [SiteMapTitle("Breadcrumb")]
-        public async Task<ActionResult> Index(int? year)
+        public ActionResult Index(int? year)
         {
             //HomeFinanceModel homeFinanceModel = new HomeFinanceModel();
             //HomeOperationModel homeOperationModel = new HomeOperationModel();
@@ -39,7 +42,7 @@ namespace WebUI.Controllers
 
             //ViewBag.HomeFinanceModel = homeFinanceModelTask.Result;
             //ViewBag.HomeOperationModel = homeOperationModelTask.Result;
-
+            
             return View();
         }
 

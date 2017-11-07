@@ -96,7 +96,24 @@ namespace WebUI.Controllers
                             membershipService.UpdateUser(user);
                         }
                     }
-                    formsAuthenticationService.SetAuthCookie(model.UserName, model.RememberMe);
+
+                    FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                        1,
+                        model.UserName,  //user id
+                        DateTime.Now,
+                        DateTime.Now.AddHours(8),  // expiry
+                        model.RememberMe,  //remember or not
+                        string.Empty
+                    );
+
+                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket))
+                    {
+                        HttpOnly = true,
+                        Expires = authTicket.Expiration
+                    };
+
+                    Response.SetCookie(cookie);
+
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
@@ -123,7 +140,8 @@ namespace WebUI.Controllers
         {
             authenticationService.LogOff();
             Session.Clear();
-            return RedirectToAction("Login", "SGAccount");
+            Request.Cookies.Clear();
+            return RedirectToAction("Index", "Home");
         }
         #endregion
 

@@ -1,34 +1,27 @@
-﻿using Business.Entities;
+﻿using SecurityGuard.Interfaces;
 using SecurityGuard.Services;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Net;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Script.Serialization;
 using System.Web.Security;
-using WebUI.Binders;
 using WebUI.Infrastructure;
 using WebUI.Infrastructure.Concrete;
-using WebUI.Models;
 
 namespace WebUI
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
 
-            DependencyResolver.SetResolver(new WebUI.Infrastructure.NinjectDependencyResolver());
+            DependencyResolver.SetResolver(new NinjectDependencyResolver());
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -42,35 +35,6 @@ namespace WebUI
             //model binder
             //ModelBinders.Binders.Add(typeof(UserLogin), new UserLoginModelBinder());
         }
-
-    //    protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
-        
-    //    {
-    //        HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-
-    //        if (authCookie != null)
-    //        {
-				//try
-				//{
-				//	FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-
-				//	JavaScriptSerializer serializer = new JavaScriptSerializer();
-
-				//	CustomPrincipalSerializeModel serializeModel = serializer.Deserialize<CustomPrincipalSerializeModel>(authTicket.UserData);
-
-				//	ApplicationPrincipal newUser = new ApplicationPrincipal(authTicket.Name);
-				//	newUser.Modules = serializeModel.Modules;
-
-				//	HttpContext.Current.User = newUser;
-				//}
-				//catch
-				//{
-				//	FormsAuthentication.SignOut();
-    //                Response.Redirect(FormsAuthentication.LoginUrl, true);
-				//}
-                
-    //        }
-    //    }
 
         private void Application_Error(object sender, EventArgs e)
         {
@@ -92,83 +56,50 @@ namespace WebUI
             }
         }
 
-        //protected void Application_PreRequestHandlerExecute(object sender, EventArgs e)
-        //{
-        //    //Check if user is authenticated
-        //    HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-        //    if (authCookie != null)
-        //    {
-        //        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-        //        if (!authTicket.Expired)
-        //        {
-        //            try
-        //            {
-        //                {
-        //                    if (Session["userId"] == null) //session kosong, set dari servis
-        //                    {
-        //                        MobidigUser user = FindMobidigUser();
+        protected void Application_PreRequestHandlerExecute(object sender, EventArgs e)
+        {
+            //Check if user is authenticated
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
 
-        //                        if (user == null)
-        //                        {
-        //                            FormsAuthentication.SignOut();
-        //                            Response.Redirect(FormsAuthentication.LoginUrl, true);
-        //                            return;
-        //                        }
-        //                        else
-        //                        {
-        //                            string[] roles = user.rolename.ToArray();
-
-        //                            Session["userId"] = user.id;
-        //                            Session["username"] = user.username;
-        //                            Session["roles"] = roles;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception exception)
-        //            {
-        //            }
-        //        }
-        //        else
-        //        {
-        //            FormsAuthentication.SignOut();
-        //            Response.Redirect(FormsAuthentication.LoginUrl, true);
-        //            return;
-        //        }
-        //    }
-        //}
-
-        //public MobidigUser FindMobidigUser()
-        //{
-        //    //kamus
-        //    string baseUrl = ConfigurationManager.AppSettings["MobidigUrl"];
-        //    string serviceUrl = "Services/UserService/GetUserLogin?username=" + User.Identity.Name;
-        //    string fullUrl = baseUrl + serviceUrl;
-        //    string json = null;
-        //    MobidigUser user = null;
-
-        //    //algoritma
-        //    if (Request.IsLocal)
-        //    {
-        //        fullUrl = "http://localhost/mobidig/Services/UserService/GetUserLogin.php";
-        //    }
-
-        //    using (var client = new WebClient())
-        //    {
-        //        json = client.DownloadString(fullUrl);
-        //        new LogHelper().Write(fullUrl);
-        //        new LogHelper().Write(json);
-
-        //        try
-        //        {
-        //            user = new JavaScriptSerializer().Deserialize<MobidigUser>(json);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //        }
-        //    }
-
-        //    return user;
-        //}
+            if (authCookie != null)
+            {
+                FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+                if (!authTicket.Expired)
+                {
+                    if (HttpContext.Current.Session != null)
+                    {
+                        if (HttpContext.Current.Session[AuthenticationHelper.SessionName] == null)
+                        {
+                            IMembershipService membershipService = new MembershipService(Membership.Provider);
+                            MembershipUser user = membershipService.GetUser(authTicket.Name);
+                            if (user != null)
+                            {
+                                ApplicationPrincipal principal = new ApplicationPrincipal(user.UserName);
+                                principal.UserId = user.ProviderUserKey.ToString();
+                                principal.UserName = user.UserName;
+                                principal.Email = user.Email;
+                                principal.Roles = Roles.GetRolesForUser(user.UserName).Any() ?
+                                    Roles.GetRolesForUser(user.UserName).ToList() : null;
+                                principal.Modules = ModuleAction.GetModuleActionForUser(user.UserName);
+                                HttpContext.Current.Session[AuthenticationHelper.SessionName] = principal;
+                                HttpContext.Current.User = principal;
+                            }
+                        }
+                        else
+                        {
+                            HttpContext.Current.User = HttpContext.Current.Session[AuthenticationHelper.SessionName] as ApplicationPrincipal;
+                        }
+                    }
+                }
+                else
+                {
+                    FormsAuthentication.SignOut();
+                    Session.Clear();
+                    Request.Cookies.Clear();
+                    Response.Redirect(FormsAuthentication.LoginUrl, true);
+                    return;
+                }
+            }
+        }
     }
 }

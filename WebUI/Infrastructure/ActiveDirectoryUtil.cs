@@ -22,14 +22,13 @@ namespace WebUI.Infrastructure
 
         public void Login(string username, string password, bool rememberMe)
         {
-            this.IsAuthenticated = false;
-            //password = AESEncryptionLibrary.DecryptText(password, "M013i1)!9TpD");
-
+            IsAuthenticated = false;
+            
             string domain = ConfigurationManager.AppSettings["LDAPHost"].ToString();
             //string loginName = ConfigurationManager.AppSettings["ServerLogin"].ToString();
             //string pass = ConfigurationManager.AppSettings["ServerPassword"].ToString();
 
-            DirectoryEntry entry = new DirectoryEntry("LDAP://10.11.3.90/DC=pertamina,DC=com", username, password, AuthenticationTypes.Secure);
+            DirectoryEntry entry = new DirectoryEntry(domain, username, password, AuthenticationTypes.Secure);
 
             //DirectoryEntry entry = new DirectoryEntry(domain, username, password);
             try
@@ -48,7 +47,6 @@ namespace WebUI.Infrastructure
 
                 //search.PropertiesToLoad.Add("cn");
                 //search.PropertiesToLoad.Add("mail");
-
                 SearchResult result = search.FindOne();
 
                 if (result != null)
@@ -58,13 +56,13 @@ namespace WebUI.Infrastructure
                         Email = (string)result.Properties["mail"][0];
                     else
                         Email = "-";
-                    this.IsAuthenticated = true;
+                    IsAuthenticated = true;
                 }
 
             }
             catch (Exception ex)
             {
-                this.IsAuthenticated = false;
+                IsAuthenticated = false;
             }
 
         }

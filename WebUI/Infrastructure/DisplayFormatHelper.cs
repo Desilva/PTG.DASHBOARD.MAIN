@@ -202,7 +202,7 @@ namespace WebUI.Infrastructure
         {
             List<SelectListItem> result = new List<SelectListItem>();
             EnumHelper eh = new EnumHelper();
-            List<T> enumValList = eh.EnumToList<T>().ToList();
+            List<T> enumValList = EnumExtension.EnumToList<T>().ToList();
             Type enumType = typeof(T);
             Enum en;
             

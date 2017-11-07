@@ -1,15 +1,7 @@
 ﻿using Business.Abstract;
-using SecurityGuard.Interfaces;
-using SecurityGuard.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
-using WebUI.Infrastructure;
 using WebUI.Infrastructure.Concrete;
 
 namespace WebUI.Controllers
@@ -18,9 +10,8 @@ namespace WebUI.Controllers
     //[LogActionFilter]
     public abstract class MyController : Controller
     {
-        private const string USER_LOGIN = "USER_LOGIN";
-        public ILogRepository RepoLog;
-
+        public ILogRepository RepoLog { get; set; }
+        
         protected string AppAddress
         {
             get
@@ -38,42 +29,10 @@ namespace WebUI.Controllers
         {
             get
             {
-                if (base.User.Identity.IsAuthenticated)
-                {
-                    if (Session[USER_LOGIN] as ApplicationPrincipal != null)
-                        HttpContext.User = Session[USER_LOGIN] as ApplicationPrincipal;
-                    else
-                    {
-                        HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-                        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                        IMembershipService membershipService = new MembershipService(Membership.Provider);
-                        MembershipUser user = membershipService.GetUser(authTicket.Name);
-                        if (user != null)
-                        {
-                            ApplicationPrincipal appUser = new ApplicationPrincipal(user.UserName);
-                            appUser.UserId = user.ProviderUserKey.ToString();
-                            appUser.UserName = user.UserName;
-                            appUser.Email = user.Email;
-                            //appUser.Roles = ; use method to get roles from db first then the objects will be store to session
-                            //appUser.Modules = ; use method to get modules from db first then the objects will be store to session
-                            Session[USER_LOGIN] = appUser;
-                            HttpContext.User = appUser;
-                        }
-                        else
-                        {
-                            FormsAuthentication.SignOut();
-                            Response.Redirect(FormsAuthentication.LoginUrl, true);
-                        }
-                    }
-                }
-                else
-                {
-                    FormsAuthentication.SignOut();
-                    Response.Redirect(FormsAuthentication.LoginUrl, true);
-                }
                 return HttpContext.User as ApplicationPrincipal;
             }
         }
+
         #endregion
 
         public MyController(ILogRepository repoLog)
@@ -85,8 +44,6 @@ namespace WebUI.Controllers
         {
             base.OnActionExecuted(filterContext);
             
-            if (Session[USER_LOGIN] as ApplicationPrincipal == null)
-                HttpContext.User = User;
             ViewBag.AppAddress = AppAddress;
         }
 
@@ -95,8 +52,8 @@ namespace WebUI.Controllers
         protected override void HandleUnknownAction(string actionName)
         {
             // If controller is ErrorController dont 'nest' exceptions
-            if (this.GetType() != typeof(ErrorController))
-                this.InvokeHttp404(HttpContext);
+            if (GetType() != typeof(ErrorController))
+                InvokeHttp404(HttpContext);
         }
 
         public ActionResult InvokeHttp404(HttpContextBase httpContext)
