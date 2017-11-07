@@ -2698,7 +2698,7 @@
     <Compile Include="Models\LogPresentationStub.cs" />
     <Compile Include="Models\Log\LogFormStub.cs" />
     <Compile Include="Models\Log\LogPresentationStub.cs" />
-    <Compile Include="Models\ModuleAction.cs" />
+    <Compile Include="Infrastructure\ModuleAction.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\UserLogin.cs" />

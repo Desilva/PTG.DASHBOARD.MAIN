@@ -22,23 +22,20 @@ namespace WebUI.Infrastructure
 
         public void Login(string username, string password, bool rememberMe)
         {
-            this.IsAuthenticated = false;
-            //password = AESEncryptionLibrary.DecryptText(password, "M013i1)!9TpD");
-
+            IsAuthenticated = false;
+            
             string domain = ConfigurationManager.AppSettings["LDAPHost"].ToString();
-            //string loginName = ConfigurationManager.AppSettings["ServerLogin"].ToString();
-            //string pass = ConfigurationManager.AppSettings["ServerPassword"].ToString();
             
             DirectoryEntry entry = new DirectoryEntry(domain, username, password);
             try
             {
                 DirectorySearcher search = new DirectorySearcher(entry);
-                search.Filter = "(sAMAccountName=" + username + ")";
-
-                //Select property in the server to identify roles
-                search.PropertiesToLoad.Add("cn");
-                search.PropertiesToLoad.Add("mail");
-
+                string str = string.Format("(&(ObjectClass={0})(sAMAccountName={1}))", "person", username);
+                string[] strArrays = new string[] { "fullname", "cn", "mail" };
+                search.SearchScope = SearchScope.Subtree;
+                search.ReferralChasing = ReferralChasingOption.All;
+                search.PropertiesToLoad.AddRange(strArrays);
+                search.Filter = str;
                 SearchResult result = search.FindOne();
 
                 if (result != null)
@@ -48,13 +45,13 @@ namespace WebUI.Infrastructure
                         Email = (string)result.Properties["mail"][0];
                     else
                         Email = "-";
-                    this.IsAuthenticated = true;
+                    IsAuthenticated = true;
                 }
 
             }
             catch (Exception ex)
             {
-                this.IsAuthenticated = false;
+                IsAuthenticated = false;
             }
 
         }

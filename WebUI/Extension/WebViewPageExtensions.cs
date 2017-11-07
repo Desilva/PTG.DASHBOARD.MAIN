@@ -1,9 +1,11 @@
 ﻿using SecurityGuard.Interfaces;
 using SecurityGuard.Services;
+using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using WebUI.Infrastructure;
 using WebUI.Infrastructure.Concrete;
 
 namespace WebUI.Extension
@@ -53,8 +55,9 @@ namespace WebUI.Extension
                             appUser.UserId = user.ProviderUserKey.ToString();
                             appUser.UserName = user.UserName;
                             appUser.Email = user.Email;
-                            //appUser.Roles = ; use method to get roles from db first then the objects will be store to session
-                            //appUser.Modules = ; use method to get modules from db first then the objects will be store to session
+                            appUser.Roles = Roles.GetRolesForUser(user.UserName).Any() ?
+                                 Roles.GetRolesForUser(user.UserName).ToList() : null;
+                            appUser.Modules = ModuleAction.GetModuleActionForUser(user.UserName);
                             HttpContext.Current.Session[USER_LOGIN] = appUser;
                             HttpContext.Current.User = appUser;
                         }

@@ -21,7 +21,7 @@ namespace WebUI.Infrastructure.Concrete
 
         public ApplicationPrincipal(string username)
         {
-            this.Identity = new GenericIdentity(username);
+            Identity = new GenericIdentity(username);
         }
 
         public bool IsInRole(string role)
@@ -36,9 +36,9 @@ namespace WebUI.Infrastructure.Concrete
             bool isHas = false;
 
             //algoritma
-            if (this.Modules != null)
+            if (Modules != null)
             {
-                isHas = this.Modules.Where(m => moduleNames.Contains(m.ModuleName)).Count() > 0;
+                isHas = Modules.Where(m => moduleNames.Contains(m.ModuleName)).Count() > 0;
             }
 
             return isHas;

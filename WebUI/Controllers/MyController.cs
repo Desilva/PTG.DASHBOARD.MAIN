@@ -1,10 +1,8 @@
 ﻿using Business.Abstract;
+using Common.Enums;
 using SecurityGuard.Interfaces;
 using SecurityGuard.Services;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -19,8 +17,9 @@ namespace WebUI.Controllers
     public abstract class MyController : Controller
     {
         private const string USER_LOGIN = "USER_LOGIN";
-        public ILogRepository RepoLog;
 
+        public ILogRepository RepoLog { get; set; }
+        
         protected string AppAddress
         {
             get
@@ -54,8 +53,9 @@ namespace WebUI.Controllers
                             appUser.UserId = user.ProviderUserKey.ToString();
                             appUser.UserName = user.UserName;
                             appUser.Email = user.Email;
-                            //appUser.Roles = ; use method to get roles from db first then the objects will be store to session
-                            //appUser.Modules = ; use method to get modules from db first then the objects will be store to session
+                            appUser.Roles = Roles.GetRolesForUser(user.UserName).Any() ? 
+                                Roles.GetRolesForUser(user.UserName).ToList() : null;
+                            appUser.Modules = ModuleAction.GetModuleActionForUser(user.UserName);
                             Session[USER_LOGIN] = appUser;
                             HttpContext.User = appUser;
                         }
@@ -95,8 +95,8 @@ namespace WebUI.Controllers
         protected override void HandleUnknownAction(string actionName)
         {
             // If controller is ErrorController dont 'nest' exceptions
-            if (this.GetType() != typeof(ErrorController))
-                this.InvokeHttp404(HttpContext);
+            if (GetType() != typeof(ErrorController))
+                InvokeHttp404(HttpContext);
         }
 
         public ActionResult InvokeHttp404(HttpContextBase httpContext)
