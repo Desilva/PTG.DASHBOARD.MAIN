@@ -104,8 +104,10 @@ namespace WebUI.Models
 
         public HomeFinanceItemModel(string account, string value, string persen)
         {
-            if (account == "Pertumbuhan Pendapatan Usaha") Account = "Pertumbuhan Pendapatan";
-            else Account = account;
+            //if (account == "Pertumbuhan Pendapatan Usaha") Account = "Pertumbuhan Pendapatan";
+            //else Account = account;
+
+            Account = account;
 
             string USDStrReplaced = "USD ";
             string USDStrReplacer = " (USD)";
