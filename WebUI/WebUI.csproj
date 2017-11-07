@@ -2666,6 +2666,7 @@
     <Compile Include="Infrastructure\ActiveDirectoryUtil.cs" />
     <Compile Include="Infrastructure\AESEncryptionLibrary.cs" />
     <Compile Include="Infrastructure\ApiCredential.cs" />
+    <Compile Include="Infrastructure\AuthenticationHelper.cs" />
     <Compile Include="Infrastructure\AuthorizeUserAttribute.cs" />
     <Compile Include="Infrastructure\BasicAuthMessageHandler.cs" />
     <Compile Include="Infrastructure\Concrete\ApplicationPrincipal.cs" />

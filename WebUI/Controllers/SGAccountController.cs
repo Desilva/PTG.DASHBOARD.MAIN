@@ -97,8 +97,6 @@ namespace WebUI.Controllers
                         }
                     }
 
-                    //formsAuthenticationService.SetAuthCookie(model.UserName, model.RememberMe);
-
                     FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
                         1,
                         model.UserName,  //user id
@@ -142,7 +140,8 @@ namespace WebUI.Controllers
         {
             authenticationService.LogOff();
             Session.Clear();
-            return RedirectToAction("Login", "SGAccount");
+            Request.Cookies.Clear();
+            return RedirectToAction("Index", "Home");
         }
         #endregion
 

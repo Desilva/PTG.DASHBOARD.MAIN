@@ -1,5 +1,4 @@
-﻿using Business.Abstract;
-using Business.Concrete;
+﻿using Business.Concrete;
 using Business.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace WebUI.Infrastructure
 
         public static List<ModuleAction> GetModuleActionForUser(string username)
         {
-            IUserRepository repoUser = new EFUserRepository();
+            var repoUser = new EFUserRepository();
             var result = new List<ModuleAction>();
             var filter = GetFilterInfo(username);
             var user = repoUser.Find(null, filter);

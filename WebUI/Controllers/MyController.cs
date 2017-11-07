@@ -1,13 +1,7 @@
 ﻿using Business.Abstract;
-using Common.Enums;
-using SecurityGuard.Interfaces;
-using SecurityGuard.Services;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
-using WebUI.Infrastructure;
 using WebUI.Infrastructure.Concrete;
 
 namespace WebUI.Controllers
@@ -16,8 +10,6 @@ namespace WebUI.Controllers
     //[LogActionFilter]
     public abstract class MyController : Controller
     {
-        private const string USER_LOGIN = "USER_LOGIN";
-
         public ILogRepository RepoLog { get; set; }
         
         protected string AppAddress
@@ -37,43 +29,10 @@ namespace WebUI.Controllers
         {
             get
             {
-                if (base.User.Identity.IsAuthenticated)
-                {
-                    if (Session[USER_LOGIN] as ApplicationPrincipal != null)
-                        HttpContext.User = Session[USER_LOGIN] as ApplicationPrincipal;
-                    else
-                    {
-                        HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-                        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                        IMembershipService membershipService = new MembershipService(Membership.Provider);
-                        MembershipUser user = membershipService.GetUser(authTicket.Name);
-                        if (user != null)
-                        {
-                            ApplicationPrincipal appUser = new ApplicationPrincipal(user.UserName);
-                            appUser.UserId = user.ProviderUserKey.ToString();
-                            appUser.UserName = user.UserName;
-                            appUser.Email = user.Email;
-                            appUser.Roles = Roles.GetRolesForUser(user.UserName).Any() ? 
-                                Roles.GetRolesForUser(user.UserName).ToList() : null;
-                            appUser.Modules = ModuleAction.GetModuleActionForUser(user.UserName);
-                            Session[USER_LOGIN] = appUser;
-                            HttpContext.User = appUser;
-                        }
-                        else
-                        {
-                            FormsAuthentication.SignOut();
-                            Response.Redirect(FormsAuthentication.LoginUrl, true);
-                        }
-                    }
-                }
-                else
-                {
-                    FormsAuthentication.SignOut();
-                    Response.Redirect(FormsAuthentication.LoginUrl, true);
-                }
                 return HttpContext.User as ApplicationPrincipal;
             }
         }
+
         #endregion
 
         public MyController(ILogRepository repoLog)
@@ -85,8 +44,6 @@ namespace WebUI.Controllers
         {
             base.OnActionExecuted(filterContext);
             
-            if (Session[USER_LOGIN] as ApplicationPrincipal == null)
-                HttpContext.User = User;
             ViewBag.AppAddress = AppAddress;
         }
 

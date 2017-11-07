@@ -1,11 +1,4 @@
-﻿using SecurityGuard.Interfaces;
-using SecurityGuard.Services;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using WebUI.Infrastructure;
+﻿using System.Web.Mvc;
 using WebUI.Infrastructure.Concrete;
 
 namespace WebUI.Extension
@@ -16,7 +9,7 @@ namespace WebUI.Extension
         {
             get
             {
-                return WebViewPageExtensionsHelper.GetCurrentUser;
+                return base.User as ApplicationPrincipal;
             }
         }
     }
@@ -27,53 +20,7 @@ namespace WebUI.Extension
         {
             get
             {
-                return WebViewPageExtensionsHelper.GetCurrentUser;
-            }
-        }
-    }
-
-    internal static class WebViewPageExtensionsHelper
-    {
-        private const string USER_LOGIN = "USER_LOGIN";
-        public static ApplicationPrincipal GetCurrentUser
-        {
-            get
-            {
-                if (HttpContext.Current.User.Identity.IsAuthenticated)
-                {
-                    if (HttpContext.Current.Session[USER_LOGIN] as ApplicationPrincipal != null)
-                        HttpContext.Current.User = HttpContext.Current.Session[USER_LOGIN] as ApplicationPrincipal;
-                    else
-                    {
-                        HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
-                        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                        IMembershipService membershipService = new MembershipService(Membership.Provider);
-                        MembershipUser user = membershipService.GetUser(authTicket.Name);
-                        if (user != null)
-                        {
-                            ApplicationPrincipal appUser = new ApplicationPrincipal(user.UserName);
-                            appUser.UserId = user.ProviderUserKey.ToString();
-                            appUser.UserName = user.UserName;
-                            appUser.Email = user.Email;
-                            appUser.Roles = Roles.GetRolesForUser(user.UserName).Any() ?
-                                 Roles.GetRolesForUser(user.UserName).ToList() : null;
-                            appUser.Modules = ModuleAction.GetModuleActionForUser(user.UserName);
-                            HttpContext.Current.Session[USER_LOGIN] = appUser;
-                            HttpContext.Current.User = appUser;
-                        }
-                        else
-                        {
-                            FormsAuthentication.SignOut();
-                            HttpContext.Current.Response.Redirect(FormsAuthentication.LoginUrl, true);
-                        }
-                    }
-                }
-                else
-                {
-                    FormsAuthentication.SignOut();
-                    HttpContext.Current.Response.Redirect(FormsAuthentication.LoginUrl, true);
-                }
-                return HttpContext.Current.User as ApplicationPrincipal;
+                return base.User as ApplicationPrincipal;
             }
         }
     }
