@@ -1,60 +1,143 @@
 @model SecurityGuard.ViewModels.ManageRolesViewModel
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/SecurityGuard/Views/Shared/_SecurityGuardLayoutPage.cshtml";
+    //Layout = "~/Areas/SecurityGuard/Views/Shared/_SecurityGuardLayoutPage.cshtml";
 }
-    <script src="@Url.Content("~/Content/SecurityGuard/scripts/jquery.jqia.selects.js")" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Content/SecurityGuard/scripts/jquery.jqia.selects.js")" type="text/javascript"></script>*@    
 
-<div id="breadcrumb">
-    @Html.ActionLink("Dashboard", "Index", "Dashboard") > Manage Roles
-</div>
-<h2>
-    Manage Roles</h2>
-<script src="/Scripts/jquery.jqia.selects.js" type="text/javascript"></script>
-<ul class="system_messages" style="display: none;">
-</ul>
-<div class="fl w48pc mr20">
-    <fieldset>
-        <p>
-            Role Name<br />
-            @Html.TextBox("RoleName")
-        </p>
-        <p>
-            <button id="add-role">
-                Add</button></p>
-        <hr />
-        <p>
-            Roles<br />
-            @Html.ListBox("Roles", Model.Roles, new { height = "120px", width = "200px" })
-        </p>
-        <p>
-            @Html.CheckBox("throwOnPopulatedRole")&nbsp;Delete role if it has users? <br />(Recommended:
-            un-checked)<br />
-            <button id="delete-roles">
-                Delete</button></p>
-    </fieldset>
-</div>
-<div class="fr w48pc">
-    <fieldset>
-        <p>
-            Get Users In Role<br />
-            @Html.DropDownList("RolesList", Model.Roles, "[Select Role]")
-        </p>
-        <div id="users-in-role-div" style="display: none;">
-            <p>
-                Users In Role
-            </p>
-            <ul>
-            </ul>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <div id="breadcrumb">
+            @Html.ActionLink("Dashboard", "Index", "Dashboard") > Manage Roles
         </div>
-    </fieldset>
+    </div>
 </div>
-<script type="text/javascript">
+
+<div class="wrapper wrapper-content">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h4>Manage Roles</h4>
+        </div>
+        <div class="ibox-content">
+            <ul class="system_messages" style="display: none;"></ul>
+
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Role Name</label>
+                    <div class="col-xs-4">
+                        @Html.TextBox("RoleName", "", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <button id="add-role" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+                <hr />
+
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Roles</label>
+                    <div class="col-xs-4">
+                        @Html.ListBox("Roles", Model.Roles, new { @class = "form-control", style = "height:200px;" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-5">
+                        <div class="checkbox">
+                            @Html.CheckBox("throwOnPopulatedRole")&nbsp;Delete role if it has users? <em class="small">(Recommended: un-checked)</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <button id="edit-role" class="btn btn-primary">Edit</button>&nbsp;
+                        <button id="delete-roles" class="btn btn-default">Delete</button>&nbsp;
+                        @Html.ActionLink("Add Module", "AddModule", "Role", new { area = "SecurityGuard" }, new { id = "add-module" })
+                    </div>
+                </div>
+            </div><br>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Get Users in Role</label>
+                    <div class="col-xs-4">
+                        @Html.DropDownList("RolesList", Model.Roles, "[Select Role]", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div id="users-in-role-div" class="form-group" style="display: none;">
+                    <div class="col-xs-offset-2 col-xs-4">
+                        Users in Role
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="edit-dialog">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h6 class="modal-title">Edit Role</h6>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="role-id" />
+                            <div class="form-group">
+                                <label for="role-edit">Role Name:</label>
+                                <input type="text" class="form-control" id="role-edit">
+                            </div>
+                            <div class="form-group">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success" id="save-role">Save</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/Content/SecurityGuard/scripts/jquery.jqia.selects.js")" type="text/javascript"></script>
+    <script type="text/javascript">
 
     $(function () {
-
         var message = $(".system_messages");
+        //$('#Roles').removeAttr('multiple');
+        var anchor = $("a#add-module");
 
+        anchor.attr('href', 'javascript: void(0)');
+
+        $("#Roles").change(function () {
+            var count = $(this).find('option:selected').length;
+
+            // Get a reference to the "href" of the link.
+            //var href = anchor.attr("href");
+            var href = '@Url.Action("AddModule", "Role", new {area = "SecurityGuard"})';
+
+            // Concatenate the existing href value with the username
+            var newHref = href + "?roleName=" + $(this).val();
+
+            // Replace the existing href value with the new one
+            if (count == 0 || count > 1) {
+                anchor.attr('href', 'javascript: void(0)');
+            } else {
+                anchor.attr("href", newHref);
+            }
+
+
+        });
+
+        function onSelect(e) {
+
+        }
 
         /***********************************************
         * Begin Add Role Functions
@@ -84,7 +167,7 @@
                 $("#RoleName").val("");
 
                 GetAllRoles("Roles");
-                GetAllRoles("RolesList");
+                GetListRoles("RolesList");
             } else {
                 $("#RoleName").val("");
             }
@@ -112,6 +195,83 @@
         ***********************************************/
 
 
+        /***********************************************
+        * Begin Edit Role Functions
+        ***********************************************/
+
+        $("#edit-role").click(function () {
+            var role = $("#Roles").find("option:selected");
+
+            if (role.length == 0) {
+                ShowMessage("Please select at least one role to edit.");                
+                return;
+            }
+
+            if (role.length > 1) {
+                ShowMessage("You can not select more than one role to edit.");              
+                return;
+            }
+
+            $.post('@Url.Action("RoleId")', { roleName: role.text() }, function (data) {
+                //console.log(data);
+                $('#role-id').val(data);
+                $('#role-edit').val(role.text());
+                $('#edit-dialog').modal('show');                
+            });
+        });
+
+        $("#save-role").click(function () {
+            var roleId = $('#role-id').val();
+            var roleName = $('#role-edit').val();
+            var tempRoleName = $("#Roles").find("option:selected").text();
+
+            if (roleName == "") {
+                ShowEditMessage("Please enter a role name.");
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("EditRole")',
+                dataType: 'json',
+                type: 'POST',
+                cache: false,
+                data: { roleId: roleId, roleName: roleName, tempRoleName: tempRoleName },
+                success: OnEditRoleSuccess,
+                error: OnEditRoleError
+            });
+        });
+
+        function OnEditRoleSuccess(data) {
+            if (data.Success) {
+                $('#edit-dialog').modal('hide');
+
+                GetAllRoles('Roles');
+                GetListRoles('RolesList');
+
+                anchor.attr('href', 'javascript: void(0)');
+            } else {
+                ShowEditMessage(data.Message);
+            }
+        }
+
+        function OnEditRoleError(xhr, status, error) {
+            ShowEditMessage(error);
+        }
+
+        function ShowEditMessage(message) {
+            var status = $('#edit-dialog').find('span');
+
+            status.addClass("text-danger");
+            status.html(message);
+            status.show();
+
+            setTimeout(function () {
+                status.hide().empty();
+            }, 3000);
+        }
+        /***********************************************
+        * End Edit Role Functions
+        ***********************************************/
 
 
         /***********************************************
@@ -159,7 +319,7 @@
                     if (item.Success) {
                         // Refresh Roles lists
                         GetAllRoles("Roles");
-                        GetAllRoles("RolesList");
+                        GetListRoles("RolesList");
                     }
 
                     // Show the message
@@ -220,7 +380,8 @@
                 ul.append("<li>No user(s).</li>");
             } else {
                 $.each(data, function (index, item) {
-                    ul.append("<li><a href=\"/SecurityGuard/Membership/Update?userName=" + item + "\">" + item + "</a></li>");
+                    var url = '@Url.Action("Update", "Membership")';
+                    ul.append('<li><a href="' + url + '?userName=' + item + '\">' + item + '</a></li>');
                 });
             }
         }
@@ -256,7 +417,34 @@
                 cache: false,
                 success: function (data) {
                     var rolesList = $("#" + selectObject);
-                    rolesList.loadSelect(data);
+                    //rolesList.loadSelect(data);
+                    rolesList.empty();
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        rolesList.append('<option value="'+ data[i].value +'">' + data[i].caption + '</option>')
+                    }
+                    console.log(data);
+                },
+                error: function (data) {                    
+                    console.log(data);
+                },               
+            });
+            console.log(selectObject)
+        }
+
+        function GetListRoles(selectObject) {
+            $.ajax({
+                url: '@Url.Action("GetListRoles", "Role")',
+                dataType: 'json',
+                type: 'GET',
+                cache: false,
+                success: function (data) {
+                    var rolesList = $("#" + selectObject);
+                    //rolesList.loadSelect(data);
+                    rolesList.empty();
+                    for (var i = 0; i < data.length; i++) {
+                        rolesList.append('<option value="' + data[i].value + '">' + data[i].caption + '</option>')
+                    }
                 }
             });
         }
@@ -301,4 +489,5 @@
 
 
 
-</script>
+    </script>
+}

@@ -12,5 +12,12 @@ namespace Business.Abstract
     {
         Role FindByName(string roleName);
         void AddModuleAndAction(string[] modules,string role);
+
+        #region Asynchronous
+        Task<Role> FindByNameAsync(string roleName);
+        Task<Role> FindByRoleIdAsync(Guid roleId);
+        Task AddModuleAndActionAsync(string[] modules, string role);
+        Task EditAsync(Role dbItem);
+        #endregion
     }
 }

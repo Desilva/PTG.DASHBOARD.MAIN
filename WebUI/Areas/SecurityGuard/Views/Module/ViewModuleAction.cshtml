@@ -1,33 +1,49 @@
 ﻿@{
-    ViewBag.Title = "ViewModuleAction";
+    ViewBag.Title = "Manage Module";
+    Layout = "~/Views/Shared/Inspinia/_Layout.cshtml";
     //Layout = "~/Areas/SecurityGuard/Views/Shared/_SecurityGuardLayoutPage.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-5">
-        <div class="form-group">
-            <select id="module" class="form-control">
-                @foreach (Business.Entities.Module m in ViewBag.modules)
-                {
-                    <option value="@m.Id">@m.ModuleName</option>
-                }
-            </select>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <select id="actions" multiple="true" size="10">
-            @foreach (Business.Entities.Action a in ViewBag.actions)
-            {
-                <option value="@a.Id">@a.ActionName</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-2">
-        <input type="button" class="btn btn-default" value="Grant" id="grant" />
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>       
     </div>
 </div>
 
-@section sgscripts {
+<div class="wrapper wrapper-content">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h3>ViewModuleAction</h3>
+            </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <select id="module" class="form-control">
+                            @foreach (Business.Entities.Module m in ViewBag.modules)
+                            {
+                                <option value="@m.Id">@m.ModuleName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <select id="actions" multiple="true" size="10">
+                        @foreach (Business.Entities.Action a in ViewBag.actions)
+            {
+                            <option value="@a.Id">@a.ActionName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="button" class="btn btn-primary" value="Grant" id="grant" />
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+@section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
             $('#grant').click(function () {
@@ -42,3 +58,4 @@
         });
     </script>
 }
+

@@ -1,3 +1,4 @@
+using Business.Abstract;
 using System;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -9,10 +10,16 @@ using SecurityGuard.Interfaces;
 using SecurityGuard.ViewModels;
 using WebUI.Controllers;
 using viewModels = WebUI.Areas.SecurityGuard.ViewModels;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using MvcSiteMapProvider;
+using Common.Enums;
+using WebUI.Infrastructure;
 
 namespace WebUI.Areas.SecurityGuard.Controllers
 {
-    [Authorize(Roles = "SecurityGuard")]
+    [AuthorizeUser(ModuleName = UserModule.SECURITY_GUARD)]
     public partial class MembershipController : BaseController
     {
 
@@ -20,16 +27,20 @@ namespace WebUI.Areas.SecurityGuard.Controllers
 
         private IMembershipService membershipService;
         private readonly IRoleService roleService;
+        private IUserRepository RepoUser;
 
-        public MembershipController()
+        public MembershipController(IUserRepository repoUser)
         {
             this.roleService = new RoleService(Roles.Provider);
             this.membershipService = new MembershipService(Membership.Provider);
+            RepoUser = repoUser;
         }
 
         #endregion
 
         #region Index Method
+        //[MvcSiteMapNode(Title = "Download Excel", ParentKey = "IndexHome", Key = "IndexDownload")]
+        //[SiteMapTitle("Breadcrumb")]
         public virtual ActionResult Index(string filterby, string searchterm)
         {
             ManageUsersViewModel viewModel = new ManageUsersViewModel();
@@ -67,6 +78,25 @@ namespace WebUI.Areas.SecurityGuard.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        public async Task<JsonResult> Binding()
+        {
+            int totalRecords;
+            var items = await GetAllUsersAsync(0, int.MaxValue, out totalRecords);
+
+            var result = (from MembershipUser item in items
+                          select new
+                          {
+                              userName = item.UserName,
+                              isApproved = item.IsApproved.Equals(true) ? "Approved" : "Not Approved",
+                              isLockedOut = item.IsLockedOut.Equals(true) ? "Locked" : "Unlocked",
+                              email = item.Email,
+                              lastActivity = item.LastActivityDate
+                          });
+            return Json(result);
+        }
+
         #endregion
 
         #region Create User Methods
@@ -164,7 +194,7 @@ namespace WebUI.Areas.SecurityGuard.Controllers
         [HttpPost]
         //[ActionName("Update")]
         [MultiButtonFormSubmit(ActionName = "UpdateDeleteCancel", SubmitButton = "UpdateUser")]
-        public ActionResult UpdateUser(string UserName)
+        public ActionResult Update(string UserName)
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -189,6 +219,8 @@ namespace WebUI.Areas.SecurityGuard.Controllers
 
             return RedirectToAction("Update", new { userName = user.UserName });
         }
+
+  
 
 
         #region Ajax methods for Updating the user
@@ -284,6 +316,8 @@ namespace WebUI.Areas.SecurityGuard.Controllers
             model.AvailableRoles = (string.IsNullOrEmpty(username) ? new SelectList(roleService.GetAllRoles()) : new SelectList(roleService.AvailableRolesForUser(username)));
             model.GrantedRoles = (string.IsNullOrEmpty(username) ? new SelectList(new string[] { }) : new SelectList(roleService.GetRolesForUser(username)));
 
+            //var user = filterContext.HttpContext.User as ApplicationPrincipal;
+
             return View(model);
         }
 
@@ -314,18 +348,38 @@ namespace WebUI.Areas.SecurityGuard.Controllers
                 return Json(response);
             }
 
+
             try
             {
-                roleService.AddUserToRoles(userName, roleNames);
-
+                foreach (string roleName in roleNames)
+                {
+                    if (!string.IsNullOrEmpty(roleName))
+                    {
+                        string[] userRoles = roleService.GetRolesForUser(userName);
+                        bool hasRole = false;
+                        foreach(string userRole in userRoles)
+                        {
+                            if(userRole == roleName)
+                            {
+                                hasRole = true;
+                            }
+                        }
+                        if (!hasRole)
+                        {
+                            roleService.AddUserToRoles(userName, roleNames);                            
+                        }
+                    }
+                }
                 response.Success = true;
                 response.Message = "The Role(s) has been GRANTED successfully to " + userName;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 response.Success = false;
-                response.Message = "There was a problem adding the user to the roles.";
+                response.Message = e.Message + "\r\n" + e.StackTrace;
             }
+            
+                                     
 
             return Json(response);
         }
@@ -364,23 +418,46 @@ namespace WebUI.Areas.SecurityGuard.Controllers
                 return Json(response);
             }
 
+
             try
             {
-                roleService.RemoveUserFromRoles(userName, roleNames);
-
+                foreach (string roleName in roleNames)
+                {
+                    if (!string.IsNullOrEmpty(roleName))
+                    {
+                        string[] userRoles = roleService.GetRolesForUser(userName);
+                        bool hasRole = false;
+                        foreach (string userRole in userRoles)
+                        {
+                            if (userRole == roleName)
+                            {
+                                hasRole = true;
+                            }
+                        }
+                        if (hasRole)
+                        {
+                            roleService.RemoveUserFromRoles(userName, roleNames);                            
+                        }
+                    }
+                }
                 response.Success = true;
                 response.Message = "The Role(s) has been REVOKED successfully for " + userName;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 response.Success = false;
-                response.Message = "There was a problem revoking roles for the user.";
-            }
-
+                response.Message = e.Message + "\r\n" + e.StackTrace;
+            }                           
             return Json(response);
         }
 
         #endregion
 
+
+
+        private Task<List<MembershipUser>> GetAllUsersAsync(int pageIndex, int pageSize, out int totalRecords)
+        {
+            return Task.FromResult(membershipService.GetAllUsers(pageIndex, pageSize, out totalRecords).ToList());
+        }
     }
 }
