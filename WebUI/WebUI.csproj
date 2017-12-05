@@ -2684,6 +2684,7 @@
     <Compile Include="Infrastructure\HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\LogActionFilter.cs" />
     <Compile Include="Infrastructure\LogHelper.cs" />
+    <Compile Include="Infrastructure\MD5EncryptionLibrary.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\OptionGenerator.cs" />
     <Compile Include="Infrastructure\Settings.cs" />
