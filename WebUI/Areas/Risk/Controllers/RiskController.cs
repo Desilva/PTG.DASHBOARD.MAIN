@@ -20,7 +20,7 @@ using WebUI.Infrastructure;
 
 namespace WebUI.Areas.Risk.Controllers
 {
-    [AuthorizeUser(ModuleName = UserModule.AUTH_MODULE)]
+    [AuthorizeUser(ModuleName = UserModule.RISK_VIEW_MODULE)]
     public class RiskController : MyController
     {
         public IRiskRepository RiskRepo;

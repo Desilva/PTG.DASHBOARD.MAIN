@@ -75,11 +75,17 @@ namespace Common.Enums
         [Description("Residual")]
         RESIDUAL
     }
-
-    public enum UserModule
+    
+   public enum UserModule
     {
         [Description("Authorize Module")] //penanganan hak akses sementara
-        AUTH_MODULE
+        AUTH_MODULE,
+        [Description("Security Guard")]
+        SECURITY_GUARD,
+        [Description("Risk Update")]
+        RISK_UPDATE_MODULE,
+        [Description("Risk View")]
+        RISK_VIEW_MODULE
     }
 
     public enum UserAction
