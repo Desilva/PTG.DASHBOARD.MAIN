@@ -43,6 +43,7 @@ namespace WebUI.Areas.Services.Controllers
                 AdModel.Login(model.UserName, model.Password, model.RememberMe);
                 if (AdModel.IsAuthenticated)
                 {
+                    Request.Headers.Add("token", MD5EncryptionLibrary.MD5Hash(model.UserName));
                     UserServiceStub user = new UserServiceStub()
                     {
                         username = model.UserName,
