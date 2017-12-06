@@ -48,7 +48,7 @@ namespace WebUI.Areas.Risk.Controllers
         }
 
         // GET: Risk/Risk        
-        [MvcSiteMapNode(Title = "Risk", ParentKey = "IndexHome", Key = "IndexRisk")]
+        [MvcSiteMapNode(Title = "Risk", ParentKey = "Dashboard", Key = "IndexRisk")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult Index(int? year)
         {
