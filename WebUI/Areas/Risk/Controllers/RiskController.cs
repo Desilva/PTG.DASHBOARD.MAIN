@@ -117,7 +117,8 @@ namespace WebUI.Areas.Risk.Controllers
             RiskFormStub model = new RiskFormStub(RiskRepo.FindByPk(riskId));
             return View("_RiskDetails", model);
         }
-        
+
+        [AuthorizeUser(ModuleName = UserModule.RISK_UPDATE_MODULE)]
         [MvcSiteMapNode(Title = "Tambah Risiko", ParentKey = "IndexRisk", Key = "addRisk")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult AddRisk(int? year)
@@ -475,6 +476,7 @@ namespace WebUI.Areas.Risk.Controllers
         //    return PartialView("_RiskDocument", listRiskDocuments);
         //}
 
+        [AuthorizeUser(ModuleName = UserModule.RISK_UPDATE_MODULE)]
         [MvcSiteMapNode(Title = "Tambah Dokumen", ParentKey = "IndexRisk", Key = "addRiskDocument")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult AddRiskDocument()
