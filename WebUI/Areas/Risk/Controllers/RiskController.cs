@@ -20,7 +20,7 @@ using WebUI.Infrastructure;
 
 namespace WebUI.Areas.Risk.Controllers
 {
-    [AuthorizeUser(ModuleName = UserModule.AUTH_MODULE)]
+    [AuthorizeUser(ModuleName = UserModule.RISK_VIEW_MODULE)]
     public class RiskController : MyController
     {
         public IRiskRepository RiskRepo;
@@ -48,7 +48,7 @@ namespace WebUI.Areas.Risk.Controllers
         }
 
         // GET: Risk/Risk        
-        [MvcSiteMapNode(Title = "Risk", ParentKey = "IndexHome", Key = "IndexRisk")]
+        [MvcSiteMapNode(Title = "Risk", ParentKey = "Dashboard", Key = "IndexRisk")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult Index(int? year)
         {
@@ -117,7 +117,8 @@ namespace WebUI.Areas.Risk.Controllers
             RiskFormStub model = new RiskFormStub(RiskRepo.FindByPk(riskId));
             return View("_RiskDetails", model);
         }
-        
+
+        [AuthorizeUser(ModuleName = UserModule.RISK_UPDATE_MODULE)]
         [MvcSiteMapNode(Title = "Tambah Risiko", ParentKey = "IndexRisk", Key = "addRisk")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult AddRisk(int? year)
@@ -475,6 +476,7 @@ namespace WebUI.Areas.Risk.Controllers
         //    return PartialView("_RiskDocument", listRiskDocuments);
         //}
 
+        [AuthorizeUser(ModuleName = UserModule.RISK_UPDATE_MODULE)]
         [MvcSiteMapNode(Title = "Tambah Dokumen", ParentKey = "IndexRisk", Key = "addRiskDocument")]
         [SiteMapTitle("Breadcrumb")]
         public ActionResult AddRiskDocument()

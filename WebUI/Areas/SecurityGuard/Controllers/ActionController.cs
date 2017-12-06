@@ -12,10 +12,11 @@ using System.Data.SqlClient;
 using WebUI.Infrastructure;
 using MvcSiteMapProvider;
 using MvcSiteMapProvider.Web.Mvc.Filters;
+using Common.Enums;
 
 namespace WebUI.Areas.SecurityGuard.Controllers
-{
-    [AuthorizeUser(ModuleName = "Security Guard")]
+{    
+    [AuthorizeUser(ModuleName = UserModule.SECURITY_GUARD)]
     public partial class ActionController : BaseController
     {
         #region ctors

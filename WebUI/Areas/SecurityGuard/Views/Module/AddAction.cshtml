@@ -1,52 +1,59 @@
 ﻿@model SecurityGuard.ViewModels.AddActionsToModuleViewModel
 @{
-    ViewBag.Title = "AddActions";
+    ViewBag.Title = "Manage Module";
     //Layout = "~/Areas/SecurityGuard/Views/Shared/_SecurityGuardLayoutPage.cshtml";
 }
 
-<div class="page-header">
-	<h1>Add Actions to Module</h1>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <div id="breadcrumb">
+            @Html.ActionLink("Dashboard", "Index", "Dashboard") >
+            @Html.ActionLink("Manage Modules", "Index", "Module") >
+            Add Actions to Module
+        </div>
+    </div>
 </div>
 
+<div class="wrapper wrapper-content">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h3 class="panel-title"><strong>Action to Modules</strong></h3>
+        </div>
+        <div class="ibox-content">
+            <p>Clicking the &quot;Add&quot; or &quot;Revoke&quot; buttons will execute that command.</p>
+            <p>Add any of the following actions to: <span id="modulename-to-grant-roles">@Model.ModuleName</span></p>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><strong>Action to Modules</strong></h3>
-    </div>
-    <div class="panel-body">
-        <p>Clicking the &quot;Add&quot; or &quot;Revoke&quot; buttons will execute that command.</p>
-        <p>Add any of the following actions to: <span id="modulename-to-grant-roles">@Model.ModuleName</span></p>
+            <ul class="system_messages" style="display: none;">
+                <li><span class="ico"></span><strong class="system_title"></strong></li>
+            </ul>
 
-        <ul class="system_messages" style="display: none;">
-            <li><span class="ico"></span><strong class="system_title"></strong></li>
-        </ul>
-
-        <div class="row">
-            <div class="col-xs-4">
-                <div id="available-roles">
-                    <h3>Available actions</h3>
-                    @Html.ListBox("AvailableActions", Model.AvailableActions, new { @class = "form-control" })
+            <div class="row">
+                <div class="col-xs-4">
+                    <div id="available-roles">
+                        <h4 class="backend" style="margin-bottom: 10px;">Available Actions</h4>
+                        @Html.ListBox("AvailableActions", Model.AvailableActions, new { @class = "form-control", style = "height:150px;" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-2">
-                <div id="add-controls">
-                    <br /><br /><br /><br />
-                    <button id="add-button" class="btn btn-primary">Grant --&gt;</button><br />
-                    <button id="revoke-button" class="btn btn-primary">&lt;-- Revoke</button>
+                <div class="col-xs-2 text-center">
+                    <div id="add-controls">
+                        <button id="add-button" class="btn btn-default" style="width:100px; margin-top:70px;">Grant <span class="glyphicon glyphicon-circle-arrow-right"></span></button><br />
+                        <button id="revoke-button" class="btn btn-default" style="width:100px; margin-top:10px;"><span class="glyphicon glyphicon-circle-arrow-left"></span> Revoke</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xs-4">
-                <div id="granted-actions">
-                    <h3>Added Actions</h3>
-                    @Html.ListBox("GrantedActions", Model.AddedActions, new { @class = "form-control" })
+                <div class="col-xs-4">
+                    <div id="granted-actions">
+                        <h4 class="backend" style="margin-bottom: 10px;">Added Actions</h4>
+                        @Html.ListBox("GrantedActions", Model.AddedActions, new { @class = "form-control", style = "height:150px;" })
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@section sgscripts{
-<script type="text/javascript">
+@section scripts{
+    <script type="text/javascript">
     $(function () {
 
         var message = $(".system_messages");
@@ -65,7 +72,7 @@
                 return;
             }
 
-            // Then move the selected list items to the 
+            // Then move the selected list items to the
             // granted roles list.
             move_list_items("AvailableActions", "GrantedActions");
 
@@ -100,7 +107,7 @@
 
 
         $("#revoke-button").click(function () {
-            // First make sure at least one role in the 
+            // First make sure at least one role in the
             // granted list is selected to revoke.
             if (grantedList.val() == null) {
                 alert("You must select a actions to revoke.");
@@ -148,5 +155,5 @@
 
 
     });
-</script>
+    </script>
 }

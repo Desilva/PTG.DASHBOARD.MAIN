@@ -4,10 +4,12 @@ using SecurityGuard.Services;
 using SecurityGuard.Interfaces;
 using SecurityGuard.ViewModels;
 using WebUI.Controllers;
+using WebUI.Infrastructure;
+using Common.Enums;
 
 namespace WebUI.Areas.SecurityGuard.Controllers
 {
-    [Authorize(Roles = "SecurityGuard")]
+    [AuthorizeUser(ModuleName = UserModule.SECURITY_GUARD)]
     public partial class DashboardController : BaseController
     {
 

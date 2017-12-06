@@ -1,94 +1,166 @@
-﻿@model SecurityGuard.ViewModels.AddModulesToRoleViewModel
+﻿@model SecurityGuard.ViewModels.GrantModulesToRoleViewModel
 @{
-    ViewBag.Title = "AddModule";
+    ViewBag.Title = "Manage Role";
     //Layout = "~/Areas/SecurityGuard/Views/Shared/_SecurityGuardLayoutPage.cshtml";
 }
 
-<div class="page-header">
-    <h1>Add Modules to Role</h1>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <div id="breadcrumb">
+            @Html.ActionLink("Dashboard", "Index", "Dashboard") >
+            @Html.ActionLink("Manage Roles", "Index", "Role") >
+            Add Modules to Role
+        </div>
+    </div>
 </div>
 
-<ul class="system_messages" style="display: none;">
-    <li><span class="ico"></span><strong class="system_title"></strong></li>
-</ul>
+<div class="wrapper wrapper-content">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h3 class="panel-title"><strong>Mdules To Role</strong></h3>
+        </div>
+        <div class="ibox-content">
+            <p>Clicking the &quot;Add&quot; or &quot;Revoke&quot; buttons will execute that command.</p>
+            <p>Add any of the following modules to: <span id="modulename-to-grant-roles">@Model.RoleName</span></p>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><strong>Modules to Roles</strong></h3>
-    </div>
-    <div class="panel-body">
-        <p>Add any of the following modules to: <span id="modulename-to-grant-roles">@Model.RoleName</span></p>
-        <div class="form-horizontal">
-            @{
-                string classHeader = "col-md-" + (int)(9 / (Model.Actions.Count + 1));
-                <div class="row">
-                    <div class="col-xs-3"></div>
-                    @foreach (Business.Entities.Action a in Model.Actions)
-                    {
-                        <div id="@a.Id" class="@classHeader">@a.ActionName</div>
-                    }
+            <ul class="system_messages" style="display: none;">
+                <li><span class="ico"></span><strong class="system_title"></strong></li>
+            </ul>
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <div id="available-modules">
+                        <h4 class="backend" style="margin-bottom: 10px;">Available Modules</h4>
+                        @Html.ListBox("AvailableModules", Model.AvailableModules, new { @class = "form-control", style = "height:150px;" })
+                    </div>
                 </div>
-            }
-            @Html.Raw(Model.Render)
-
-            <br>
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <button id="save-module-roles" class="btn btn-primary">Save modules to role</button>
+                <div class="col-xs-2 text-center">
+                    <div id="add-controls">
+                        <button id="add-button" class="btn btn-default" style="width:100px; margin-top:70px;">Grant <span class="glyphicon glyphicon-circle-arrow-right"></span></button><br />
+                        <button id="revoke-button" class="btn btn-default" style="width:100px; margin-top:10px;"><span class="glyphicon glyphicon-circle-arrow-left"></span> Revoke</button>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="granted-modules">
+                        <h4 class="backend" style="margin-bottom: 10px;">Added Modules</h4>
+                        @Html.ListBox("GrantedModules", Model.GrantedModules, new { @class = "form-control", style = "height:150px;" })
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@section sgscripts{
+@section scripts{
     <script type="text/javascript">
-        $(function () {
-            var message = $(".system_messages");
+    $(function () {
 
-            /******************************************************
-            * Begin added commands
-            ******************************************************/
+        var message = $(".system_messages");
 
-            $("#save-module-roles").click(function () {
-                var checkedValues = $('input:checkbox:checked').map(function () {
-                    return this.value;
-                }).get();
+        /******************************************************
+        * Begin Grant/Revoke commands
+        ******************************************************/
+        var availableList = $("#AvailableModules");
+        var grantedList = $("#GrantedModules");
 
-                console.log(checkedValues.length);
+        $("#add-button").click(function () {
+            // First check if any items in the available list
+            // are selected.
+            if (availableList.val() == null) {
+                alert("You must select a action to add.");
+                return;
+            }
 
-                // First check if any items
-                // are selected.
-                if (checkedValues.length <= 0) {
-                    alert("You must select an action in module to add.");
-                    return;
-                }
+            // Then move the selected list items to the
+            // granted roles list.
+            move_list_items("AvailableModules", "GrantedModules");
 
-                // Now execute the command using jQuery ajax.
-                $.ajax({
-                    url: '@Url.Action("AddModulesToRole", "Role")',
-                    type: 'POST',
-                    traditional: true,
-                    data: { modules: checkedValues, roleName: '@Model.RoleName' },
-                    dataType: 'json',
-                    success: OnAddedSuccess,
-                    error: OnAddedError
-                });
+            // Now take all the roles from the granted list
+            // and create a single comma-delimited list.
+            var grantedModules = "";
+            var comma = "";
+            $("#GrantedModules option").each(function (index, data) {
+                grantedModules += comma + data.value;
+                comma = ",";                
             });
 
-            function OnAddedSuccess(data) {
-                message.show().delay(5000).fadeOut();    // Show the message
-                $("li", message).addClass("green");      // Apply the Green style
-                $("strong", message).text(data.Message); // Insert the message
-            }
-
-            function OnAddedError(xhr, status, error) {
-                alert(error);
-            }
-
-            /******************************************************
-            * End added
-            ******************************************************/
+            // Now execute the command using jQuery ajax.
+            $.ajax({
+                url: '@Url.Action("GrantModulesToRole", "Role")',
+                dataType: 'json',
+                type: 'POST',
+                data: { RoleId: '@Model.RoleName', Modules: grantedModules },
+                success: OnGrantedSuccess,
+                error: OnGrantedError
+            });
         });
+
+        function OnGrantedSuccess(data) {
+            message.show().delay(5000).fadeOut();    // Show the message
+            $("li", message).addClass("green");      // Apply the Green style
+            $("strong", message).text(data.Message); // Insert the message
+        }
+
+        function OnGrantedError(xhr, status, error) {
+            alert(error);
+        }
+
+        $("#revoke-button").click(function () {
+            // First make sure at least one role in the
+            // granted list is selected to revoke.
+            if (grantedList.val() == null) {
+                alert("You must select a actions to revoke.");
+                return;
+            }
+
+            // Now move the item back to the Available list.
+            move_list_items("GrantedModules", "AvailableModules");
+
+            // Now make a comma-delimited string of revoked items.
+            var revokedModules = "";
+            var comma = "";
+            //$("#GrantedModules option").each(function (index, data) {
+            //    revokedModules += comma + data.value;
+            //    comma = ",";
+            //});
+            $("#GrantedModules option").each(function (index, data) {
+                revokedModules += comma + data.value;
+                comma = ",";
+                
+            });            
+
+            // Now execute the command using jQuery ajax.
+            $.ajax({
+                url: '@Url.Action("RevokeModulesForRole", "Role")',
+                dataType: 'json',
+                type: 'POST',
+                data: { RoleId: '@Model.RoleName', Modules: revokedModules },
+                success: OnRevokedSuccess,
+                error: OnRevokedError
+            });
+        });
+
+        function OnRevokedSuccess(data) {
+            message.show().delay(5000).fadeOut();
+            $("li", message).addClass("green");
+            $("strong", message).text(data.Message);
+        }
+
+        function OnRevokedError(xhr, status, error) {
+            alert(error);
+        }
+
+        // This function moves items from one list to the other.
+        function move_list_items(sourceid, destinationid) {
+            $("#" + sourceid + "  option:selected").appendTo("#" + destinationid);
+        }
+        /******************************************************
+        * End Grant/Revoke commands
+        ******************************************************/
+
+
+
+    });
     </script>
 }
