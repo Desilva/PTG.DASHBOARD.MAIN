@@ -127,6 +127,16 @@ namespace WebUI.Areas.SecurityGuard.Controllers
             MembershipCreateStatus status;
             user = membershipService.CreateUser(model.UserName, model.Password, model.Email, model.SecretQuestion, model.SecretAnswer, model.Approve, out status);
 
+            if (status == MembershipCreateStatus.DuplicateUserName)
+            {
+                ModelState.AddModelError("", "Username sudah ada");
+                return RedirectToAction("CreateUser");
+            }
+            else if (status == MembershipCreateStatus.DuplicateEmail)
+            {
+                ModelState.AddModelError("", "Email sudah digunakan");
+                return RedirectToAction("CreateUser");
+            }
             return routeHelpers.Actions.GrantRolesToUser(user.UserName);
         }
 
