@@ -80,7 +80,7 @@ namespace Common.Enums
     {
         [Description("Authorize Module")] //penanganan hak akses sementara
         AUTH_MODULE,
-        [Description("Security Guard")]
+        [Description("User Management")]
         SECURITY_GUARD,
         [Description("Risk Update")]
         RISK_UPDATE_MODULE,
