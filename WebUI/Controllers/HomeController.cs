@@ -13,8 +13,7 @@ using WebUI.Infrastructure;
 using Common.Enums;
 
 namespace WebUI.Controllers
-{
-    [AuthorizeUser(ModuleName = UserModule.AUTH_MODULE)]
+{    
     public class HomeController : MyController
     {
         string LINK_FIN = ConfigurationManager.AppSettings["URL_API_PTGFIN_DASHBOARD"];

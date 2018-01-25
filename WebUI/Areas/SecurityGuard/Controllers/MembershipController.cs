@@ -97,6 +97,22 @@ namespace WebUI.Areas.SecurityGuard.Controllers
             return Json(result);
         }
 
+        public JsonResult GenerateIsApprovedList() {
+            List<SelectObject> listApproved = new List<SelectObject>{
+                new SelectObject{caption="Approved", value="Approved"},
+                new SelectObject{caption="Not Approved", value="Not Approved"},
+            };
+            return Json(listApproved);
+        }
+
+        public JsonResult GenerateIsLockedOutList()
+        {
+            List<SelectObject> listLocked = new List<SelectObject>{
+                new SelectObject{caption="Locked", value="Locked"},
+                new SelectObject{caption="Unlocked", value="Unlocked"},
+            };
+            return Json(listLocked);
+        }
         #endregion
 
         #region Create User Methods
