@@ -11,7 +11,7 @@
             <h5>Operasi</h5>
         </div>
         <div class="ibox-content">
-            <table class="table table-bordered">
+            <table class="operation table-bordered table-responsive">
                 <thead>
                     <tr>
                         <th>Jenis Usaha</th>
@@ -19,16 +19,18 @@
                         <th>% Real</th>
                     </tr>
                 </thead>
-                @{
+                <tbody>
+                    @{
                     foreach (HomeOperationItemModel homeOperationItemModel in Model.OperationItems.Values)
                     {
-                        <tr>
-                            <td>@homeOperationItemModel.Account</td>
-                            <td class="text-right">@homeOperationItemModel.Value</td>
-                            <td class="text-right">@homeOperationItemModel.Persen</td>
-                        </tr>
+                    <tr>
+                        <td>@homeOperationItemModel.Account</td>
+                        <td class="text-right">@homeOperationItemModel.Value</td>
+                        <td class="text-right">@homeOperationItemModel.Persen</td>
+                    </tr>
                     }
-                }
+                    }
+                </tbody>
             </table>
         </div>
     </div>

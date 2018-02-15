@@ -735,6 +735,10 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     padding: 10px 15px 10px 20px;
 }
 
+.form-inline.pull-left.mb-15{
+    margin-left:20px;
+}
+
 @media (max-width: 768px) {
     .top-navigation .navbar-header {
         display: block;
@@ -8861,6 +8865,17 @@ body.landing-page {
 }
 
 @media (max-width: 768px) {
+    .landing-page .navbar .navbar-header {
+        display: block;
+        float: none;
+    }
+
+        .landing-page .navbar .navbar-header .navbar-toggle {
+            background-color: #ffffff;
+            padding: 9px 10px;
+            border: none;
+        }
+
     .landing-page .carousel-caption,
     .landing-page .carousel-caption.blank {
         left: 5%;
@@ -8929,7 +8944,7 @@ body.landing-page {
 
     .landing-page .carousel-control {
         display: none;
-    }
+    }   
 }
 
 @media (min-width: 992px) {
@@ -8938,17 +8953,45 @@ body.landing-page {
     }
 }
 
-@media (max-width: 768px) {
-    .landing-page .navbar .navbar-header {
-        display: block;
-        float: none;
+@media (max-width: 600px) {
+    .ibox-title h5 {
+        font-size: 12px;
     }
 
-        .landing-page .navbar .navbar-header .navbar-toggle {
-            background-color: #ffffff;
-            padding: 9px 10px;
-            border: none;
+    .operation{
+        font-size:x-small;
+    }
+
+    #panel-toprisk{
+        height:65px;
+    }
+
+    .form-inline.pull-left.mb-15 {
+        margin-left: -80px;        
+        margin-top: 20px;
+    }
+
+    .footer.fixed.nav.narrow {    
+        height: 94px;        
+    }
+
+    .footer.fixed.nav.narrow .row {
+        min-width:100%;
+        margin:-15px 0 0 5px;
+    }
+
+    .footer.fixed.nav.narrow .col-xs-3.navitem {
+        padding-left: 20px;
+    }
+        .footer.fixed.nav.narrow .col-xs-3.navitem .navchild.navimg{            
+            background-size:40px;            
         }
+            .footer.fixed.nav.narrow .col-xs-3.navitem .navchild.navimg .navtitle {
+                background-size: 40px;                
+                font-size: small;
+                margin-left:-2px;
+                margin-top:40px;
+            }   
 }
 
 body.rtls {
